@@ -5,7 +5,6 @@ import './App.css';
 
 class App extends Component {
 
-
   render() {
     let routes = (
       <><Route path="/" exact render={() => <div>This is unprotected</div>} />
