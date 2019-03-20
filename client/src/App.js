@@ -15,6 +15,11 @@ class App extends Component {
           path="/something-else"
           render={() => <div>This is unprotected</div>}
         />
+        <Route
+          path="/onboarding"
+          component={OnboardingView}
+          userType={this.props.userType}
+        />
       </>
     );
     if (this.props.authenticated) {
@@ -32,7 +37,6 @@ class App extends Component {
     return (
       <div className="App">
         Client
-        <Route exact path="/onboarding" component={OnboardingView} />
         <Switch>
           {routes}
           <Redirect to="/" exact />
@@ -45,7 +49,8 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     authenticated:
-      state.auth.user.token !== null && state.auth.user.token !== undefined
+      state.auth.user.token !== null && state.auth.user.token !== undefined,
+    userType: state.auth.user.type
   };
 };
 
