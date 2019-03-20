@@ -1,27 +1,40 @@
-import React, { Component } from 'react';
-import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import './App.css';
+import React, { Component } from "react";
+import { Switch, Route, Redirect, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+
+import "./App.css";
+
+import OnboardingView from "./views/OnboardingView/OnboardingView";
 
 class App extends Component {
-
-
   render() {
     let routes = (
-      <><Route path="/" exact render={() => <div>This is unprotected</div>} />
-        <Route path="/something-else" render={() => <div>This is unprotected</div>} /></>
-    )
+      <>
+        <Route path="/" exact render={() => <div>This is unprotected</div>} />
+        <Route
+          path="/something-else"
+          render={() => <div>This is unprotected</div>}
+        />
+      </>
+    );
     if (this.props.authenticated) {
       routes = (
-        <><Route path="/" exact render={() => <div>This is protected</div>} />
-        <Route path="/something-else" render={() => <div>This is protected</div>} /></>
-      )
+        <>
+          <Route path="/" exact render={() => <div>This is protected</div>} />
+          <Route
+            path="/something-else"
+            render={() => <div>This is protected</div>}
+          />
+        </>
+      );
     }
 
     return (
       <div className="App">
+        Client
+        <Route exact path="/onboarding" component={OnboardingView} />
         <Switch>
-          { routes }
+          {routes}
           <Redirect to="/" exact />
         </Switch>
       </div>
@@ -31,8 +44,9 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    authenticated: state.auth.user.token !== null && state.auth.user.token !== undefined,
-  }
-}
+    authenticated:
+      state.auth.user.token !== null && state.auth.user.token !== undefined
+  };
+};
 
 export default withRouter(connect(mapStateToProps)(App));
