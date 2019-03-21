@@ -131,8 +131,10 @@ class OnboardingForm extends React.Component {
                   <>
                     <TextField
                       type="date"
-                      placeholder="Due Date"
                       label="Due Date"
+                      InputLabelProps={{
+                        shrink: true
+                      }}
                       name="dueDateInput"
                       value={this.state.dueDateInput}
                       onChange={this.handleInput}
