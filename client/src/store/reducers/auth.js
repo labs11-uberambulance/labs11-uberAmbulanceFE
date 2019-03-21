@@ -1,9 +1,7 @@
 import { authTypes } from "../actions/actionTypes";
 
 const initialState = {
-  user: {
-    type: "" // driver, mother, caregiver
-  },
+  user: {},
   loading: false,
   error: null
 };

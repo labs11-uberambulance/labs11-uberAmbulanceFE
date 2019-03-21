@@ -6,15 +6,27 @@ import OnboardingDriver from "../../components/OnboardingComponents/OnboardingDr
 import OnboardingMother from "../../components/OnboardingComponents/OnboardingMother.js";
 import OnboardingCaregiver from "../../components/OnboardingComponents/OnboardingCaregiver.js";
 
-function OnboardingView({ match }) {
+function OnboardingView(props) {
   return (
     <>
-      <Route exact path={`${match.path}/`} component={OnboardingSelector} />
-      <Route exact path={`${match.path}/driver`} component={OnboardingDriver} />
-      <Route exact path={`${match.path}/mother`} component={OnboardingMother} />
       <Route
         exact
-        path={`${match.path}/caregiver`}
+        path={`${props.match.path}/`}
+        render={() => <OnboardingSelector setUserType={props.setUserType} />}
+      />
+      <Route
+        exact
+        path={`${props.match.path}/driver`}
+        component={OnboardingDriver}
+      />
+      <Route
+        exact
+        path={`${props.match.path}/mother`}
+        component={OnboardingMother}
+      />
+      <Route
+        exact
+        path={`${props.match.path}/caregiver`}
         component={OnboardingCaregiver}
       />
     </>

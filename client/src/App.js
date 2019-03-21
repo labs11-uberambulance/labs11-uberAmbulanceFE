@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
+import { setUserType } from "./store/actions/userActions.js";
+
 import "./App.css";
 
 import OnboardingView from "./views/OnboardingView/OnboardingView";
@@ -17,8 +19,12 @@ class App extends Component {
         />
         <Route
           path="/onboarding"
-          component={OnboardingView}
-          userType={this.props.userType}
+          render={() => (
+            <OnboardingView
+              userType={this.props.userType}
+              setUserType={this.props.setUserType}
+            />
+          )}
         />
       </>
     );
@@ -54,4 +60,11 @@ const mapStateToProps = state => {
   };
 };
 
-export default withRouter(connect(mapStateToProps)(App));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    {
+      setUserType
+    }
+  )(App)
+);

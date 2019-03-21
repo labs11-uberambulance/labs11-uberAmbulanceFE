@@ -4,7 +4,12 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 
 class OnboardingSelector extends React.Component {
-  setUserType(userType) {
+  constructor(props) {
+    super(props);
+  }
+
+  handleSetUserType(userType) {
+    this.props.setUserType(userType);
     this.props.history.push(`/onboarding/${userType}`);
   }
 
@@ -13,21 +18,21 @@ class OnboardingSelector extends React.Component {
       <Grid container direction="column">
         <Button
           value="DRIVER"
-          onClick={() => this.setUserType("driver")}
+          onClick={() => this.handleSetUserType("driver")}
           color="primary"
         >
           DRIVER
         </Button>
         <Button
           value="PREGNANT MOTHER"
-          onClick={() => this.setUserType("mother")}
+          onClick={() => this.handleSetUserType("mother")}
           color="primary"
         >
           PREGNANT MOTHER
         </Button>
         <Button
           value="CAREGIVER"
-          onClick={() => this.setUserType("caregiver")}
+          onClick={() => this.handleSetUserType("caregiver")}
           color="primary"
         >
           CAREGIVER
