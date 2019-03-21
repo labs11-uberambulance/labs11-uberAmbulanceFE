@@ -3,7 +3,10 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import axios from './axios-instance';
 
-import RegisterView from './views/AuthenticationView/RegisterView'
+import { setUserType } from "./store/actions/userActions.js";
+
+import RegisterView from "./views/AuthenticationView/RegisterView";
+
 import "./App.css";
 
 import OnboardingView from "./views/OnboardingView/OnboardingView";
@@ -16,6 +19,15 @@ class App extends Component {
         <Route
           path="/something-else"
           render={() => <div>This is unprotected</div>}
+        />
+        <Route
+          path="/onboarding"
+          render={() => (
+            <OnboardingView
+              userType={this.props.userType}
+              setUserType={this.props.setUserType}
+            />
+          )}
         />
       </>
     );
@@ -33,7 +45,6 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Route exact path="/onboarding" component={OnboardingView} />
         <Switch>
           {routes}
           <Redirect to="/" exact />
@@ -53,8 +64,16 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     authenticated:
-      state.auth.user.token !== null && state.auth.user.token !== undefined
+      state.auth.user.token !== null && state.auth.user.token !== undefined,
+    userType: state.auth.user.type
   };
 };
 
-export default withRouter(connect(mapStateToProps)(App));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    {
+      setUserType
+    }
+  )(App)
+);
