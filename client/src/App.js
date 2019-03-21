@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import axios from './axios-instance';
 
 import RegisterView from './views/AuthenticationView/RegisterView'
 import "./App.css";
@@ -39,6 +40,13 @@ class App extends Component {
         </Switch>
       </div>
     );
+  }
+  componentDidMount() {
+    axios.get('').then(result => {
+      console.log(result.data)
+    }).catch(err => {
+      console.error(err)
+    })
   }
 }
 
