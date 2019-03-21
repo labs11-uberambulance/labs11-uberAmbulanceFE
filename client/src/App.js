@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
-// import RegisterView from './views/AuthenticationView/RegisterView'
+import RegisterView from './views/AuthenticationView/RegisterView'
 import "./App.css";
 
 import OnboardingView from "./views/OnboardingView/OnboardingView";
@@ -11,7 +11,7 @@ class App extends Component {
   render() {
     let routes = (
       <>
-        {/* <Route path="/" exact component={RegisterView} /> */}
+        <Route path="/" exact component={RegisterView} />
         <Route
           path="/something-else"
           render={() => <div>This is unprotected</div>}
@@ -32,7 +32,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Route exact path="/" component={OnboardingView} />
+        <Route exact path="/onboarding" component={OnboardingView} />
         <Switch>
           {routes}
           <Redirect to="/" exact />
