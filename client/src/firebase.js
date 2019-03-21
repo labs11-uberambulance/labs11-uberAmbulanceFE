@@ -1,6 +1,5 @@
-import firebase from 'firebase'
-console.log('apiKey', process.env.REACT_APP_apiKey)
-console.log('senderId', process.env.REACT_APP_messagingSenderId)
+import firebase from 'firebase/app'
+import "firebase/auth"
 const config = {
     apiKey: process.env.REACT_APP_apiKey,
     authDomain: "birth-ride.firebaseapp.com",
