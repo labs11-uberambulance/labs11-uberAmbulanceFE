@@ -20,15 +20,7 @@ class App extends Component {
           path="/something-else"
           render={() => <div>This is unprotected</div>}
         />
-        <Route
-          path="/onboarding"
-          render={() => (
-            <OnboardingView
-              userType={this.props.userType}
-              setUserType={this.props.setUserType}
-            />
-          )}
-        />
+        <Route path="/onboarding" component={OnboardingView} />
       </>
     );
     if (this.props.authenticated) {
@@ -64,16 +56,11 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     authenticated:
-      state.auth.user.token !== null && state.auth.user.token !== undefined,
-    userType: state.auth.user.type
+      state.auth.user.token !== null && state.auth.user.token !== undefined
   };
 };
 
 export default withRouter(
   connect(
-    mapStateToProps,
-    {
-      setUserType
-    }
-  )(App)
+    mapStateToProps)(App)
 );
