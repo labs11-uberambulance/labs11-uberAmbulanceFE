@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import { setUserType } from "./store/actions/userActions.js";
 
+import AuthenticationView from "./views/AuthenticationView/AuthenticationView";
 import "./App.css";
 
 import OnboardingView from "./views/OnboardingView/OnboardingView";
@@ -12,7 +13,7 @@ class App extends Component {
   render() {
     let routes = (
       <>
-        <Route path="/" exact render={() => <div>This is unprotected</div>} />
+        <Route path="/" exact component={AuthenticationView} />
         <Route
           path="/something-else"
           render={() => <div>This is unprotected</div>}
@@ -42,7 +43,6 @@ class App extends Component {
 
     return (
       <div className="App">
-        Client
         <Switch>
           {routes}
           <Redirect to="/" exact />
