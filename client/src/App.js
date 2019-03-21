@@ -3,13 +3,11 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import axios from './axios-instance';
 
-import { setUserType } from "./store/actions/userActions.js";
-
 import RegisterView from "./views/AuthenticationView/RegisterView";
+import OnboardingView from "./views/OnboardingView/OnboardingView";
 
 import "./App.css";
 
-import OnboardingView from "./views/OnboardingView/OnboardingView";
 
 class App extends Component {
   render() {
