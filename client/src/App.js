@@ -4,8 +4,7 @@ import { connect } from "react-redux";
 
 import { setUserType } from "./store/actions/userActions.js";
 
-import AuthenticationView from "./views/AuthenticationView/AuthenticationView";
-import RegisterView from './views/AuthenticationView/RegisterView'
+import RegisterView from "./views/AuthenticationView/RegisterView";
 
 import "./App.css";
 
