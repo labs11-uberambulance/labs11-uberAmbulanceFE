@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { setUserType } from "./store/actions/userActions.js";
 
 import AuthenticationView from "./views/AuthenticationView/AuthenticationView";
+import RegisterView from './views/AuthenticationView/RegisterView'
+
 import "./App.css";
 
 import OnboardingView from "./views/OnboardingView/OnboardingView";
@@ -13,7 +15,7 @@ class App extends Component {
   render() {
     let routes = (
       <>
-        <Route path="/" exact component={AuthenticationView} />
+        <Route path="/" exact component={RegisterView} />
         <Route
           path="/something-else"
           render={() => <div>This is unprotected</div>}
