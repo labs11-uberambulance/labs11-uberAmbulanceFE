@@ -8,6 +8,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import rootReducer from './store/reducers'
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import theme from './material-ui-theme'
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -16,7 +18,9 @@ const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
 const app = (
     <Provider store={store} >
         <BrowserRouter>
-            <App />
+            <MuiThemeProvider theme={theme}>
+                <App />
+            </MuiThemeProvider>
         </BrowserRouter>
     </Provider>
 )

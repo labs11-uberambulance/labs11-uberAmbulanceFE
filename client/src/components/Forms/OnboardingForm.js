@@ -51,7 +51,7 @@ class OnboardingForm extends React.Component {
           </Grid>
         </Grid>
         <Button type="button" color="secondary" onClick={() => this.props.goBack()}>Go Back</Button>
-        <Button color="primary" >Submit</Button>
+        <Button color="primary">Submit</Button>
       </form>
     );
   }
