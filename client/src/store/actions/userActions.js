@@ -5,6 +5,5 @@ export const userActionsTypes = {
 };
 
 export const registerUser = userData => dispatch => {
-  dispatch({ type: userActionsTypes.SET_USER_TYPE_SUCCESS, payload: userType });
-  console.log(`user type set to ${userType}`);
+  console.log(`registerUser action`);
 };
