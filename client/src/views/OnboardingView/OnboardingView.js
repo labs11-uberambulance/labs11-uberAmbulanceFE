@@ -20,6 +20,7 @@ class OnboardingView extends Component {
     if (!this.state.userType) {
       return <OnboardingSelector setUserType={this.setUserTypeHandler} />;
     }
+    console.log(this.state.userType)
     return (
       <OnboardingForm
         userType={this.state.userType}
