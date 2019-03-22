@@ -1,11 +1,14 @@
-import axios from 'axios';
+import axios from "axios";
 
-// const instance = axios.create({
-//     baseURL:'http://localhost:4200'
-// })
+const apiURL = process.env.REACT_APP_BIRTHRIDE_API_URL;
 
 const instance = axios.create({
-    baseURL:'https://birthrider-backend.herokuapp.com/'
+  baseURL: apiURL
+});
+
+instance.interceptors.request.use(function(options) {
+  options.headers.authorization = "token";
+  return options;
 });
 
 export default instance;

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import axios from './axios-instance';
+import axios from "./axios-instance";
 
 import RegisterView from "./views/AuthenticationView/RegisterView";
 import OnboardingView from "./views/OnboardingView/OnboardingView";
@@ -43,11 +43,14 @@ class App extends Component {
     );
   }
   componentDidMount() {
-    axios.get('').then(result => {
-      console.log(result.data)
-    }).catch(err => {
-      console.error(err)
-    })
+    axios
+      .get("")
+      .then(result => {
+        console.log("axios get test: ", result.data);
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 }
 
@@ -58,7 +61,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default withRouter(
-  connect(
-    mapStateToProps)(App)
-);
+export default withRouter(connect(mapStateToProps)(App));
