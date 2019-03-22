@@ -1,8 +1,9 @@
 import React from "react";
 import { withRouter } from "react-router";
+import axios from "../../axios-instance";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button"
+import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
@@ -229,17 +230,30 @@ class OnboardingForm extends React.Component {
 
   handleRegister = e => {
     e.preventDefault();
-    console.log("register");
+    const userData = {
+      name: this.state.nameInput,
+      login: this.state.emailInput,
+      google_id: "google_id_here",
+      phone: this.state.phoneNumberInput,
+      user_type: "mothers"
+    };
+    console.log("reg userData: ", userData);
+    axios
+      .post("/api/users", userData)
+      .then(res => {
+        console.log("successful api post");
+      })
+      .catch(err => console.log(err));
   };
 
   render() {
     return (
       <>
-        <form onsubmit={this.handleRegister}>
+        <form onSubmit={this.handleRegister}>
           {this.props.userType}
           <Grid
             container
-            spacing="32"
+            spacing={32}
             direction="row"
             justify="center"
             alignItems="center"
@@ -380,7 +394,16 @@ class OnboardingForm extends React.Component {
               </Grid>
             </Grid>
           </Grid>
-          <Button type="button" color="secondary" onClick={() => this.props.goBack()}>Go Back</Button>
+          <Button type="submit" value="Register" color="primary">
+            Register
+          </Button>
+          <Button
+            type="button"
+            color="secondary"
+            onClick={() => this.props.goBack()}
+          >
+            Go Back
+          </Button>
         </form>
       </>
     );
