@@ -1,15 +1,28 @@
 import { userActionsTypes } from "../actions/userActions";
 
 const initialState = {
-  userType: ""
+  isRegisteringUser: false,
+  user: [],
+  userActionError: ""
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case userActionsTypes.SET_USER_TYPE_SUCCESS:
+    case userActionsTypes.REGISTER_USER_START:
       return {
         ...state,
-        userType: action.payload
+        isRegisteringUser: true,
+        userActionError: ""
+      };
+    case userActionsTypes.REGISTER_USER_SUCCESS:
+      return {
+        ...state,
+        user: action.payload
+      };
+    case userActionsTypes.REGISTER_USER_FAIL:
+      return {
+        ...state,
+        userActionError: action.payload
       };
     default:
       return state;

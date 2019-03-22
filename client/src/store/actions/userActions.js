@@ -1,10 +1,28 @@
+import axios from "../../axios-instance";
+
 export const userActionsTypes = {
-  SET_USER_TYPE_STARTING: "SET_USER_TYPE_STARTING",
-  SET_USER_TYPE_SUCCESS: "SET_USER_TYPE_SUCCESS",
-  SET_USER_TYPE_FAIL: "SET_USER_TYPE_FAIL"
+  REGISTER_USER_START: "REGISTER_USER_START",
+  REGISTER_USER_SUCCESS: "REGISTER_USER_SUCCESS",
+  REGISTER_USER_FAIL: "REGISTER_USER_FAIL"
 };
 
-export const setUserType = userType => dispatch => {
-  dispatch({ type: userActionsTypes.SET_USER_TYPE_SUCCESS, payload: userType });
-  console.log(`user type set to ${userType}`);
+export const registerUser = userData => dispatch => {
+  console.log(`registerUser action, userData: ${userData}`);
+  dispatch({ type: userActionsTypes.REGISTER_USER_START });
+  axios
+    .post("/api/users", userData)
+    .then(res => {
+      console.log("successful api post, res.body: ", res.body);
+      dispatch({
+        type: userActionsTypes.REGISTER_USER_SUCCESS,
+        payload: res.body
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: userActionsTypes.REGISTER_USER_FAIL,
+        payload: err
+      });
+    });
 };
