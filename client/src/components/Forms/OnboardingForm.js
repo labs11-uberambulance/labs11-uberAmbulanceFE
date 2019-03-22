@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "../../axios-instance";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -8,23 +7,20 @@ import { fetchOnboardingForm } from "./FormsTemplate";
 class OnboardingForm extends React.Component {
   handleRegister = e => {
     e.preventDefault();
+    const form = this.state.controls;
     const userData = {
-      name: this.state.nameInput,
-      login: this.state.emailInput,
-      google_id: "google_id_here",
-      phone: this.state.phoneNumberInput,
+      name: form.name.elementAttri.value,
+      login: form.email.elementAttri.value,
+      google_id: form.email.elementAttri.value,
+      phone: form.phoneNumber.elementAttri.value,
       user_type: "mothers"
     };
-    console.log("reg userData: ", userData);
-    axios
-      .post("/api/users", userData)
-      .then(res => {
-        console.log("successful api post");
-      })
-      .catch(err => console.log(err));
+    console.log("handleRegister");
+    this.props.registerUser(userData);
   };
 
   render() {
+    // console.log("controls: ", this.state.controls);
     const formElementsArray = [];
     for (let key in this.state.controls) {
       formElementsArray.push({
@@ -46,10 +42,10 @@ class OnboardingForm extends React.Component {
       inputs.length - 1
     );
     return (
-      <form onsubmit={this.handleRegister}>
+      <form onSubmit={this.handleRegister}>
         <Grid
           container
-          spacing="32"
+          spacing={32}
           direction="row"
           justify="center"
           alignItems="center"
@@ -82,7 +78,9 @@ class OnboardingForm extends React.Component {
         >
           Go Back
         </Button>
-        <Button color="primary">Submit</Button>
+        <Button type="submit" color="primary">
+          Submit
+        </Button>
       </form>
     );
   }
