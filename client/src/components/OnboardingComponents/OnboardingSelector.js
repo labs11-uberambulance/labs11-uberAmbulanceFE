@@ -1,45 +1,32 @@
 import React from "react";
-import { withRouter } from "react-router";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+// import OnBoardingForm from '../OnboardingComponents/'
 
-class OnboardingSelector extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const onboardingSelector = (props) => (
+  <Grid container direction="column">
+    <Button
+      value="DRIVER"
+      onClick={() => props.setUserType("driver")}
+      color="primary"
+    >
+      DRIVER
+    </Button>
+    <Button
+      value="PREGNANT MOTHER"
+      onClick={() => props.setUserType("mother")}
+      color="primary"
+    >
+      PREGNANT MOTHER
+    </Button>
+    <Button
+      value="CAREGIVER"
+      onClick={() => props.setUserType("caregiver")}
+      color="primary"
+    >
+      CAREGIVER
+    </Button>
+  </Grid>
+);
 
-  handleSetUserType(userType) {
-    this.props.setUserType(userType);
-    this.props.history.push(`/onboarding/${userType}`);
-  }
-
-  render() {
-    return (
-      <Grid container direction="column">
-        <Button
-          value="DRIVER"
-          onClick={() => this.handleSetUserType("driver")}
-          color="primary"
-        >
-          DRIVER
-        </Button>
-        <Button
-          value="PREGNANT MOTHER"
-          onClick={() => this.handleSetUserType("mother")}
-          color="primary"
-        >
-          PREGNANT MOTHER
-        </Button>
-        <Button
-          value="CAREGIVER"
-          onClick={() => this.handleSetUserType("caregiver")}
-          color="primary"
-        >
-          CAREGIVER
-        </Button>
-      </Grid>
-    );
-  }
-}
-
-export default withRouter(OnboardingSelector);
+export default onboardingSelector;

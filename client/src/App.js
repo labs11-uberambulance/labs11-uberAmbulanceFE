@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-
-import { setUserType } from "./store/actions/userActions.js";
+import axios from './axios-instance';
 
 import RegisterView from "./views/AuthenticationView/RegisterView";
+import OnboardingView from "./views/OnboardingView/OnboardingView";
 
 import "./App.css";
 
-import OnboardingView from "./views/OnboardingView/OnboardingView";
 
 class App extends Component {
   render() {
@@ -19,15 +18,7 @@ class App extends Component {
           path="/something-else"
           render={() => <div>This is unprotected</div>}
         />
-        <Route
-          path="/onboarding"
-          render={() => (
-            <OnboardingView
-              userType={this.props.userType}
-              setUserType={this.props.setUserType}
-            />
-          )}
-        />
+        <Route path="/onboarding" component={OnboardingView} />
       </>
     );
     if (this.props.authenticated) {
@@ -51,21 +42,23 @@ class App extends Component {
       </div>
     );
   }
+  componentDidMount() {
+    axios.get('').then(result => {
+      console.log(result.data)
+    }).catch(err => {
+      console.error(err)
+    })
+  }
 }
 
 const mapStateToProps = state => {
   return {
     authenticated:
-      state.auth.user.token !== null && state.auth.user.token !== undefined,
-    userType: state.auth.user.type
+      state.auth.user.token !== null && state.auth.user.token !== undefined
   };
 };
 
 export default withRouter(
   connect(
-    mapStateToProps,
-    {
-      setUserType
-    }
-  )(App)
+    mapStateToProps)(App)
 );
