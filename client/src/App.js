@@ -8,7 +8,6 @@ import OnboardingView from "./views/OnboardingView/OnboardingView";
 
 import "./App.css";
 
-
 class App extends Component {
   render() {
     let routes = (
@@ -46,7 +45,7 @@ class App extends Component {
     axios
       .get("")
       .then(result => {
-        console.log("axios get test: ", result.data);
+        // console.log("axios get test: ", result.data);
       })
       .catch(err => {
         console.error(err);
