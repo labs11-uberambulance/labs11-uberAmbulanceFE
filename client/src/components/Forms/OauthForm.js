@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
 import firebase, { auth, googleProvider } from '../../firebase';
+import actions from '../../store/actions'
 
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -14,8 +16,9 @@ class OauthForm extends Component {
   initOauthWithGoogle = () => {
     this.setState({ usingPhone: false, phoneNumber: ''})
       auth.signInWithPopup(googleProvider).then((result) => {
-          const user = result.user;
-          console.log(user)
+          const { uid, email, photoURL } = result.user
+          const registerUser = { firebaseId: uid, email, photoURL }
+          this.props.onRegisterUser(registerUser)
         });
   }
 
@@ -30,7 +33,9 @@ class OauthForm extends Component {
   onSubmitCodeForConfirmation = (e) => {
     e.preventDefault()
     this.state.confirmationFunc.confirm(this.state.inputCode).then(result => {
-      console.log(result)
+      const { uid, phoneNumber } = result.user
+      const registerUser = { firebaseId: uid, phoneNumber }
+      this.props.onRegisterUser(registerUser)
     })
   }
 
@@ -94,4 +99,19 @@ class OauthForm extends Component {
   }
 }
 
-export default OauthForm
+const mapStateToProps = state => {
+  return {
+    loading: state.auth.loading,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onRegisterUser: (user) => dispatch(actions.auth.initOauth(user))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(OauthForm);
+
+
+

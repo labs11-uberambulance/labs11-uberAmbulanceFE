@@ -50,17 +50,17 @@ export const fetchOnboardingForm = (filter) => {
     user.forEach(input => {
       filteredInputs[input] = onboardingForm[input]
     })
-    if (filter === 'mother') {
+    if (filter === 'mothers') {
       mother.forEach(input => {
         filteredInputs[input] = onboardingForm[input]
       })
     }
-    if (filter === 'driver') {
+    if (filter === 'drivers') {
       driver.forEach(input => {
         filteredInputs[input] = onboardingForm[input]
       })
     }
-    if (filter === 'caregiver') {
+    if (filter === 'caregivers') {
       caregiver.forEach(input => {
         filteredInputs[input] = onboardingForm[input]
       })
