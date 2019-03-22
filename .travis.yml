@@ -1,8 +1,9 @@
 git:
   quiet: true
-# branches:
-#   only:
-#     - master
+branches:
+  only:
+    - master
+    - kenneth-johnson
 language: node_js
 node_js:
   - "10"
