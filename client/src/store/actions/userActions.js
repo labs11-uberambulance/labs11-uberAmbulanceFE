@@ -15,7 +15,7 @@ export const registerUser = userData => dispatch => {
       console.log("successful api post, res.body: ", res.body);
       dispatch({
         type: userActionsTypes.REGISTER_USER_SUCCESS,
-        payload: res.body
+        payload: userData
       });
     })
     .catch(err => {
