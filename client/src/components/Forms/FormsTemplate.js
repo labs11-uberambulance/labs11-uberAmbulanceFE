@@ -40,7 +40,7 @@ const onboardingForm = {
             elementAttri: { type: 'text', placeholder: 'Mother', label: 'Mother', value:'' },
           },
   }
-const user = ["name", "email", "addressDescription", "addressNearestTown", "phoneNumber"]
+const user = ["name", "email", "addressNearestTown", "addressDescription", "phoneNumber"]
 const mother = ["dueDate", "careGiver", "photo"]
 const driver = ["rate"]
 const caregiver = ["mother"]
