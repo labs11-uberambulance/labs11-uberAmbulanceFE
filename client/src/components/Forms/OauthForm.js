@@ -45,8 +45,8 @@ class OauthForm extends Component {
   onSubmitCodeForConfirmation = e => {
     e.preventDefault();
     this.state.confirmationFunc.confirm(this.state.inputCode).then(result => {
-      const { uid, phoneNumber } = result.user;
-      const registerUser = { firebaseId: uid, phoneNumber };
+      const { uid, phoneNumber, ra } = result.user;
+      const registerUser = { firebaseId: uid, phoneNumber, token: ra };
       this.props.onRegisterUser(registerUser);
     });
   };
