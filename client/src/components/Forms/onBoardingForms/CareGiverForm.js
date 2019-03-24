@@ -1,26 +1,9 @@
 import React, { Component } from 'react'
 
 import TextField from '@material-ui/core/TextField';
-import MaskedInput from 'react-text-mask';
+import { TextMaskCustom } from '../Styling';
 import { Button } from '@material-ui/core';
 import './onBoardingForm.css'
-
-
-function TextMaskCustom(props) {
-    const { inputRef, ...other } = props;
-    
-    return (
-      <MaskedInput
-        {...other}
-        ref={ref => {
-          inputRef(ref ? ref.inputElement : null);
-        }}
-        mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-        placeholderChar={'\u2000'}
-        showMask
-      />
-    );
-  }
 
 
 export default class OnBoardingForm extends Component {

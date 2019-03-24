@@ -7,9 +7,10 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Input from '@material-ui/core/Input';
 import Modal from '@material-ui/core/Modal';
+import TextField from '@material-ui/core/TextField';
 import gIcon from '../../assests/images/btn_google_light_normal_ios.svg';
-import { modalCode } from './Styling';
-
+import { modalCode, normalizePhone } from './Styling';
+import { TextMaskCustom } from './Styling';
 
 class OauthForm extends Component {
 
@@ -25,7 +26,11 @@ class OauthForm extends Component {
   initOauthWithPhone = (e) => {
     e.preventDefault()
     const appVerifier = window.recaptchaVerifier;
-    auth.signInWithPhoneNumber(this.state.phoneNumber, appVerifier).then(confirmationResult => {
+    const firebaseNumber = normalizePhone(`+1${this.state.phoneNumber}`);
+    if (!firebaseNumber) {
+      this.setState({ phoneNumber: '', errorMessage: 'invalid phone number pattern' })
+    }
+    auth.signInWithPhoneNumber(firebaseNumber, appVerifier).then(confirmationResult => {
       this.setState({ confirmationFunc: confirmationResult, verifyCode: true })
     })
   }
@@ -50,11 +55,12 @@ class OauthForm extends Component {
             {!this.state.usingPhone && <Button onClick={() => {this.setState(prevState => ({ usingPhone: !prevState.usingPhone }))}} type="button"> 
                 Sign in with Phone
             </Button>}
-            {this.state.usingPhone && 
-            <Input
+            {this.state.usingPhone && <TextField
+              required
               value={this.state.phoneNumber}
-              onBlur={() => {this.setState(prevState => ({ usingPhone: !prevState.usingPhone }))}}
+              InputProps={{placeholder:'(  )    -    ', inputComponent:TextMaskCustom}}
               name="phoneNumber"
+              onBlur={() => {this.setState(prevState => ({ usingPhone: !prevState.usingPhone }))}}
               onChange={this.inputChangeHandler}
             />}
         </form>
@@ -65,7 +71,7 @@ class OauthForm extends Component {
             <Input value={this.state.inputCode} name="inputCode" onChange={this.inputChangeHandler} />
             <br />
             <br />
-            <Button type="button" color="secondary" onClick={() => {this.setState({confirmationFunc: null, verifyCode: false})}}>Cancel</Button>
+            <Button type="button" color="secondary" onClick={() => {this.setState({ confirmationFunc: null, verifyCode: false, inputCode: '' })}}>Cancel</Button>
           </form>
         </Modal>}
         <div id="sign-captcha"></div>
@@ -77,22 +83,15 @@ class OauthForm extends Component {
     phoneNumber: '',
     confirmationFunc: null,
     verifyCode: false,
-    inputCode: ''
+    inputCode: '',
+    errorMessage: null
   }
   inputChangeHandler = (e) => {
-    // const pattern = /^[0-9]*$/;
     const { name, value } = e.target;
-    // if (!pattern.test(value)) return;
     this.setState({[name]: value})
   }
   componentDidMount = () => {
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-captcha', {
-      'size': 'invisible',
-      'callback': function(response) {
-        // reCAPTCHA solved, allow signInWithPhoneNumber.
-        console.log(response)
-      }
-    });
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-captcha', {'size': 'invisible',});
   }
   componentWillUnmount = () => {
     window.recaptchaVerifier = null;
