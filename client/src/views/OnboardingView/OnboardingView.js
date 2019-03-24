@@ -4,7 +4,9 @@ import { connect } from "react-redux";
 import { registerUser } from "../../store/actions/userActions";
 
 import OnboardingSelector from "../../components/OnboardingComponents/OnboardingSelector.js";
-import OnboardingForm from "../../components/Forms/OnboardingForm.js";
+import MotherForm from '../../components/Forms/onBoardingForms/MotherForm';
+import DriverForm from '../../components/Forms/onBoardingForms/DriverForm';
+import CareGiversForm from '../../components/Forms/onBoardingForms/CareGiverForm';
 
 class OnboardingView extends Component {
   state = {
@@ -20,14 +22,16 @@ class OnboardingView extends Component {
     if (!this.state.userType) {
       return <OnboardingSelector setUserType={this.setUserTypeHandler} />;
     }
-    console.log(this.state.userType)
-    return (
-      <OnboardingForm
-        userType={this.state.userType}
-        goBack={this.returnToSelectorHandler}
-        registerUser={this.props.registerUser}
-      />
-    );
+    if (this.state.userType === 'mothers') {
+      return <MotherForm />
+    }
+    if (this.state.userType === 'drivers') {
+      return <DriverForm />
+    }
+    if (this.state.userType === 'caregivers') {
+      return <CareGiversForm />
+    }
+    return <p>Some thing went wrong...</p>
   }
 }
 
