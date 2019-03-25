@@ -27,10 +27,13 @@ export default class OnBoardingForm extends Component {
     }
     onPressEnterHandler = (e, nextInp) => {
         if (e.key === 'Enter') {
+            e.preventDefault()
+            e.stopPropagation()
             this.scrollToNextInputHandler(nextInp)
         }
     }
-    submitForm = () => {
+    submitForm = (e) => {
+        e.preventDefault();
         const formValues = {
             type: 'mothers',
             name: this.nameInp.current.value,
@@ -51,10 +54,11 @@ export default class OnBoardingForm extends Component {
     }
   render() {
     return (
-      <div>
+      <form onSubmit={this.submitForm} onKeyDown={this.stopSubmissionViaEnter}>
         <div className="inputHolder">
             <TextField
                 autoFocus
+                inputProps={{pattern: "[a-zA-Z- ]+"}}
                 label="Full Name"
                 required
                 inputRef={this.nameInp}
@@ -66,6 +70,7 @@ export default class OnBoardingForm extends Component {
         <div className="inputHolder" >
             <TextField
                 label="Email"
+                type='email'
                 fullWidth
                 inputRef={this.emailInp}
                 onKeyPress={(e) => this.onPressEnterHandler(e, this.phoneInp)}
@@ -113,9 +118,9 @@ export default class OnBoardingForm extends Component {
                 fullWidth
                 inputRef={this.dueDateInp}
             />
-            <Button type="button" color="secondary" onClick={this.submitForm}>Submit</Button>
+            <Button type="submit" color="secondary">Submit</Button>
         </div>
-      </div>
+      </form>
     )
   }
 }
