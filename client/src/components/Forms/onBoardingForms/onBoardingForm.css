@@ -1,0 +1,10 @@
+.inputHolder {
+    height: 20vh;
+    padding-top: 2rem;
+    padding: 20rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    z-index: 2;
+    background-color: white;
+}
