@@ -13,9 +13,9 @@ class OnboardingForm extends React.Component {
       login: form.email.elementAttri.value,
       google_id: form.email.elementAttri.value,
       phone: form.phoneNumber.elementAttri.value,
-      user_type: "mothers"
+      user_type: this.props.userType
     };
-    console.log("handleRegister");
+    // console.log("handleRegister");
     this.props.registerUser(userData);
   };
 

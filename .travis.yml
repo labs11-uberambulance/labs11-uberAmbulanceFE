@@ -1,0 +1,29 @@
+git:
+  quiet: true
+branches:
+  only:
+    - master
+    - kenneth-johnson
+language: node_js
+node_js:
+  - "10"
+dist: trusty
+cache:
+  directories:
+    - client/node_modules
+install:
+  - cd client/
+  - npm install
+  - npm run ci-build
+script:
+  - nohup npm run start &
+  - sleep 3
+  # - npm run test #when we add test uncomment
+notifications:
+  email:
+    on_failure: change
+  # slack: #If we want notifications on slack
+  #   rooms:
+  #     - <account>:<token>#labs11_uber-travis-builds
+  #   on_failure: change
+  #   on_pull_requests: false

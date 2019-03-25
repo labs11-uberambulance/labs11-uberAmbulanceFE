@@ -20,7 +20,7 @@ const onboardingSelector = props => (
     </Button>
     <Button
       value="CAREGIVER"
-      onClick={() => props.setUserType("caregivers")}
+      onClick={() => props.setUserType("mothers")}
       color="primary"
     >
       CAREGIVER

@@ -7,15 +7,15 @@ export const userActionsTypes = {
 };
 
 export const registerUser = userData => dispatch => {
-  console.log(`registerUser action, userData: ${userData}`);
+  // console.log(`registerUser action, userData: ${userData}`);
   dispatch({ type: userActionsTypes.REGISTER_USER_START });
   axios
     .post("/api/users", userData)
     .then(res => {
-      console.log("successful api post, res.body: ", res.body);
+      // console.log("successful api post, res.body: ", res.body);
       dispatch({
         type: userActionsTypes.REGISTER_USER_SUCCESS,
-        payload: res.body
+        payload: userData
       });
     })
     .catch(err => {

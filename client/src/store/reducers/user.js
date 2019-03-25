@@ -2,7 +2,7 @@ import { userActionsTypes } from "../actions/userActions";
 
 const initialState = {
   isRegisteringUser: false,
-  user: [],
+  user: {},
   userActionError: ""
 };
 
