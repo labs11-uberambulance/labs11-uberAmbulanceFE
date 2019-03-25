@@ -54,7 +54,7 @@ export default class OnBoardingForm extends Component {
     }
   render() {
     return (
-      <form onSubmit={this.submitForm} onKeyDown={this.stopSubmissionViaEnter}>
+      <form onSubmit={this.submitForm}>
         <div className="inputHolder">
             <TextField
                 autoFocus
