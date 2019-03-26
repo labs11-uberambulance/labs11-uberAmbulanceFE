@@ -32,6 +32,7 @@ export function TextMaskCustom(props) {
       <MaskedInput {...other} placeholderChar={'\u2000'}
         ref={ref => {inputRef(ref ? ref.inputElement : null)}}
         mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+        pattern="^\([1-9][0-9]{2}\)\s[0-9]{3}-[0-9]{4}$"
       />
     );
   }
