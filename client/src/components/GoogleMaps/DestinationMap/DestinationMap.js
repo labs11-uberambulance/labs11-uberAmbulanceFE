@@ -26,7 +26,7 @@ class DestinationMap extends Component {
                     onChange={(e) => this.setState({ search: e.target.value })}
                     fullWidth
                 />
-                { places < this.state.palces && <Button type="button" onClick={() => this.setState({ markersSelected: [] })}>Show All</Button> }
+                { places < this.state.places && <Button type="button" onClick={() => this.setState({ markersSelected: [] })}>Show All</Button> }
             </div>
             <div id="map"></div>
         </div>
