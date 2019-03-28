@@ -1,5 +1,7 @@
 import firebase from 'firebase/app'
 import "firebase/auth"
+import "firebase/storage"
+
 const config = {
     apiKey: process.env.REACT_APP_apiKey,
     authDomain: "birth-ride.firebaseapp.com",

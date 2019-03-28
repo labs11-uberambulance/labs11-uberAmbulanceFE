@@ -19,3 +19,14 @@ export const initOauth = (user) => dispatch => {
         })
     })
 }
+
+
+export const autoSignIn = (user) => dispatch => {
+    dispatch({ type: authTypes.OAUTH_SUCCESS, payload: user })
+}
+
+
+
+export const logout = () => {
+    
+}
