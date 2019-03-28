@@ -15,11 +15,7 @@ import { TextMaskCustom } from "./Styling";
 class OauthForm extends Component {
   initOauthWithGoogle = () => {
     this.setState({ usingPhone: false, phoneNumber: "" });
-    auth.signInWithPopup(googleProvider).then(result => {
-      const { uid, email, photoURL, ra } = result.user;
-      const registerUser = { firebaseId: uid, email, photoURL, fireBtoken: ra };
-      this.props.onRegisterUser({ registerUser });
-    });
+    auth.signInWithPopup(googleProvider).catch(err => console.error(err));
   };
 
   initOauthWithPhone = e => {
@@ -44,11 +40,9 @@ class OauthForm extends Component {
 
   onSubmitCodeForConfirmation = e => {
     e.preventDefault();
-    this.state.confirmationFunc.confirm(this.state.inputCode).then(result => {
-      const { uid, phoneNumber, ra } = result.user;
-      const registerUser = { firebaseId: uid, phoneNumber, fireBtoken: ra };
-      this.props.onRegisterUser({ registerUser });
-    });
+    this.state.confirmationFunc
+      .confirm(this.state.inputCode)
+      .catch(err => console.error(err));
   };
 
   render() {

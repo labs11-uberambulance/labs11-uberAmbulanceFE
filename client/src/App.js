@@ -13,27 +13,26 @@ import Logout from "./views/AuthenticationView/Logout";
 class App extends Component {
   render() {
     let routes = (
-      <>
+      <Switch>
         <Route path="/" exact component={RegisterView} />
-        <Route
-          path="/something-else"
-          render={() => <div>This is unprotected</div>}
-        />
         <Route path="/logout" component={Logout} />
-        <Route path="/onboarding" component={OnboardingView} />
-      </>
+        <Redirect to="/" />
+      </Switch>
     );
     if (this.props.authenticated) {
-      console.log("You are Authenticated!");
-      // routes = (
-      //   <>
-      //     <Route path="/" exact render={() => <div>This is protected</div>} />
-      //     <Route
-      //       path="/something-else"
-      //       render={() => <div>This is protected</div>}
-      //     />
-      //   </>
-      // );
+      console.log("You are Authenticated!", this.props.user.user.user_type);
+      routes = (
+        <Switch>
+          {!this.props.user.user.user_type && (
+            <Redirect from="/" exact to="/onboarding" />
+          )}
+          {this.props.user.user.user_type && (
+            <Redirect from="/" exact to="/onboarding" />
+          )}
+          {/* <Redirect to="/" /> */}
+          <Route path="/onboarding" component={OnboardingView} />
+        </Switch>
+      );
     }
 
     return (
@@ -46,15 +45,13 @@ class App extends Component {
         >
           Logout
         </button>
-        <Switch>
-          {routes}
-          <Redirect to="/" exact />
-        </Switch>
+        {routes}
       </div>
     );
   }
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
+      console.log("HERE");
       if (user) {
         const { uid, ra } = user;
         if (user.email) {
@@ -79,7 +76,8 @@ const mapStateToProps = state => {
   return {
     authenticated:
       state.auth.user.fireBtoken !== null &&
-      state.auth.user.fireBtoken !== undefined
+      state.auth.user.fireBtoken !== undefined,
+    user: state.auth.user
   };
 };
 
