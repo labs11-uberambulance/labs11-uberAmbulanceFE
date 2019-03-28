@@ -1,0 +1,19 @@
+#map {
+    height: 360px;
+    width: 550px;
+    margin: 0 auto;
+    border-radius: 12px;
+    box-shadow: 13px 4px 38px -6px rgba(0,0,0,0.75);
+  }
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .google-search-container {
+    display: flex;
+    width: 550px;
+    padding: 0 20px;
+    justify-content: center;
+    margin: 20px auto;
+}
