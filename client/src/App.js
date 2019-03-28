@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import firebase from './firebase';
-import actions from './store/actions';
+import firebase from "./firebase";
+import actions from "./store/actions";
 
 import RegisterView from "./views/AuthenticationView/RegisterView";
 import OnboardingView from "./views/OnboardingView/OnboardingView";
@@ -24,7 +24,7 @@ class App extends Component {
       </>
     );
     if (this.props.authenticated) {
-      console.log('You are Authenticated!')
+      console.log("You are Authenticated!");
       // routes = (
       //   <>
       //     <Route path="/" exact render={() => <div>This is protected</div>} />
@@ -38,7 +38,14 @@ class App extends Component {
 
     return (
       <div className="App">
-        <button type="button" onClick={() => {this.props.history.push('/logout')}}>Logout</button>
+        <button
+          type="button"
+          onClick={() => {
+            this.props.history.push("/logout");
+          }}
+        >
+          Logout
+        </button>
         <Switch>
           {routes}
           <Redirect to="/" exact />
@@ -52,28 +59,39 @@ class App extends Component {
         const { uid, ra } = user;
         if (user.email) {
           const { email } = user;
-          this.props.onAutoSignIn({ fireBId: uid, email, fireBtoken: ra })
+          this.props.onAutoSignIn({ fireBId: uid, email, fireBtoken: ra });
         } else {
           const { phoneNumber } = user;
-          this.props.onAutoSignIn({ fireBId: uid, phoneNumber, fireBtoken: ra })
+          this.props.onAutoSignIn({
+            fireBId: uid,
+            phoneNumber,
+            fireBtoken: ra
+          });
         }
       } else {
-        console.log('Not Authenticated')
+        console.log("Not Authenticated");
       }
-    })
+    });
   }
 }
 
 const mapStateToProps = state => {
   return {
-    authenticated: state.auth.user.fireBtoken !== null && state.auth.user.fireBtoken !== undefined,
+    authenticated:
+      state.auth.user.fireBtoken !== null &&
+      state.auth.user.fireBtoken !== undefined
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAutoSignIn: (user) => dispatch(actions.auth.autoSignIn(user)) 
-  }
-}
+    onAutoSignIn: user => dispatch(actions.auth.initOauth(user))
+  };
+};
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App)
+);
