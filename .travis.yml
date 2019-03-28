@@ -3,7 +3,7 @@ git:
 branches:
   only:
     - master
-    - kenneth-johnson
+    # - kenneth-johnson
 language: node_js
 node_js:
   - "10"
