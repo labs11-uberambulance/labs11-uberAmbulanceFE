@@ -57,7 +57,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     onSubmitForm: (user, formValues) =>
-      dispatch(actions.onbrd.initOnbrd(user, formValues))
+      dispatch(actions.auth.initOnbrd(user, formValues))
   };
 };
 

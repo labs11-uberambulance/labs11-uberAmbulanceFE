@@ -11,7 +11,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case authTypes.AUTH_STARTING:
+    case authTypes.OAUTH_STARTING:
       return state;
 
     case authTypes.OAUTH_SUCCESS:
@@ -24,6 +24,21 @@ export default (state = initialState, action) => {
 
     case authTypes.OAUTH_LOGOUT:
       return initialState;
+
+    case authTypes.ONBRD_STARTING:
+      console.log("onboard start reducer");
+      return state;
+
+    case authTypes.ONBRD_SUCCESS:
+      console.log("onboard success reducer");
+      return {
+        ...state,
+        ...action.payload
+      };
+
+    case authTypes.ONBRD_FAIL:
+      console.log("onboard fail reducer");
+      return state;
 
     default:
       return state;
