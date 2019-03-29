@@ -3,21 +3,32 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import firebase from "./firebase";
 import actions from "./store/actions";
-
+import axios from './axios-instance';
 import RegisterView from "./views/AuthenticationView/RegisterView";
 import OnboardingView from "./views/OnboardingView/OnboardingView";
 import DriversView from "./views/DriversView/DriversView";
 import MothersView from "./views/MothersView/MothersView";
+import DestinationMap from './components/GoogleMaps/DestinationMap/DestinationMap';
+import OriginMap from './components/GoogleMaps/OriginMap/OriginMap';
 
 import "./App.css";
 import Logout from "./views/AuthenticationView/Logout";
 
 class App extends Component {
+
+  setTwilio = () => {
+    axios.get('/api/twilio/text-me')
+  }
   render() {
     let routes = (
       <Switch>
         <Route path="/" exact component={RegisterView} />
         <Route path="/logout" component={Logout} />
+        <Route path="/onboarding" component={OnboardingView} />
+        <Route path="/drivers" component={DriversView} />
+        <Route path="/mothers" component={MothersView} />
+        <Route path="/destination" component={DestinationMap} />
+        <Route path="/location" component={OriginMap} />
         <Redirect to="/" />
       </Switch>
     );
@@ -33,6 +44,8 @@ class App extends Component {
           <Route path="/onboarding" component={OnboardingView} />
           <Route path="/drivers" component={DriversView} />
           <Route path="/mothers" component={MothersView} />
+          <Route path="/destination" component={DestinationMap} />
+          <Route path="/location" component={OriginMap} />
           <Redirect to="/" />
         </Switch>
       );
@@ -49,6 +62,7 @@ class App extends Component {
           Logout
         </button>
         {routes}
+        <button onClick={this.setTwilio}>Get Twilio Updates</button>
       </div>
     );
   }
