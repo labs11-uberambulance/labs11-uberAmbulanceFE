@@ -6,6 +6,7 @@ import actions from './store/actions';
 
 import RegisterView from "./views/AuthenticationView/RegisterView";
 import OnboardingView from "./views/OnboardingView/OnboardingView";
+import OriginMap from './components/GoogleMaps/OriginMap/OriginMap';
 
 import "./App.css";
 import Logout from "./views/AuthenticationView/Logout";
@@ -43,6 +44,7 @@ class App extends Component {
           {routes}
           <Redirect to="/" exact />
         </Switch>
+        <OriginMap />
       </div>
     );
   }
