@@ -14,9 +14,12 @@ export const initOauth = user => dispatch => {
     .then(result => {
       // GET to /api/user will check for user, create if not found.
       // returns found/created user data
+      console.log("result: ", result);
       const payload = {
         ...user,
-        ...result.data
+        ...result.data.user,
+        ...result.data.motherData,
+        ...result.data.driverData
       };
       dispatch({
         type: authTypes.OAUTH_SUCCESS,
@@ -87,32 +90,33 @@ export const initOnbrd = (user, formValues) => dispatch => {
   // token should be set at this point by initOauth
   console.log("POST data: ", typeData);
   axios
-    .post(`/api/users/onboard/${user.user.id}`, typeData)
+    .post(`/api/users/onboard/${user.id}`, typeData)
     .then(res => {
-      // POST to /api/users/onboard/id will create a mother/driver record (based on user.user.type) with form values
+      // POST to /api/users/onboard/id will create a mother/driver record (based on user.type) with form values
       // update the user record once it's done:
       console.log("PUT data: ", userData);
       axios
-        .put(`/api/users/update/${user.user.id}`, userData)
+        .put(`/api/users/update/${user.id}`, userData)
         .then(res => {
           console.log(`success updating user record: ${res.body}`);
           let payload = {
             user: {
               ...user,
-              ...userData.user
+              ...userData.user,
+              ...typeData
             }
           };
-          if (typeData.user_type === "mother") {
-            payload = {
-              ...payload,
-              user: {
-                ...payload.user,
-                motherData: {
-                  ...typeData.motherData
-                }
-              }
-            };
-          }
+          // if (typeData.user_type === "mother") {
+          //   payload = {
+          //     ...payload,
+          //     user: {
+          //       ...payload.user,
+          //       motherData: {
+          //         ...typeData.motherData
+          //       }
+          //     }
+          //   };
+          // }
           dispatch({
             type: authTypes.ONBRD_SUCCESS,
             payload: payload

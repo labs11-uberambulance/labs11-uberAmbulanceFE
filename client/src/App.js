@@ -22,7 +22,7 @@ class App extends Component {
       </Switch>
     );
     if (this.props.authenticated) {
-      const userType = this.props.user.user.user_type;
+      const userType = this.props.user.user_type;
       console.log("You are Authenticated! user_type: ", userType);
       routes = (
         <Switch>
