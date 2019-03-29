@@ -14,7 +14,6 @@ export const initOauth = user => dispatch => {
     .then(result => {
       // GET to /api/user will check for user, create if not found.
       // returns found/created user data
-      // console.log(result.data);
       const payload = {
         ...user,
         ...result.data
@@ -32,4 +31,6 @@ export const initOauth = user => dispatch => {
     });
 };
 
-export const logout = () => {};
+export const logout = dispatch => {
+  dispatch({ type: authTypes.OAUTH_LOGOUT });
+};

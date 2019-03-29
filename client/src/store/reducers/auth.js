@@ -22,6 +22,9 @@ export default (state = initialState, action) => {
         }
       };
 
+    case authTypes.OAUTH_LOGOUT:
+      return initialState;
+
     default:
       return state;
   }

@@ -54,7 +54,7 @@ class App extends Component {
   }
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
-      console.log("CDM App.js");
+      console.log("CDM App.js", user);
       if (user) {
         const { uid, ra } = user;
         if (user.email) {
@@ -69,6 +69,7 @@ class App extends Component {
           });
         }
       } else {
+        // this.props.onLogout();
         console.log("Not Authenticated");
       }
     });
@@ -86,7 +87,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAutoSignIn: user => dispatch(actions.auth.initOauth(user))
+    onAutoSignIn: user => dispatch(actions.auth.initOauth(user)),
+    onLogout: () => dispatch(actions.auth.logout)
   };
 };
 
