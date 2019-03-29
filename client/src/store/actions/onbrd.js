@@ -21,16 +21,21 @@ export const initOnbrd = (user, formValues) => dispatch => {
   // first update user record:
   // map formValues to api format:
   const userData = {
-    name,
-    phone,
-    user_type: type,
-    address: description,
-    village: town,
-    email
+    user: {
+      name,
+      phone,
+      user_type: type,
+      address: description,
+      village: town,
+      email
+    }
   };
+  console.log("PUT data: ", userData);
   axios
     .put(`/api/users/update/${user.user.id}`, userData)
-    .then(console.log("success updating user record."))
+    .then(res => {
+      console.log(`success updating user record: ${res.body}`);
+    })
     .catch(err => {
       console.log("error updating user record: ", err);
       dispatch({
@@ -42,9 +47,11 @@ export const initOnbrd = (user, formValues) => dispatch => {
   let typeData;
   if (formValues.type === "mothers") {
     typeData = {
-      user_type: "mothers",
-      due_date: dueDate,
-      hospital
+      user_type: "mother",
+      motherData: {
+        due_date: dueDate,
+        hospital
+      }
     };
   } else if (formValues.type === "drivers") {
     console.log("create driver record");
@@ -57,6 +64,7 @@ export const initOnbrd = (user, formValues) => dispatch => {
     });
   }
   // token should be set at this point by initOauth
+  console.log("POST data: ", typeData);
   axios
     .post(`/api/users/onboard/${user.user.id}`, typeData)
     .then(result => {
