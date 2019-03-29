@@ -7,7 +7,7 @@ export const initOauth = user => dispatch => {
     type: authTypes.OAUTH_STARTING
   });
   // now that we have a token, set headers for all future axios requests
-  console.log("initOauth", user.fireBtoken);
+  // console.log("initOauth", user.fireBtoken);
   axios.defaults.headers.common["Authorization"] = user.fireBtoken;
   axios
     .get("/api/users/")

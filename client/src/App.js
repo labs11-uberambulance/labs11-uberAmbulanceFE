@@ -23,7 +23,7 @@ class App extends Component {
     );
     if (this.props.authenticated) {
       const userType = this.props.user.user.user_type;
-      console.log("You are Authenticated!", userType);
+      console.log("You are Authenticated! user_type: ", userType);
       routes = (
         <Switch>
           <Route path="/logout" component={Logout} />
