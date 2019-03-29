@@ -6,6 +6,8 @@ import actions from "./store/actions";
 
 import RegisterView from "./views/AuthenticationView/RegisterView";
 import OnboardingView from "./views/OnboardingView/OnboardingView";
+import DriversView from "./views/DriversView/DriversView";
+import MothersView from "./views/MothersView/MothersView";
 
 import "./App.css";
 import Logout from "./views/AuthenticationView/Logout";
@@ -20,17 +22,18 @@ class App extends Component {
       </Switch>
     );
     if (this.props.authenticated) {
-      console.log("You are Authenticated!", this.props.user.user.user_type);
+      const userType = this.props.user.user.user_type;
+      console.log("You are Authenticated!", userType);
       routes = (
         <Switch>
-          {!this.props.user.user.user_type && (
-            <Redirect from="/" exact to="/onboarding" />
-          )}
-          {this.props.user.user.user_type && (
-            <Redirect from="/" exact to="/onboarding" />
-          )}
-          {/* <Redirect to="/" /> */}
+          <Route path="/logout" component={Logout} />
+          {!userType && <Redirect from="/" exact to="/onboarding" />}
+          {userType === "drivers" && <Redirect from="/" exact to="/drivers" />}
+          {userType === "mothers" && <Redirect from="/" exact to="/mothers" />}
           <Route path="/onboarding" component={OnboardingView} />
+          <Route path="/drivers" component={DriversView} />
+          <Route path="/mothers" component={MothersView} />
+          <Redirect to="/" />
         </Switch>
       );
     }
@@ -51,7 +54,7 @@ class App extends Component {
   }
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
-      console.log("HERE");
+      console.log("CDM App.js");
       if (user) {
         const { uid, ra } = user;
         if (user.email) {
