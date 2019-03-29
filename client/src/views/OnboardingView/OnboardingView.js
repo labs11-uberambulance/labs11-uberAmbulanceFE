@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import actions from "../../store/actions";
 
 import OnboardingSelector from "../../components/OnboardingComponents/OnboardingSelector.js";
 import MotherForm from "../../components/Forms/onBoardingForms/MotherForm";
@@ -21,24 +22,46 @@ class OnboardingView extends Component {
       return <OnboardingSelector setUserType={this.setUserTypeHandler} />;
     }
     if (this.state.userType === "mothers") {
-      return <MotherForm />;
+      return (
+        <MotherForm
+          user={this.props.user}
+          onSubmitForm={this.props.onSubmitForm}
+        />
+      );
     }
     if (this.state.userType === "drivers") {
-      return <DriverForm />;
+      return (
+        <DriverForm
+          user={this.props.user}
+          onSubmitForm={this.props.onSubmitForm}
+        />
+      );
     }
     if (this.state.userType === "caregivers") {
-      return <CareGiversForm />;
+      return (
+        <CareGiversForm
+          user={this.props.user}
+          onSubmitForm={this.props.onSubmitForm}
+        />
+      );
     }
     return <p>Some thing went wrong...</p>;
   }
 }
 
 const mapStateToProps = state => ({
-  user: state.user,
-  isRegisteringUser: state.isRegisteringUser
+  user: state.auth.user,
+  isRegisteringUser: state.isRegisteringUser // delete this?
 });
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onSubmitForm: (user, formValues) =>
+      dispatch(actions.onbrd.initOnbrd(user, formValues))
+  };
+};
 
 export default connect(
   mapStateToProps,
-  {}
+  mapDispatchToProps
 )(OnboardingView);
