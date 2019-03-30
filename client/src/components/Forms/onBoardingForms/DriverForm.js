@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import firebase from "../../../firebase";
-import { connect } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import { TextMaskCustom } from "../Styling";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { Button } from "@material-ui/core";
 import "./onBoardingForm.css";
 
-class OnBoardingForm extends Component {
+export default class OnBoardingForm extends Component {
   constructor(props) {
     super(props);
     this.nameInp = React.createRef();
@@ -37,7 +36,9 @@ class OnBoardingForm extends Component {
     const image = this.state.file;
     const storageRef = firebase
       .storage()
-      .ref(`profile_images/${this.props.id}@${new Date().toISOString()}`);
+      .ref(
+        `profile_images/${this.props.user.fireBId}@${new Date().toISOString()}`
+      );
     const uploadTask = storageRef.put(image, { contentType: image.type });
     return uploadTask.on(
       "state_changed",
@@ -56,10 +57,10 @@ class OnBoardingForm extends Component {
             email: this.emailInp.current.value,
             imageURL: downloadURL,
             address: this.addressInp.current.value,
-            rate: this.rateInp.current.value
+            rate: this.rateForScroll.current.value
           };
           console.log(formValues);
-          // this.props.onSubmitForm()
+          // this.props.onSubmitForm(this.props.user, formValues)
         });
       }
     );
@@ -187,21 +188,3 @@ class OnBoardingForm extends Component {
     });
   };
 }
-
-const mapStateToProps = state => {
-  return {
-    token: state.auth.user.fireBtoken,
-    id: state.auth.user.fireBId
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onSubmitForm: onBoardingData => dispatch()
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(OnBoardingForm);
