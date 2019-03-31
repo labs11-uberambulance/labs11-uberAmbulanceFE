@@ -52,7 +52,11 @@ export const initOnbrd = (user, formValues) => dispatch => {
     town,
     email,
     dueDate,
-    hospital
+    hospital,
+    // driver specific
+    imageURL,
+    address,
+    rate
   } = formValues;
   // a user record was created automatically with first login but has no user info besides firebase ID.
   // the api checks if user type is set and will not allow creating a user type record if it is. Therefore, create the user type record before updating user record.
@@ -78,6 +82,14 @@ export const initOnbrd = (user, formValues) => dispatch => {
     };
   } else if (formValues.type === "drivers") {
     console.log("create driver record");
+    typeData = {
+      user_type: "driver",
+      driverData: {
+        price: rate,
+        active: false, // initialize at false
+        photo_url: imageURL
+      }
+    };
   } else if (formValues.type === "caregivers") {
     console.log("create mother record with caregiver info");
   } else {

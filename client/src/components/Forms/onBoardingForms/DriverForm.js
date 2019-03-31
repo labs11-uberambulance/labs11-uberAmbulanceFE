@@ -60,7 +60,7 @@ export default class OnBoardingForm extends Component {
             rate: this.rateForScroll.current.value
           };
           console.log(formValues);
-          // this.props.onSubmitForm(this.props.user, formValues)
+          this.props.onSubmitForm(this.props.user, formValues);
         });
       }
     );
