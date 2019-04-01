@@ -124,11 +124,12 @@ export const initOnbrd = (user, formValues) => dispatch => {
           console.log(`success updating user record: ${res.body}`);
           let payload = {
             user: {
+              ...typeData,
               ...user,
-              ...userData.user,
-              ...typeData
+              ...userData.user
             }
           };
+          console.log("payload: ", payload);
           dispatch({
             type: authTypes.ONBRD_SUCCESS,
             payload: payload
