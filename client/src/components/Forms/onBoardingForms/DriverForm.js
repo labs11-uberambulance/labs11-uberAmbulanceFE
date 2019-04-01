@@ -23,12 +23,12 @@ export default class OnBoardingForm extends Component {
 
   scrollToNextInputHandler = nextInp => {
     nextInp.current.focus({ preventScroll: true });
-    nextInp.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    // nextInp.current.scrollIntoView({ behavior: "smooth", block: "center" });
   };
   onPressEnterHandler = (e, nextInp) => {
     if (e.key === "Enter") {
       nextInp.current.focus({ preventScroll: true });
-      nextInp.current.scrollIntoView({ behavior: "smooth", block: "center" });
+      // nextInp.current.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   };
 
