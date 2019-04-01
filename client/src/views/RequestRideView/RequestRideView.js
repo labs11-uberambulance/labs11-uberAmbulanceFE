@@ -10,3 +10,4 @@ export default class RequestRideView extends Component {
     )
   }
 }
+
