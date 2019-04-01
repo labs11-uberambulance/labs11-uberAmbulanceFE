@@ -1,10 +1,12 @@
 import {rideTypes} from '../actions/actionTypes'
 
+//lat: 1.079695, lng: 33.366965
 const initialState = {
     drivers: {},
     rides: {},
     loading: false,
-    error: null
+    error: null,
+    driverCount: 0,
 }
 
 export default (state = initialState, action) => {

@@ -56,32 +56,30 @@ const styles = theme => ({
   },
 });
 
-const steps = ['Request a Ride', 'Set Pickup and Drop off', 'Waiting', 'Select Driver', 'Waiting', 'Completed'];
+const steps = ['Request a Ride', 'Set Pickup and Drop off', 'Waiting', 'Select Driver', 'Completed'];
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <RequestButtons />;
-    case 1:
-      return <DestinationOptions />;
-    case 2:
-      return <Waiting/>;
-    case 3:
-      return <SelectDriver />;
-    case 4:
-      return <Waiting />;
-    case 5:
-      return <Completed />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
+
 
 class Checkout extends React.Component {
   state = {
     activeStep: 0,
   };
-
+   getStepContent = (step)=> {
+    switch (step) {
+      case 0:
+        return <RequestButtons handleNext={this.handleNext}/>;
+      case 1:
+        return <DestinationOptions />;
+      case 2:
+        return <Waiting/>;
+      case 3:
+        return <SelectDriver />;
+      case 4:
+        return <Completed />;
+      default:
+        throw new Error('Unknown step');
+    }
+  }
   handleNext = () => {
     this.setState(state => ({
       activeStep: state.activeStep + 1,
@@ -139,7 +137,7 @@ class Checkout extends React.Component {
                 </>
               ) : (
                 <>
-                  {getStepContent(activeStep)}
+                  {this.getStepContent(activeStep)}
                   <div className={classes.buttons}>
                     {activeStep !== 0 && (
                       <Button onClick={this.handleBack} className={classes.button}>

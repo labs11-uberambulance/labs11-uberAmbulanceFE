@@ -6,8 +6,8 @@ import {getDrivers} from '../../../store/actions/rides'
 function requestButtons(props) {
   return (
     <div>
-      <Button onClick={e=>props.getDrivers({lat: 1.079695, lng: 33.366965})}>Request A Ride</Button>
-      <Button onClick={e=>console.log('Find Nearest Driver')}>Find nearest Driver</Button>
+      <Button onClick={e=>props.handleNext()}>Request Ride</Button>
+      <Button onClick={e=>props.handleNext()}>Search Drivers</Button>
     </div>
   )
 }
