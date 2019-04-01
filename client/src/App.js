@@ -8,6 +8,7 @@ import RegisterView from "./views/AuthenticationView/RegisterView";
 import OnboardingView from "./views/OnboardingView/OnboardingView";
 import DriversView from "./views/DriversView/DriversView";
 import MothersView from "./views/MothersView/MothersView";
+import RequestRideView from "./views/RequestRideView/RequestRideView";
 import DestinationMap from "./components/GoogleMaps/DestinationMap/DestinationMap";
 import OriginMap from "./components/GoogleMaps/OriginMap/OriginMap";
 
@@ -28,6 +29,7 @@ class App extends Component {
         <Route path="/mothers" component={MothersView} />
         <Route path="/destination" component={DestinationMap} />
         <Route path="/location" component={OriginMap} />
+        <Route path="/newride" component={RequestRideView} />
         <Redirect to="/" />
       </Switch>
     );
@@ -51,6 +53,7 @@ class App extends Component {
           <Route path="/mothers" component={MothersView} />
           <Route path="/destination" component={DestinationMap} />
           <Route path="/location" component={OriginMap} />
+          <Route path="/newride" component={RequestRideView} />
           <Redirect to="/" />
         </Switch>
       );
