@@ -56,7 +56,9 @@ export const initOnbrd = (user, formValues) => dispatch => {
     // driver specific
     imageURL,
     address,
-    rate
+    rate,
+    // caregiver specific:
+    caregiverName
   } = formValues;
   // a user record was created automatically with first login but has no user info besides firebase ID.
   // the api checks if user type is set and will not allow creating a user type record if it is. Therefore, create the user type record before updating user record.
@@ -66,7 +68,7 @@ export const initOnbrd = (user, formValues) => dispatch => {
       name,
       phone,
       user_type: type,
-      address: description,
+      address: description ? description : address,
       village: town,
       email
     }
@@ -81,7 +83,7 @@ export const initOnbrd = (user, formValues) => dispatch => {
       }
     };
   } else if (formValues.type === "drivers") {
-    console.log("create driver record");
+    // console.log("create driver record");
     typeData = {
       user_type: "driver",
       driverData: {
@@ -91,7 +93,16 @@ export const initOnbrd = (user, formValues) => dispatch => {
       }
     };
   } else if (formValues.type === "caregivers") {
-    console.log("create mother record with caregiver info");
+    // console.log("create mother record with caregiver info");
+    userData.user.user_type = "mothers";
+    typeData = {
+      user_type: "mother",
+      motherData: {
+        caretaker_name: caregiverName,
+        due_date: dueDate,
+        hospital
+      }
+    };
   } else {
     dispatch({
       type: authTypes.ONBRD_FAIL,
@@ -118,17 +129,6 @@ export const initOnbrd = (user, formValues) => dispatch => {
               ...typeData
             }
           };
-          // if (typeData.user_type === "mother") {
-          //   payload = {
-          //     ...payload,
-          //     user: {
-          //       ...payload.user,
-          //       motherData: {
-          //         ...typeData.motherData
-          //       }
-          //     }
-          //   };
-          // }
           dispatch({
             type: authTypes.ONBRD_SUCCESS,
             payload: payload
