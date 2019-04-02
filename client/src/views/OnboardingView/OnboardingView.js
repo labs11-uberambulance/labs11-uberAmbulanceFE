@@ -14,6 +14,7 @@ import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 
 import OnboardingSelector from "../../components/OnboardingComponents/OnboardingSelector.js";
+import OnboardingSetLocation from "../../components/OnboardingComponents/OnboardingSetLocation";
 import MotherForm from "../../components/Forms/onBoardingForms/MotherForm";
 import DriverForm from "../../components/Forms/onBoardingForms/DriverForm";
 import CareGiversForm from "../../components/Forms/onBoardingForms/CareGiverForm";
@@ -21,6 +22,7 @@ import OnboardingConfirm from "../../components/OnboardingComponents/OnboardingC
 
 const steps = [
   "Select User Type",
+  "Select Your Location",
   "Enter Information",
   "Confirm Your Information"
 ];
@@ -44,6 +46,8 @@ function getStepContent(
         />
       );
     case 1:
+      return <OnboardingSetLocation />;
+    case 2:
       if (userType === "mothers") {
         return (
           <MotherForm
@@ -72,7 +76,7 @@ function getStepContent(
         );
       }
       break;
-    case 2:
+    case 3:
       return <OnboardingConfirm formValues={formValues} />;
     default:
       throw new Error("Unknown step in OnboardingView");
