@@ -44,8 +44,7 @@ export default class OnBoardingForm extends Component {
       phone: this.phoneInp.current.value,
       town: this.townInp.current.value,
       description: this.descInp.current.value,
-      dueDate: this.dueDateInp.current.value,
-      hospital: "will come from map" // TODO
+      dueDate: this.dueDateInp.current.value
     };
     // console.log("mother form values: ", formValues);
     this.props.storeFormValues(formValues);
