@@ -38,7 +38,7 @@ export const initGoogleScript = (options)  => {
     if (!window.google) {
         window.initMap = initMap(options)
         const googleAPI = document.createElement('script');
-        googleAPI.id = "google.api";
+        googleAPI.id = "google-api";
         googleAPI.async = true;
         googleAPI.defer = true;
         googleAPI.src = process.env.REACT_APP_googleApiKey;
@@ -83,7 +83,12 @@ export const destroyGoogleScript = () => {
     const googleAPI = document.getElementById("google-api");
     googleAPI.parentNode.removeChild(googleAPI);
     window.google = null;
-    // might need to handle header <script> cleanup if react-router-dom doesn't rewrite header
+    let scripts = Array.from(document.getElementsByTagName("script"));
+    scripts.forEach(script => {
+      if (script.src.match(/maps\.googleapis/)) {
+          script.parentNode.removeChild(script);
+      }
+  })
 }
 // MAP CUSTOME STYLING EXAMPLE
 const styles = [
