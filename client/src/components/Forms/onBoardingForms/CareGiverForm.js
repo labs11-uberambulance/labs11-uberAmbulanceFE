@@ -43,7 +43,7 @@ export default class OnBoardingForm extends Component {
       hospital: "will come from map" // TODO
     };
     console.log(formValues);
-    this.props.onSubmitForm(this.props.user, formValues);
+    this.props.onSubmitForm(formValues);
   };
   render() {
     return (

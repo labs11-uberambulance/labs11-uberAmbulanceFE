@@ -51,7 +51,7 @@ export default class OnBoardingForm extends Component {
     this.dueDateHolder.current.value = "";
     this.dueDateInp.current.value = "";
     console.log("mother form values: ", formValues);
-    this.props.onSubmitForm(this.props.user, formValues);
+    this.props.onSubmitForm(formValues);
   };
   render() {
     return (

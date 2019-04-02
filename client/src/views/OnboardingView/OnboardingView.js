@@ -4,9 +4,9 @@ import actions from "../../store/actions";
 
 // MUI components for stepper
 // https://github.com/mui-org/material-ui/blob/master/docs/src/pages/getting-started/page-layout-examples/checkout/Checkout.js
-import AppBar from "@material-ui/core/AppBar";
+// import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
-import Toolbar from "@material-ui/core/Toolbar";
+// import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import Stepper from "@material-ui/core/Stepper";
@@ -52,6 +52,7 @@ function getStepContent(
       if (userType === "caregivers") {
         return <CareGiversForm user={user} onSubmitForm={handleNext} />;
       }
+      break;
     case 2:
       return <OnboardingConfirm formValues={formValues} />;
     default:
@@ -66,7 +67,7 @@ class OnboardingView extends Component {
     formValues: { name: "" }
   };
 
-  handleNext = (user, formValues) => {
+  handleNext = formValues => {
     console.log("handleNext: ", formValues);
     console.log("this.state.formvalues", this.state.formValues);
     this.setState(state => ({
@@ -77,6 +78,10 @@ class OnboardingView extends Component {
         ...state,
         formValues
       }));
+  };
+
+  handleSubmit = () => {
+    this.props.onSubmitForm(this.props.user, this.state.formValues);
   };
 
   handleBack = () => {
@@ -105,17 +110,17 @@ class OnboardingView extends Component {
 
     return (
       <>
-        <AppBar position="absolute" color="default">
+        {/* <AppBar position="absolute" color="default">
           <Toolbar>
             <Typography variant="h6" color="inherit" noWrap>
               Welcome to Birthride!
             </Typography>
           </Toolbar>
-        </AppBar>
+        </AppBar> */}
         <main>
           <Paper>
             <Typography component="h1" variant="h4" align="center">
-              Checkout
+              Register
             </Typography>
             <Stepper activeStep={activeStep}>
               {steps.map(label => (
@@ -150,13 +155,23 @@ class OnboardingView extends Component {
                     {activeStep !== 0 && (
                       <Button onClick={this.handleBack}>Back</Button>
                     )}
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={this.handleNext}
-                    >
-                      {activeStep === steps.length - 1 ? "Confirm" : "Next"}
-                    </Button>
+                    {activeStep === steps.length - 1 ? (
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={this.handleSubmit}
+                      >
+                        Confirm
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={this.handleNext}
+                      >
+                        Next
+                      </Button>
+                    )}
                   </div>
                 </React.Fragment>
               )}
