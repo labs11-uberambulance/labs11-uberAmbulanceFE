@@ -30,6 +30,7 @@ function getStepContent(
   user,
   userType,
   setUserTypeHandler,
+  storeFormValues,
   handleNext,
   formValues
 ) {
@@ -44,7 +45,13 @@ function getStepContent(
       );
     case 1:
       if (userType === "mothers") {
-        return <MotherForm user={user} onSubmitForm={handleNext} />;
+        return (
+          <MotherForm
+            user={user}
+            storeFormValues={storeFormValues}
+            onSubmitForm={handleNext}
+          />
+        );
       }
       if (userType === "drivers") {
         return <DriverForm user={user} onSubmitForm={handleNext} />;
@@ -67,17 +74,20 @@ class OnboardingView extends Component {
     formValues: { name: "" }
   };
 
-  handleNext = formValues => {
-    console.log("handleNext: ", formValues);
-    console.log("this.state.formvalues", this.state.formValues);
-    this.setState(state => ({
-      activeStep: state.activeStep + 1
-    }));
+  storeFormValues = formValues => {
+    // console.log("storeFVs OnbrdView", formValues, this.state.formValues);
     formValues &&
       this.setState(state => ({
         ...state,
         formValues
       }));
+  };
+
+  handleNext = formValues => {
+    console.log("handleNext: ", formValues);
+    this.setState(state => ({
+      activeStep: state.activeStep + 1
+    }));
   };
 
   handleSubmit = () => {
@@ -148,6 +158,7 @@ class OnboardingView extends Component {
                     this.props.user,
                     this.state.userType,
                     this.setUserTypeHandler,
+                    this.storeFormValues,
                     this.handleNext,
                     this.state.formValues
                   )}
