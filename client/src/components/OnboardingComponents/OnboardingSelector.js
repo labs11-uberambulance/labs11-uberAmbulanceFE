@@ -7,21 +7,21 @@ const onboardingSelector = props => (
     <Button
       value="DRIVER"
       onClick={() => props.setUserType("drivers")}
-      color="primary"
+      color={props.userType === "drivers" ? "secondary" : "primary"}
     >
       DRIVER
     </Button>
     <Button
       value="PREGNANT MOTHER"
       onClick={() => props.setUserType("mothers")}
-      color="primary"
+      color={props.userType === "mothers" ? "secondary" : "primary"}
     >
       PREGNANT MOTHER
     </Button>
     <Button
       value="CAREGIVER"
       onClick={() => props.setUserType("caregivers")}
-      color="primary"
+      color={props.userType === "caregivers" ? "secondary" : "primary"}
     >
       CAREGIVER
     </Button>

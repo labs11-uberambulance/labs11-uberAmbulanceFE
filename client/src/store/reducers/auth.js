@@ -1,10 +1,7 @@
 import { authTypes } from "../actions/actionTypes";
 
 const initialState = {
-  user: {
-    fireBId: null,
-    fireBtoken: null
-  },
+  user: {},
   loading: false,
   error: null
 };

@@ -146,13 +146,5 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onRegisterUser: user => dispatch(actions.auth.initOauth(user))
-  };
-};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(OauthForm);
+export default connect(mapStateToProps)(OauthForm);
