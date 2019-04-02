@@ -25,6 +25,7 @@ class OriginMap extends Component {
             <TextField
                 inputRef={this.userInp}
                 onKeyPress={this.searchForLocationHandler}
+                style={{margin: 1 + 'em'}}
             />
             <div id="map"></div>
           </div>

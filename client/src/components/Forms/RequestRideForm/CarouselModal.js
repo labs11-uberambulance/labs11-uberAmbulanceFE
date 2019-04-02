@@ -2,8 +2,8 @@ import React from 'react';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+// import AppBar from '@material-ui/core/AppBar';
+// import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -11,8 +11,8 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import RequestButtons from './requestButtons.js';
-import DestinationOptions from './DestinationOptions.js';
-import Waiting from './Waiting.js';
+import Dropoff from './DropOff.js';
+import Pickup from './Pickup.js';
 import SelectDriver from './SelectDriver';
 import Completed from './Confirmation.js';
 
@@ -56,22 +56,23 @@ const styles = theme => ({
   },
 });
 
-const steps = ['Request a Ride', 'Set Pickup and Drop off', 'Waiting', 'Select Driver', 'Completed'];
+const steps = ['Request a Ride', 'Set Pickup ', 'Set Dropoff', 'Select Driver', 'Completed'];
 
 
 
 class Checkout extends React.Component {
   state = {
     activeStep: 0,
+
   };
    getStepContent = (step)=> {
     switch (step) {
       case 0:
         return <RequestButtons handleNext={this.handleNext}/>;
       case 1:
-        return <DestinationOptions />;
+        return <Pickup />;
       case 2:
-        return <Waiting/>;
+        return <Dropoff/>;
       case 3:
         return <SelectDriver />;
       case 4:
@@ -128,11 +129,10 @@ class Checkout extends React.Component {
               {activeStep === steps.length ? (
                 <>
                   <Typography variant="h5" gutterBottom>
-                    Thank you for your order.
+                    Thank you for your Requesting a ride! .
                   </Typography>
                   <Typography variant="subtitle1">
-                    Your order number is #2001539. We have emailed your order confirmation, and will
-                    send you an update when your order has shipped.
+                  We'll take the rest from here, please stay close to your phone for updates!
                   </Typography>
                 </>
               ) : (
