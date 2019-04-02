@@ -15,7 +15,6 @@ import StepLabel from "@material-ui/core/StepLabel";
 
 import OnboardingSelector from "../../components/OnboardingComponents/OnboardingSelector.js";
 import OnboardingSetLocation from "../../components/OnboardingComponents/OnboardingSetLocation";
-import OnboardingSetDestination from "../../components/OnboardingComponents/OnboardingSetDestination";
 import MotherForm from "../../components/Forms/onBoardingForms/MotherForm";
 import DriverForm from "../../components/Forms/onBoardingForms/DriverForm";
 import CareGiversForm from "../../components/Forms/onBoardingForms/CareGiverForm";
@@ -27,7 +26,6 @@ class OnboardingView extends Component {
     steps: [
       "Select User Type",
       "Select Your Location",
-      "Select Destination",
       "Enter Information",
       "Confirm Your Information"
     ],
@@ -48,8 +46,6 @@ class OnboardingView extends Component {
       case 1:
         return <OnboardingSetLocation storeLatLng={this.storeLatLng} />;
       case 2:
-        return <OnboardingSetDestination storeDest={this.storeDest} />;
-      case 3:
         if (userType === "mothers") {
           return (
             <MotherForm
@@ -78,7 +74,7 @@ class OnboardingView extends Component {
           );
         }
         break;
-      case 4:
+      case 3:
         return <OnboardingConfirm formValues={this.state.formValues} />;
       default:
         throw new Error("Unknown step in OnboardingView");
@@ -93,16 +89,6 @@ class OnboardingView extends Component {
         ...state.formValues,
         latitude: arrLatLng[0],
         longitude: arrLatLng[1]
-      }
-    }));
-  };
-
-  storeDest = dest => {
-    console.log("Obrd View destination: ", dest);
-    this.setState(state => ({
-      formValues: {
-        ...state.formValues,
-        hospital: dest
       }
     }));
   };
