@@ -1,9 +1,11 @@
 import React from 'react'
+import DestinationMap from '../../GoogleMaps/DestinationMap/DestinationMap'
 
-export default function DestinationOptions() {
+export default function DestinationOptions(props) {
+ 
   return (
     <div>
-      <h2>This will be a map</h2>
+      <DestinationMap setDestination={props.setDestination}/>
     </div>
   )
 }

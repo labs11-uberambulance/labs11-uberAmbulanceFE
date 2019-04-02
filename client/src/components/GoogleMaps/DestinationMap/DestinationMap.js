@@ -5,17 +5,27 @@ import { TextField, Button } from '@material-ui/core';
 import './DestinationMap.css';
 
 class DestinationMap extends Component {
-    state = {
-        places: null,
-        search: '',
-        markersSelected: []
+    constructor(props){
+        super(props)
+        this.state = {
+            places: null,
+            search: '',
+            markersSelected: [],
+            selected: ''
+        }
     }
-
+   
+  
   render() {
-      let { places, markersSelected } = {...this.state};
+      let { places, markersSelected, selected } = {...this.state};
       if (markersSelected.length > 0) {
           places = places.filter(place => markersSelected.includes(place.name))
       }
+      
+      
+    // this.setState({selected: fullPlace})  
+
+
     return (
       <div style={{display: 'flex'}}>
         <div>
@@ -29,9 +39,18 @@ class DestinationMap extends Component {
                 { places < this.state.places && <Button type="button" onClick={() => this.setState({ markersSelected: [] })}>Show All</Button> }
             </div>
             <div id="map"></div>
+            <div>
+            {this.state.selected ? (<>
+            <h2>`You've Selected: {this.state.selected.name}`</h2>
+            <p>Please press this button to Confirm {this.state.selected.name} as your drop off location</p>
+            <Button onClick={e=>this.props.setDestination(this.state.selected)}>Confirm</Button>
+            </>): null}
+            </div>
+            
+            
         </div>
-        {/* uncomment if we want to display a list of places next to map */}
-        {/* { places && <GooglePlacesList places={Array.isArray(places) ? places: [places]} /> } */}
+        {/* uncomment if we want to display a list of places next to map
+        { places && <GooglePlacesList places={Array.isArray(places) ? places: [places]} /> } */}
       </div>
     )
   }
@@ -45,6 +64,9 @@ class DestinationMap extends Component {
             markers.push(name);
             return { markersSelected: markers }
         })
+        this.setState({selected: this.state.places.find(place =>{
+            return place.id === name
+        })})
     }
     componentDidMount() {
         initGoogleScript({

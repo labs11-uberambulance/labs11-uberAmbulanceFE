@@ -61,18 +61,28 @@ const steps = ['Request a Ride', 'Set Pickup ', 'Set Dropoff', 'Select Driver', 
 
 
 class Checkout extends React.Component {
-  state = {
-    activeStep: 0,
-
-  };
+  constructor(props){
+    super(props);
+    this.state ={
+      activeStep: 0,
+      orderRide: false,
+      origin: null,
+      destination: null,
+    }
+  }
    getStepContent = (step)=> {
     switch (step) {
       case 0:
         return <RequestButtons handleNext={this.handleNext}/>;
       case 1:
-        return <Pickup />;
+        return <Pickup 
+        setOrigin={this.setOrigin}
+        handleNext={this.handleNext}
+        />;
       case 2:
-        return <Dropoff/>;
+        return <Dropoff
+        setDestination={this.setDestination}
+        />;
       case 3:
         return <SelectDriver />;
       case 4:
@@ -80,6 +90,17 @@ class Checkout extends React.Component {
       default:
         throw new Error('Unknown step');
     }
+  }
+  setOrigin = incoming => {
+    this.setState({origin: incoming})
+    this.handleNext()
+  }
+  setDestination = incoming => {
+    this.setState({
+      destination: incoming,
+      orderRide: true,
+    })
+    this.handleNext()
   }
   handleNext = () => {
     this.setState(state => ({

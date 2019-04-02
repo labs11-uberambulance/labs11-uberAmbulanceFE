@@ -64,6 +64,7 @@ class App extends Component {
           <Route path="/mothers" component={MothersView} />
           <Route path="/destination" component={DestinationMap} />
           <Route path="/location" component={OriginMap} />
+          <Route path="/newride" component={RequestRideView} />
         </Switch>
       );
     }

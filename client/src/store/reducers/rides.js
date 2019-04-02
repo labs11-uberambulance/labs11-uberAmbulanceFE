@@ -7,6 +7,7 @@ const initialState = {
     loading: false,
     error: null,
     driverCount: 0,
+    currentRide:{}
 }
 
 export default (state = initialState, action) => {
@@ -25,7 +26,26 @@ export default (state = initialState, action) => {
           error: null,
           loading: false
       }
-      case rideTypes.FIND_DRIVERS_SUCCESS:
+      case rideTypes.FIND_DRIVERS_FAIL:
+      return{
+          ...state,
+          error: action.payload,
+          loading: false
+      }
+      case rideTypes.CREATE_RIDE_START:
+      return{
+          ...state,
+          error: null,
+          loading: true
+      }
+      case rideTypes.CREATE_RIDE_SUCCESS:
+      return{
+          ...state,
+          currentRide: action.payload,
+          error: null,
+          loading: false
+      }
+      case rideTypes.CREATE_RIDE_FAIL:
       return{
           ...state,
           error: action.payload,

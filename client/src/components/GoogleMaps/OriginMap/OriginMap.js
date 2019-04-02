@@ -7,6 +7,9 @@ class OriginMap extends Component {
     constructor(props) {
         super(props)
         this.userInp = React.createRef();
+        this.state = {
+            origin: null
+        }
     }
     searchForLocationHandler = (e) => {
         if (e.key === 'Enter') {
@@ -15,7 +18,7 @@ class OriginMap extends Component {
     }
     originDeterminedHandler = () => {
         const originLngLat = fetchMarkerPosition();
-        console.log(originLngLat);
+        this.setState({origin: originLngLat});
     }
 
   render() {
@@ -30,6 +33,8 @@ class OriginMap extends Component {
             <div id="map"></div>
           </div>
           <Button onClick={this.originDeterminedHandler} >Set Location</Button>
+          <h2>{this.state.origin ? `You're pickup location is ${this.state.origin}`: null}</h2>
+          <Button onClick={e=>this.props.setOrigin(this.state.origin)}> Confirm Pickup Location </Button>
       </div>
     )
   }
@@ -40,5 +45,6 @@ class OriginMap extends Component {
       destroyGoogleScript()
   }
 }
+
 
 export default OriginMap;

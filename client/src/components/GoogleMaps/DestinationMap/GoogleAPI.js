@@ -65,7 +65,7 @@ const createAndDisplayMarker = (place, passComponentNameOfMarkerClicked, infoWin
     window.google.maps.event.addListener(marker, 'click', function() {
         infoWindow.setContent(place.name);
         infoWindow.open(map, this);
-        passComponentNameOfMarkerClicked(place.name)
+        passComponentNameOfMarkerClicked(place.id)
     })
     return marker;
 }
