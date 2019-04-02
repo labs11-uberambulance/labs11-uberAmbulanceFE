@@ -32,15 +32,6 @@ export default class OnBoardingForm extends Component {
     }
   };
 
-  // submitForm = async () => {
-  //   await this.uploadImg();
-  //   // const formValues = {
-  //   //   imageURL: downloadURL
-  //   // };
-  //   // this.props.storeFormValues(formValues);
-  //   this.props.onSubmitForm();
-  // };
-
   submitForm = async () => {
     const image = this.state.file;
     const storageRef = firebase
@@ -80,6 +71,7 @@ export default class OnBoardingForm extends Component {
     this.props.storeFormValues(formValues);
     return formValues;
   };
+
   render() {
     return (
       <div>

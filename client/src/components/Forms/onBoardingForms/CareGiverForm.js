@@ -31,6 +31,9 @@ export default class OnBoardingForm extends Component {
     }
   };
   submitForm = () => {
+    this.props.onSubmitForm(this.storeFormValues());
+  };
+  storeFormValues = () => {
     const formValues = {
       type: "caregivers",
       caregiverName: this.caregiverNameInp.current.value,
@@ -42,8 +45,8 @@ export default class OnBoardingForm extends Component {
       dueDate: this.dueDateInp.current.value,
       hospital: "will come from map" // TODO
     };
-    console.log(formValues);
-    this.props.onSubmitForm(formValues);
+    this.props.storeFormValues(formValues);
+    return formValues;
   };
   render() {
     return (
@@ -56,6 +59,7 @@ export default class OnBoardingForm extends Component {
             inputRef={this.caregiverNameInp}
             fullWidth
             onKeyPress={e => this.onPressEnterHandler(e, this.nameInp)}
+            onBlur={this.storeFormValues}
             helperText="Your Full Name"
           />
           <Button
@@ -72,6 +76,7 @@ export default class OnBoardingForm extends Component {
             inputRef={this.nameInp}
             fullWidth
             onKeyPress={e => this.onPressEnterHandler(e, this.emailInp)}
+            onBlur={this.storeFormValues}
             helperText="Mother's Full Name"
           />
           <Button
@@ -87,6 +92,7 @@ export default class OnBoardingForm extends Component {
             fullWidth
             inputRef={this.emailInp}
             onKeyPress={e => this.onPressEnterHandler(e, this.phoneInp)}
+            onBlur={this.storeFormValues}
           />
           <Button
             type="button"
@@ -105,6 +111,7 @@ export default class OnBoardingForm extends Component {
             fullWidth
             inputRef={this.phoneInp}
             onKeyPress={e => this.onPressEnterHandler(e, this.townInp)}
+            onBlur={this.storeFormValues}
             helperText="If you plan to use SMS to request transport this is required."
           />
           <Button
@@ -121,6 +128,7 @@ export default class OnBoardingForm extends Component {
             fullWidth
             inputRef={this.townInp}
             onKeyPress={e => this.onPressEnterHandler(e, this.descInp)}
+            onBlur={this.storeFormValues}
           />
           <Button
             type="button"
@@ -137,6 +145,7 @@ export default class OnBoardingForm extends Component {
             multiline
             rows="4"
             inputRef={this.descInp}
+            onBlur={this.storeFormValues}
           />
           <Button
             type="button"
@@ -152,6 +161,7 @@ export default class OnBoardingForm extends Component {
             InputLabelProps={{ shrink: true }}
             fullWidth
             inputRef={this.dueDateInp}
+            onBlur={this.storeFormValues}
           />
           <Button type="button" color="secondary" onClick={this.submitForm}>
             Submit

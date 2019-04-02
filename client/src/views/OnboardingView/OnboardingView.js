@@ -63,7 +63,13 @@ function getStepContent(
         );
       }
       if (userType === "caregivers") {
-        return <CareGiversForm user={user} onSubmitForm={handleNext} />;
+        return (
+          <CareGiversForm
+            user={user}
+            storeFormValues={storeFormValues}
+            onSubmitForm={handleNext}
+          />
+        );
       }
       break;
     case 2:
