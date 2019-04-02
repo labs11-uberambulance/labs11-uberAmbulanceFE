@@ -19,7 +19,6 @@ import OnNotification from "./components/OnNotification/OnNotification";
 
 class App extends Component {
   setTwilio = () => {
-<<<<<<< HEAD
     axios.get('/api/twilio/text-me')
   }
   requestPushNotificationsPermission = () => {
@@ -32,10 +31,6 @@ class App extends Component {
       return axios.post('/api/users/notifications', {token: false});
     })
   }
-=======
-    axios.get("/api/twilio/text-me");
-  };
->>>>>>> master
   render() {
     let routes = (
       <Switch>
@@ -50,14 +45,8 @@ class App extends Component {
         <Redirect to="/" />
       </Switch>
     );
-<<<<<<< HEAD
     if (this.props.user.ftoken) {
       const userType = this.props.user.user_type;
-=======
-    if (this.props.authenticated) {
-      const userType = this.props.user.user_type;
-      console.log("You are Authenticated! user_type: ", userType);
->>>>>>> master
       routes = (
         <Switch>
           <Route path="/logout" component={Logout} />
@@ -75,11 +64,6 @@ class App extends Component {
           <Route path="/mothers" component={MothersView} />
           <Route path="/destination" component={DestinationMap} />
           <Route path="/location" component={OriginMap} />
-<<<<<<< HEAD
-=======
-          <Route path="/newride" component={RequestRideView} />
-          <Redirect to="/" />
->>>>>>> master
         </Switch>
       );
     }
