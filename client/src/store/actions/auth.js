@@ -52,6 +52,8 @@ export const initOnbrd = (user, formValues) => dispatch => {
     email,
     dueDate,
     hospital,
+    latitude,
+    longitude,
     // driver specific
     imageURL,
     address,
@@ -69,7 +71,9 @@ export const initOnbrd = (user, formValues) => dispatch => {
       user_type: type,
       address: description ? description : address,
       village: town,
-      email
+      email,
+      latitude,
+      longitude
     }
   };
   let typeData;

@@ -1,11 +1,13 @@
 import React from "react";
 import OriginMap from "../../components/GoogleMaps/OriginMap/OriginMap";
-import DestinationMap from "../../components/GoogleMaps/DestinationMap/DestinationMap";
+// import DestinationMap from "../../components/GoogleMaps/DestinationMap/DestinationMap";
 
-function OnboardSetLocation() {
-  console.log("Onboarding Set Location: ");
-
-  return <DestinationMap />;
+function OnboardSetLocation(props) {
+  return (
+    <>
+      <OriginMap storeLatLng={props.storeLatLng} />
+    </>
+  );
 }
 
 export default OnboardSetLocation;

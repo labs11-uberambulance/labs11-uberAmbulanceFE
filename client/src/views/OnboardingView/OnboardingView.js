@@ -44,7 +44,7 @@ class OnboardingView extends Component {
           />
         );
       case 1:
-        return <OnboardingSetLocation />;
+        return <OnboardingSetLocation storeLatLng={this.storeLatLng} />;
       case 2:
         if (userType === "mothers") {
           return (
@@ -81,12 +81,26 @@ class OnboardingView extends Component {
     }
   }
 
+  storeLatLng = originLatLng => {
+    const arrLatLng = originLatLng.split(",");
+    console.log("Obrd View: ", arrLatLng[0], arrLatLng[1]);
+    this.setState(state => ({
+      formValues: {
+        ...state.formValues,
+        latitude: arrLatLng[0],
+        longitude: arrLatLng[1]
+      }
+    }));
+  };
+
   storeFormValues = formValues => {
     console.log("storeFVs OnbrdView", formValues);
     formValues &&
       this.setState(state => ({
-        ...state,
-        formValues
+        formValues: {
+          ...state.formValues,
+          ...formValues
+        }
       }));
   };
 
