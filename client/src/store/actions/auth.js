@@ -9,7 +9,7 @@ export const initOauth = user => dispatch => {
   // now that we have a token, set headers for all future axios requests
   axios.defaults.headers.common["Authorization"] = user.ftoken;
   axios
-    .get(`/api/users/${user.firebase_id}`)
+    .get(`/api/users`)
     .then(result => {
       // GET to /api/user will check for user, create if not found.
       // returns found/created user data
