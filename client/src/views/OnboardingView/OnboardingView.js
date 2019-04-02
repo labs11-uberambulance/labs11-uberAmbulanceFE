@@ -20,77 +20,69 @@ import DriverForm from "../../components/Forms/onBoardingForms/DriverForm";
 import CareGiversForm from "../../components/Forms/onBoardingForms/CareGiverForm";
 import OnboardingConfirm from "../../components/OnboardingComponents/OnboardingConfirm";
 
-const steps = [
-  "Select User Type",
-  "Select Your Location",
-  "Enter Information",
-  "Confirm Your Information"
-];
-
-function getStepContent(
-  step,
-  user,
-  userType,
-  setUserTypeHandler,
-  storeFormValues,
-  handleNext,
-  formValues
-) {
-  // console.log("getStepContent: ", formValues);
-  switch (step) {
-    case 0:
-      return (
-        <OnboardingSelector
-          userType={userType}
-          setUserType={setUserTypeHandler}
-        />
-      );
-    case 1:
-      return <OnboardingSetLocation />;
-    case 2:
-      if (userType === "mothers") {
-        return (
-          <MotherForm
-            user={user}
-            storeFormValues={storeFormValues}
-            onSubmitForm={handleNext}
-          />
-        );
-      }
-      if (userType === "drivers") {
-        return (
-          <DriverForm
-            user={user}
-            storeFormValues={storeFormValues}
-            onSubmitForm={handleNext}
-          />
-        );
-      }
-      if (userType === "caregivers") {
-        return (
-          <CareGiversForm
-            user={user}
-            storeFormValues={storeFormValues}
-            onSubmitForm={handleNext}
-          />
-        );
-      }
-      break;
-    case 3:
-      return <OnboardingConfirm formValues={formValues} />;
-    default:
-      throw new Error("Unknown step in OnboardingView");
-  }
-}
-
 class OnboardingView extends Component {
   state = {
     activeStep: 0,
+    steps: [
+      "Select User Type",
+      "Select Your Location",
+      "Enter Information",
+      "Confirm Your Information"
+    ],
     formValues: { type: "" }
   };
 
+  getStepContent() {
+    const userType = this.state.formValues.type;
+    // console.log("getStepContent: ", formValues);
+    switch (this.state.activeStep) {
+      case 0:
+        return (
+          <OnboardingSelector
+            userType={userType}
+            setUserType={this.setUserTypeHandler}
+          />
+        );
+      case 1:
+        return <OnboardingSetLocation />;
+      case 2:
+        if (userType === "mothers") {
+          return (
+            <MotherForm
+              user={this.props.user}
+              storeFormValues={this.storeFormValues}
+              onSubmitForm={this.handleNext}
+            />
+          );
+        }
+        if (userType === "drivers") {
+          return (
+            <DriverForm
+              user={this.props.user}
+              storeFormValues={this.storeFormValues}
+              onSubmitForm={this.handleNext}
+            />
+          );
+        }
+        if (userType === "caregivers") {
+          return (
+            <CareGiversForm
+              user={this.props.user}
+              storeFormValues={this.storeFormValues}
+              onSubmitForm={this.handleNext}
+            />
+          );
+        }
+        break;
+      case 3:
+        return <OnboardingConfirm formValues={this.state.formValues} />;
+      default:
+        throw new Error("Unknown step in OnboardingView");
+    }
+  }
+
   storeFormValues = formValues => {
-    console.log("storeFVs OnbrdView", formValues, this.state.formValues);
+    console.log("storeFVs OnbrdView", formValues);
     formValues &&
       this.setState(state => ({
         ...state,
@@ -130,8 +122,6 @@ class OnboardingView extends Component {
   };
 
   render() {
-    const { activeStep } = this.state;
-
     return (
       <>
         {/* <AppBar position="absolute" color="default">
@@ -146,15 +136,15 @@ class OnboardingView extends Component {
             <Typography component="h1" variant="h4" align="center">
               Register
             </Typography>
-            <Stepper activeStep={activeStep}>
-              {steps.map(label => (
+            <Stepper activeStep={this.state.activeStep}>
+              {this.state.steps.map(label => (
                 <Step key={label}>
                   <StepLabel>{label}</StepLabel>
                 </Step>
               ))}
             </Stepper>
             <React.Fragment>
-              {activeStep === steps.length ? (
+              {this.state.activeStep === this.state.steps.length ? (
                 <React.Fragment>
                   <Typography variant="h5" gutterBottom>
                     Thank you for your order.
@@ -167,20 +157,12 @@ class OnboardingView extends Component {
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  {getStepContent(
-                    activeStep,
-                    this.props.user,
-                    this.state.formValues.type,
-                    this.setUserTypeHandler,
-                    this.storeFormValues,
-                    this.handleNext,
-                    this.state.formValues
-                  )}
+                  {this.getStepContent()}
                   <div>
-                    {activeStep !== 0 && (
+                    {this.state.activeStep !== 0 && (
                       <Button onClick={this.handleBack}>Back</Button>
                     )}
-                    {activeStep === steps.length - 1 ? (
+                    {this.state.activeStep === this.state.steps.length - 1 ? (
                       <Button
                         variant="contained"
                         color="primary"
