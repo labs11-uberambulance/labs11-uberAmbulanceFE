@@ -17,6 +17,7 @@ import OnboardingSelector from "../../components/OnboardingComponents/Onboarding
 import MotherForm from "../../components/Forms/onBoardingForms/MotherForm";
 import DriverForm from "../../components/Forms/onBoardingForms/DriverForm";
 import CareGiversForm from "../../components/Forms/onBoardingForms/CareGiverForm";
+import OnboardingConfirm from "../../components/OnboardingComponents/OnboardingConfirm";
 
 const steps = [
   "Select User Type",
@@ -24,23 +25,35 @@ const steps = [
   "Confirm Your Information"
 ];
 
-function getStepContent(step, user, userType, handler) {
-  console.log(userType);
+function getStepContent(
+  step,
+  user,
+  userType,
+  setUserTypeHandler,
+  handleNext,
+  formValues
+) {
+  // console.log("getStepContent: ", formValues);
   switch (step) {
     case 0:
-      return <OnboardingSelector userType={userType} setUserType={handler} />;
+      return (
+        <OnboardingSelector
+          userType={userType}
+          setUserType={setUserTypeHandler}
+        />
+      );
     case 1:
       if (userType === "mothers") {
-        return <MotherForm user={userType} onSubmitForm={handler} />;
+        return <MotherForm user={user} onSubmitForm={handleNext} />;
       }
       if (userType === "drivers") {
-        return <DriverForm user={userType} onSubmitForm={handler} />;
+        return <DriverForm user={user} onSubmitForm={handleNext} />;
       }
       if (userType === "caregivers") {
-        return <CareGiversForm user={userType} onSubmitForm={handler} />;
+        return <CareGiversForm user={user} onSubmitForm={handleNext} />;
       }
-    case 3:
-      return;
+    case 2:
+      return <OnboardingConfirm formValues={formValues} />;
     default:
       throw new Error("Unknown step in OnboardingView");
   }
@@ -49,13 +62,21 @@ function getStepContent(step, user, userType, handler) {
 class OnboardingView extends Component {
   state = {
     activeStep: 0,
-    userType: null
+    userType: null,
+    formValues: { name: "" }
   };
 
-  handleNext = () => {
+  handleNext = (user, formValues) => {
+    console.log("handleNext: ", formValues);
+    console.log("this.state.formvalues", this.state.formValues);
     this.setState(state => ({
       activeStep: state.activeStep + 1
     }));
+    formValues &&
+      this.setState(state => ({
+        ...state,
+        formValues
+      }));
   };
 
   handleBack = () => {
@@ -74,9 +95,11 @@ class OnboardingView extends Component {
     // console.log("setting user type: ", type);
     this.setState({ userType: type });
   };
+
   returnToSelectorHandler = () => {
     this.setState({ userType: null });
   };
+
   render() {
     const { activeStep } = this.state;
 
@@ -119,7 +142,9 @@ class OnboardingView extends Component {
                     activeStep,
                     this.props.user,
                     this.state.userType,
-                    this.setUserTypeHandler
+                    this.setUserTypeHandler,
+                    this.handleNext,
+                    this.state.formValues
                   )}
                   <div>
                     {activeStep !== 0 && (

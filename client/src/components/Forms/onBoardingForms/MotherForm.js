@@ -18,11 +18,11 @@ export default class OnBoardingForm extends Component {
   }
 
   scrollToNextInputHandler = nextInp => {
-    // if (nextInp.current.type === "date") {
-    //   nextInp.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    // }
+    if (nextInp.current.type === "date") {
+      nextInp.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
     nextInp.current.focus({ preventScroll: true });
-    // nextInp.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    nextInp.current.scrollIntoView({ behavior: "smooth", block: "center" });
   };
   onPressEnterHandler = (e, nextInp) => {
     if (e.key === "Enter") {
@@ -50,7 +50,7 @@ export default class OnBoardingForm extends Component {
     this.descInp.current.value = "";
     this.dueDateHolder.current.value = "";
     this.dueDateInp.current.value = "";
-    // console.log(formValues)
+    console.log("mother form values: ", formValues);
     this.props.onSubmitForm(this.props.user, formValues);
   };
   render() {
