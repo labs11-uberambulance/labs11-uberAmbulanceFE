@@ -70,8 +70,7 @@ function getStepContent(
 class OnboardingView extends Component {
   state = {
     activeStep: 0,
-    userType: null,
-    formValues: { name: "" }
+    formValues: { type: "" }
   };
 
   storeFormValues = formValues => {
@@ -83,8 +82,7 @@ class OnboardingView extends Component {
       }));
   };
 
-  handleNext = formValues => {
-    console.log("handleNext: ", formValues);
+  handleNext = () => {
     this.setState(state => ({
       activeStep: state.activeStep + 1
     }));
@@ -108,7 +106,7 @@ class OnboardingView extends Component {
 
   setUserTypeHandler = type => {
     // console.log("setting user type: ", type);
-    this.setState({ userType: type });
+    this.setState({ formValues: { type } });
   };
 
   returnToSelectorHandler = () => {
@@ -156,7 +154,7 @@ class OnboardingView extends Component {
                   {getStepContent(
                     activeStep,
                     this.props.user,
-                    this.state.userType,
+                    this.state.formValues.type,
                     this.setUserTypeHandler,
                     this.storeFormValues,
                     this.handleNext,
