@@ -1,14 +1,13 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import { blue, red } from '@material-ui/core/colors';
+import { blue, teal, amber } from '@material-ui/core/colors';
 export default createMuiTheme({
     palette: {
         primary: blue,
-        error: red,
+        secondary: { main: teal['A700'], },
+        error: amber
     },
-    typography: {
-        useNextVariants: true,
-      },
-      overrides: {
+    typography: { useNextVariants: true, },
+    overrides: {
         
       }
 });
