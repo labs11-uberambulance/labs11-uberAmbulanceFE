@@ -39,7 +39,8 @@ export default class OnBoardingForm extends Component {
   };
   submitForm = e => {
     e.preventDefault();
-    this.props.onSubmitForm(this.storeFormValues());
+    this.storeFormValues();
+    this.props.onSubmitForm();
   };
   storeFormValues = () => {
     const formValues = {
@@ -54,7 +55,6 @@ export default class OnBoardingForm extends Component {
     };
     // console.log("mother form values: ", formValues);
     this.props.storeFormValues(formValues);
-    return formValues;
   };
 
   storeDest = dest => {
