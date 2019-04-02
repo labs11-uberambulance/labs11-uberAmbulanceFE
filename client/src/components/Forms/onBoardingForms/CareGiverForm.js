@@ -5,7 +5,12 @@ import { TextMaskCustom } from "../Styling";
 import { Button } from "@material-ui/core";
 import "./onBoardingForm.css";
 
+import OnboardingSetDestination from "../../OnboardingComponents/OnboardingSetDestination";
+
 export default class OnBoardingForm extends Component {
+  state = {
+    hospital: ""
+  };
   constructor(props) {
     super(props);
     this.nameInp = React.createRef();
@@ -43,131 +48,145 @@ export default class OnBoardingForm extends Component {
       town: this.townInp.current.value,
       description: this.descInp.current.value,
       dueDate: this.dueDateInp.current.value,
-      hospital: "will come from map" // TODO
+      hospital: this.state.hospital
     };
     this.props.storeFormValues(formValues);
     return formValues;
   };
+
+  storeDest = dest => {
+    console.log("MotherForm destination: ", dest);
+    this.setState(
+      state => ({
+        hospital: dest
+      }),
+      this.storeFormValues
+    );
+  };
   render() {
     return (
-      <div>
-        <div className="inputHolder">
-          <TextField
-            autoFocus
-            label="Full Name"
-            required
-            inputRef={this.caregiverNameInp}
-            fullWidth
-            onKeyPress={e => this.onPressEnterHandler(e, this.nameInp)}
-            onBlur={this.storeFormValues}
-            helperText="Your Full Name"
-          />
-          <Button
-            type="button"
-            onClick={() => this.scrollToNextInputHandler(this.nameInp)}
-          >
-            Next
-          </Button>
+      <>
+        Choose a Destination:
+        <OnboardingSetDestination storeDest={this.storeDest} />;
+        <div>
+          <div className="inputHolder">
+            <TextField
+              autoFocus
+              label="Full Name"
+              required
+              inputRef={this.caregiverNameInp}
+              fullWidth
+              onKeyPress={e => this.onPressEnterHandler(e, this.nameInp)}
+              onBlur={this.storeFormValues}
+              helperText="Your Full Name"
+            />
+            <Button
+              type="button"
+              onClick={() => this.scrollToNextInputHandler(this.nameInp)}
+            >
+              Next
+            </Button>
+          </div>
+          <div className="inputHolder">
+            <TextField
+              label="Mother's Full Name"
+              required
+              inputRef={this.nameInp}
+              fullWidth
+              onKeyPress={e => this.onPressEnterHandler(e, this.emailInp)}
+              onBlur={this.storeFormValues}
+              helperText="Mother's Full Name"
+            />
+            <Button
+              type="button"
+              onClick={() => this.scrollToNextInputHandler(this.emailInp)}
+            >
+              Next
+            </Button>
+          </div>
+          <div className="inputHolder">
+            <TextField
+              label="Email"
+              fullWidth
+              inputRef={this.emailInp}
+              onKeyPress={e => this.onPressEnterHandler(e, this.phoneInp)}
+              onBlur={this.storeFormValues}
+            />
+            <Button
+              type="button"
+              onClick={() => this.scrollToNextInputHandler(this.phoneInp)}
+            >
+              Next
+            </Button>
+          </div>
+          <div className="inputHolder">
+            <TextField
+              label="Phone Number"
+              InputProps={{
+                placeholder: "(  )    -    ",
+                inputComponent: TextMaskCustom
+              }}
+              fullWidth
+              inputRef={this.phoneInp}
+              onKeyPress={e => this.onPressEnterHandler(e, this.townInp)}
+              onBlur={this.storeFormValues}
+              helperText="If you plan to use SMS to request transport this is required."
+            />
+            <Button
+              type="button"
+              onClick={() => this.scrollToNextInputHandler(this.townInp)}
+            >
+              Next
+            </Button>
+          </div>
+          <div className="inputHolder">
+            <TextField
+              label="Nearest town to pick-up destination"
+              required
+              fullWidth
+              inputRef={this.townInp}
+              onKeyPress={e => this.onPressEnterHandler(e, this.descInp)}
+              onBlur={this.storeFormValues}
+            />
+            <Button
+              type="button"
+              onClick={() => this.scrollToNextInputHandler(this.descInp)}
+            >
+              Next
+            </Button>
+          </div>
+          <div className="inputHolder">
+            <TextField
+              label="Further description to pick-up destination"
+              required
+              fullWidth
+              multiline
+              rows="4"
+              inputRef={this.descInp}
+              onBlur={this.storeFormValues}
+            />
+            <Button
+              type="button"
+              onClick={() => this.scrollToNextInputHandler(this.dueDateHolder)}
+            >
+              Next
+            </Button>
+          </div>
+          <div className="inputHolder" ref={this.dueDateHolder}>
+            <TextField
+              type="date"
+              label="Due Date"
+              InputLabelProps={{ shrink: true }}
+              fullWidth
+              inputRef={this.dueDateInp}
+              onBlur={this.storeFormValues}
+            />
+            <Button type="button" color="secondary" onClick={this.submitForm}>
+              Submit
+            </Button>
+          </div>
         </div>
-        <div className="inputHolder">
-          <TextField
-            label="Mother's Full Name"
-            required
-            inputRef={this.nameInp}
-            fullWidth
-            onKeyPress={e => this.onPressEnterHandler(e, this.emailInp)}
-            onBlur={this.storeFormValues}
-            helperText="Mother's Full Name"
-          />
-          <Button
-            type="button"
-            onClick={() => this.scrollToNextInputHandler(this.emailInp)}
-          >
-            Next
-          </Button>
-        </div>
-        <div className="inputHolder">
-          <TextField
-            label="Email"
-            fullWidth
-            inputRef={this.emailInp}
-            onKeyPress={e => this.onPressEnterHandler(e, this.phoneInp)}
-            onBlur={this.storeFormValues}
-          />
-          <Button
-            type="button"
-            onClick={() => this.scrollToNextInputHandler(this.phoneInp)}
-          >
-            Next
-          </Button>
-        </div>
-        <div className="inputHolder">
-          <TextField
-            label="Phone Number"
-            InputProps={{
-              placeholder: "(  )    -    ",
-              inputComponent: TextMaskCustom
-            }}
-            fullWidth
-            inputRef={this.phoneInp}
-            onKeyPress={e => this.onPressEnterHandler(e, this.townInp)}
-            onBlur={this.storeFormValues}
-            helperText="If you plan to use SMS to request transport this is required."
-          />
-          <Button
-            type="button"
-            onClick={() => this.scrollToNextInputHandler(this.townInp)}
-          >
-            Next
-          </Button>
-        </div>
-        <div className="inputHolder">
-          <TextField
-            label="Nearest town to pick-up destination"
-            required
-            fullWidth
-            inputRef={this.townInp}
-            onKeyPress={e => this.onPressEnterHandler(e, this.descInp)}
-            onBlur={this.storeFormValues}
-          />
-          <Button
-            type="button"
-            onClick={() => this.scrollToNextInputHandler(this.descInp)}
-          >
-            Next
-          </Button>
-        </div>
-        <div className="inputHolder">
-          <TextField
-            label="Further description to pick-up destination"
-            required
-            fullWidth
-            multiline
-            rows="4"
-            inputRef={this.descInp}
-            onBlur={this.storeFormValues}
-          />
-          <Button
-            type="button"
-            onClick={() => this.scrollToNextInputHandler(this.dueDateHolder)}
-          >
-            Next
-          </Button>
-        </div>
-        <div className="inputHolder" ref={this.dueDateHolder}>
-          <TextField
-            type="date"
-            label="Due Date"
-            InputLabelProps={{ shrink: true }}
-            fullWidth
-            inputRef={this.dueDateInp}
-            onBlur={this.storeFormValues}
-          />
-          <Button type="button" color="secondary" onClick={this.submitForm}>
-            Submit
-          </Button>
-        </div>
-      </div>
+      </>
     );
   }
 }

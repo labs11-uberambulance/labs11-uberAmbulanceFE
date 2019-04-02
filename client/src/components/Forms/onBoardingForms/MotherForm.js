@@ -71,7 +71,7 @@ export default class OnBoardingForm extends Component {
     return (
       <>
         Choose a Destination:
-        <OnboardingSetDestination storeDest={this.storeDest} />;
+        <OnboardingSetDestination storeDest={this.storeDest} />
         <form onSubmit={this.submitForm}>
           <div className="inputHolder">
             <TextField
