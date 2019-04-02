@@ -51,20 +51,27 @@ export default class OnBoardingForm extends Component {
       },
       () => {
         return uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
-          const formValues = {
-            type: "drivers",
-            name: this.nameInp.current.value,
-            email: this.emailInp.current.value,
-            imageURL: downloadURL,
-            address: this.addressInp.current.value,
-            rate: this.rateForScroll.current.value
-          };
-          console.log(formValues);
-          this.props.onSubmitForm(this.props.user, formValues);
+          this.storeFormValues(downloadURL);
+          this.props.onSubmitForm();
         });
       }
     );
   };
+
+  storeFormValues = downloadURL => {
+    const formValues = {
+      type: "drivers",
+      name: this.nameInp.current.value,
+      email: this.emailInp.current.value,
+      phone: this.phoneInp.current.value,
+      address: this.addressInp.current.value,
+      rate: this.rateForScroll.current.value,
+      imageURL: downloadURL
+    };
+    this.props.storeFormValues(formValues);
+    return formValues;
+  };
+
   render() {
     return (
       <div>
@@ -76,6 +83,7 @@ export default class OnBoardingForm extends Component {
             inputRef={this.nameInp}
             fullWidth
             onKeyPress={e => this.onPressEnterHandler(e, this.emailInp)}
+            onBlur={() => this.storeFormValues("")}
           />
           <Button
             type="button"
@@ -91,6 +99,7 @@ export default class OnBoardingForm extends Component {
             fullWidth
             inputRef={this.emailInp}
             onKeyPress={e => this.onPressEnterHandler(e, this.phoneInp)}
+            onBlur={() => this.storeFormValues("")}
           />
           <Button
             type="button"
@@ -110,6 +119,7 @@ export default class OnBoardingForm extends Component {
             fullWidth
             inputRef={this.phoneInp}
             onKeyPress={e => this.onPressEnterHandler(e, this.addressInp)}
+            onBlur={() => this.storeFormValues("")}
             helperText="This will be the number that mothers will use to contact you."
           />
           <Button
@@ -126,6 +136,7 @@ export default class OnBoardingForm extends Component {
             fullWidth
             inputRef={this.addressInp}
             onKeyPress={e => this.onPressEnterHandler(e, this.rateForScroll)}
+            onBlur={() => this.storeFormValues("")}
           />
           <Button
             type="button"
@@ -165,6 +176,7 @@ export default class OnBoardingForm extends Component {
             onChange={e => {
               this.setState({ rateInp: e.target.value });
             }}
+            onBlur={() => this.storeFormValues("")}
             helperText={`We recommend $2${
               this.state.rateInp !== ""
                 ? `, you pledge to never charge more than $${

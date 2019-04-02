@@ -61,6 +61,7 @@ class App extends Component {
 
     return (
       <div className="App">
+        {routes}
         <button
           type="button"
           onClick={() => {
@@ -69,7 +70,6 @@ class App extends Component {
         >
           Logout
         </button>
-        {routes}
         <button onClick={this.setTwilio}>Get Twilio Updates</button>
       </div>
     );
