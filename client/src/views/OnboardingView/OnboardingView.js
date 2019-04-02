@@ -54,7 +54,13 @@ function getStepContent(
         );
       }
       if (userType === "drivers") {
-        return <DriverForm user={user} onSubmitForm={handleNext} />;
+        return (
+          <DriverForm
+            user={user}
+            storeFormValues={storeFormValues}
+            onSubmitForm={handleNext}
+          />
+        );
       }
       if (userType === "caregivers") {
         return <CareGiversForm user={user} onSubmitForm={handleNext} />;
@@ -74,7 +80,7 @@ class OnboardingView extends Component {
   };
 
   storeFormValues = formValues => {
-    // console.log("storeFVs OnbrdView", formValues, this.state.formValues);
+    console.log("storeFVs OnbrdView", formValues, this.state.formValues);
     formValues &&
       this.setState(state => ({
         ...state,
