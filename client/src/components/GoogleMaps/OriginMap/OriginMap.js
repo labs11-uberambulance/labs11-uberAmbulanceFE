@@ -20,22 +20,28 @@ class OriginMap extends Component {
         const originLngLat = fetchMarkerPosition();
         this.setState({origin: originLngLat});
     }
-
+    
   render() {
     return (
-      <div>
-          <div>
+    <>
+      <div className="map-container">
+          <div id="map" ></div>
+          <div className="search-bar">
+          <p>Search Start Locations</p>
             <TextField
                 inputRef={this.userInp}
                 onKeyPress={this.searchForLocationHandler}
                 style={{margin: 1 + 'em'}}
             />
-            <div id="map"></div>
           </div>
-          <Button onClick={this.originDeterminedHandler} >Set Location</Button>
-          <h2>{this.state.origin ? `You're pickup location is ${this.state.origin}`: null}</h2>
-          <Button onClick={e=>this.props.setOrigin(this.state.origin)}> Confirm Pickup Location </Button>
-      </div>
+            <div className="map-buttons">
+            <Button onClick={this.originDeterminedHandler} >Set Location</Button>
+            <h2>{this.state.origin ? `You're pickup location is ${this.state.origin}`: null}</h2>
+            {/* <Button onClick={e=>this.props.setOrigin(this.state.origin)}> Confirm Pickup Location </Button> */}
+            </div>
+        </div>
+
+    </>
     )
   }
   componentDidMount() {
