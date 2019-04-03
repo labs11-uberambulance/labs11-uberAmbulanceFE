@@ -24,7 +24,7 @@ export default class HomePage extends Component {
         <MomProfileMenu/>
             <p className="welcome">MothersView</p>
         {this.state.rideStart && this.state.rideEnd ?
-        <Button>Request Ride</Button> :
+        <Button onClick>Request Ride</Button> :
         null
         }
         <MotherMap 
