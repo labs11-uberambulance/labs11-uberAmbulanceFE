@@ -47,16 +47,11 @@ export const initOnbrd = (user, formValues) => dispatch => {
     name,
     phone,
     type,
-    description,
-    town,
-    email,
-    dueDate,
     hospital,
     latitude,
     longitude,
     // driver specific
     imageURL,
-    address,
     rate,
     // caregiver specific:
     caregiverName
@@ -69,9 +64,6 @@ export const initOnbrd = (user, formValues) => dispatch => {
       name,
       phone,
       user_type: type,
-      // address: description ? description : address,
-      // village: town,
-      // email,
       latitude,
       longitude
     }
@@ -81,7 +73,6 @@ export const initOnbrd = (user, formValues) => dispatch => {
     typeData = {
       user_type: "mother",
       motherData: {
-        // due_date: dueDate,
         hospital
       }
     };
@@ -102,7 +93,6 @@ export const initOnbrd = (user, formValues) => dispatch => {
       user_type: "mother",
       motherData: {
         caretaker_name: caregiverName,
-        due_date: dueDate,
         hospital
       }
     };
