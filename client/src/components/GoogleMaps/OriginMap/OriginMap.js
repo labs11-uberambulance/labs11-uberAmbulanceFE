@@ -1,42 +1,48 @@
-import React, { Component } from 'react'
-import { initGoogleScript, destroyGoogleScript, searchGoogle, fetchMarkerPosition } from './GoogleAPI';
-import './OriginMap.css';
-import { TextField, Button } from '@material-ui/core';
+import React, { Component } from "react";
+import {
+  initGoogleScript,
+  destroyGoogleScript,
+  searchGoogle,
+  fetchMarkerPosition
+} from "./GoogleAPI";
+import "./OriginMap.css";
+import { TextField, Button } from "@material-ui/core";
 
 class OriginMap extends Component {
-    constructor(props) {
-        super(props)
-        this.userInp = React.createRef();
+  constructor(props) {
+    super(props);
+    this.userInp = React.createRef();
+  }
+  searchForLocationHandler = e => {
+    if (e.key === "Enter") {
+      searchGoogle(this.userInp.current.value);
     }
-    searchForLocationHandler = (e) => {
-        if (e.key === 'Enter') {
-            searchGoogle(this.userInp.current.value)
-        }
-    }
-    originDeterminedHandler = () => {
-        const originLngLat = fetchMarkerPosition();
-        console.log(originLngLat);
-    }
+  };
+  originDeterminedHandler = () => {
+    const originLatLng = fetchMarkerPosition();
+    this.props.storeLatLng(originLatLng);
+    console.log(originLatLng);
+  };
 
   render() {
     return (
       <div>
-          <div>
-            <TextField
-                inputRef={this.userInp}
-                onKeyPress={this.searchForLocationHandler}
-            />
-            <div id="map"></div>
-          </div>
-          <Button onClick={this.originDeterminedHandler} >Set Location</Button>
+        <div>
+          <TextField
+            inputRef={this.userInp}
+            onKeyPress={this.searchForLocationHandler}
+          />
+          <div id="map" />
+        </div>
+        <Button onClick={this.originDeterminedHandler}>Set Location</Button>
       </div>
-    )
+    );
   }
   componentDidMount() {
-      initGoogleScript()
+    initGoogleScript();
   }
   componentWillUnmount() {
-      destroyGoogleScript()
+    destroyGoogleScript();
   }
 }
 
