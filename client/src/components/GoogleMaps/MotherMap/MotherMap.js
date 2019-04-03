@@ -51,7 +51,7 @@ class MotherMap extends Component {
             lng: place.geometry.location.lng()
         }
         this.props.setRideEnd(location)
-        calcAndDisplayRoute(this.state.startCoords, location);
+        calcAndDisplayRoute(this.state.startCoords, location); 
     }
 
   render() {
@@ -108,11 +108,22 @@ class MotherMap extends Component {
         })
     }
     componentDidMount() {
-        initGoogleScript(this.passPlacesToComponent, this.markerSelectedHandler)
+        initGoogleScript(this.passPlacesToComponent, this.markerSelectedHandler, 0.918607, 33.409670999999996)
+        setTimeout(()=>{
+            calcAndDisplayRoute({lat: 0.918607, lng: 33.409670999999996}, {lat: 0.988607, lng: 33.509670999999996})
+        }, 1000)
     }
     componentWillUnmount() {
         destroyGoogleScript()
     }
+}
+
+const mapStateToProps = (state) => ({
+  user: state.auth.user
+})
+
+const mapDispatchToProps = {
+  
 }
 
 

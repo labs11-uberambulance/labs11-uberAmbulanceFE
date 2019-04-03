@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
+import {connect} from 'react-redux'
+
 import MomProfileMenu from './MomProfileMenu'
 import MotherMap from '../GoogleMaps/MotherMap/MotherMap'
 import { Button } from '@material-ui/core';
+import {getDrivers} from '../../store/actions/rides'
 
-export default class HomePage extends Component {
+
+class HomePage extends Component {
   constructor(props){
       super(props);
       this.state={
@@ -12,7 +16,10 @@ export default class HomePage extends Component {
       }
   }
   setRideStart = origin =>{
-      this.setState({rideStart: origin})
+      var test = []
+      test.push(Object.values(origin))
+      console.log(test)
+      this.setState({rideStart: test.join()})
   }
   setRideEnd = dest =>{
       this.setState({rideEnd: dest})
@@ -24,7 +31,7 @@ export default class HomePage extends Component {
         <MomProfileMenu/>
             <p className="welcome">MothersView</p>
         {this.state.rideStart && this.state.rideEnd ?
-        <Button onClick>Request Ride</Button> :
+        <Button onClick={e=>this.props.getDrivers(this.state.rideStart)}>Request Ride</Button> :
         null
         }
         <MotherMap 
@@ -37,5 +44,14 @@ export default class HomePage extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  
+})
 
+const mapDispatchToProps = {
+  getDrivers
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage)
   
