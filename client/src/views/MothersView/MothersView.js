@@ -1,13 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
-
-
+import OriginMap from "../../components/GoogleMaps/OriginMap/OriginMap";
+import '../../components/GoogleMaps/OriginMap/OriginMap.css';
+import MomProfileMenu from './MomProfileMenu'
 
 
 function MothersView() {
   return (<>
-  <p>MothersView</p>
-  <button >Request a ride</button>
+  <MomProfileMenu/>
+  <p className="welcome">MothersView</p>
+  
+  <OriginMap/>
   </>)
 }
 

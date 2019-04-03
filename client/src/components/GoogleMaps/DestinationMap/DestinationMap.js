@@ -37,8 +37,8 @@ class DestinationMap extends Component {
           </div>
           <div id="map" />
         </div>
-        {/* uncomment if we want to display a list of places next to map */}
-        {/* { places && <GooglePlacesList places={Array.isArray(places) ? places: [places]} /> } */}
+        {/* uncomment if we want to display a list of places next to map
+        { places && <GooglePlacesList places={Array.isArray(places) ? places: [places]} /> } */}
       </div>
     );
   }

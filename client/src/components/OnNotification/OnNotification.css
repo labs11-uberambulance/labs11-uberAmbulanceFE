@@ -1,0 +1,29 @@
+.notification-container {
+    position: fixed;
+    width: 400px;
+    top: 15px;
+    right: 25px;
+    opacity: 0;
+    animation-name: notification-alert;
+    animation-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+    animation-duration: .8s;
+    animation-fill-mode: both;
+    transform: translateX(200px);
+    z-index: 2000;
+    background-color: #b2dfdb;
+}
+@media (max-width: 450px) {
+    .notification-container {
+        width: 90vw;
+    }
+}
+
+@keyframes notification-alert {
+    0% {
+        opacity: 0
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0)
+    }
+}

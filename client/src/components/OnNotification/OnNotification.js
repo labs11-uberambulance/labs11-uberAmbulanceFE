@@ -1,34 +1,63 @@
 import React, { Component } from 'react'
 import { messaging } from '../../firebase';
 import { withRouter } from 'react-router-dom';
+import { Paper, Typography, withStyles, Button } from '@material-ui/core';
+import './OnNotification.css';
 
+const styles = ({palette}) => ({
+  root: {
+    width: 'unset',
+    padding: '10px',
+  },
+});
 
 class OnNotification extends Component {
     state = {
         notification: null,
         data: null,
+        timer: null,
     }
 
-    
+    onRejectHandler = () => {
+      // send rejection to backend to update ride object (ride_id will be in 'data')
+
+      this.setState({ notification: null, data: null });
+    }
+    onAcceptHandler = () => {
+      // send acceptance to backend to update ride object (ride_id will be in 'data')
+
+      this.setState({ notification: null, data: null });
+    }
 
   render() {
     if (!this.state.notification) {
         return null;
     }
+    const { title, body } = this.state.notification
     return (
-      <div onClick={() => this.props.history.push(this.state.data.url)}>
-        <p>Title: {this.state.notification.title}</p>
-        <p>Body: {this.state.notification.body}</p>
-      </div>
+      <aside className="notification-container">
+        <Paper className={this.props.classes.root}>
+          <Typography variant="h5" component="h3">{title}</Typography>
+          <Typography component="p">{body}</Typography>
+          <Button color="primary" onClick={this.onAcceptHandler}>Accept</Button>
+          <Button color="inherit" onClick={this.onRejectHandler}>Reject</Button>
+        </Paper>
+      </aside>
     )
   }
   componentDidMount() {
       messaging.onMessage(({data, notification}) => {
           this.setState({notification, data});
-      })
-
+          const timer = setTimeout(() => {
+            this.setState({ notification: null, data: null });
+          }, 6000)
+          this.setState({ timer })
+      }) 
+  }
+  componentWillUnmount() {
+    clearTimeout(this.state.timer)
   }
 
 }
 
-export default withRouter(OnNotification);
+export default withStyles(styles)(OnNotification);
