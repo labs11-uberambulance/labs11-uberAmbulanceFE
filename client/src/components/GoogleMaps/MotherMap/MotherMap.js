@@ -22,13 +22,16 @@ const styles = ({ palette }) => ({
   }
 });
 class MotherMap extends Component {
-  state = {
-    places: null, //
-    search: "",
-    markersSelected: [],
-    locked: false,
-    startCoords: null // start loc
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      places: null,
+      search: "",
+      markersSelected: [],
+      locked: false,
+      startCoords: null
+    };
+  }
 
   toggleMarkLockHandler = () => {
     this.setState(({ locked }) => {
@@ -37,6 +40,7 @@ class MotherMap extends Component {
         return { search: "", places: null, markersSelected: [], locked: false };
       } else {
         const position = lockMarker();
+        this.props.setRideStart(position);
         return { search: "", locked: true, startCoords: position };
       }
     });
@@ -47,6 +51,7 @@ class MotherMap extends Component {
       searchGoogle(this.state.search);
     }
   };
+
   mapOutRoute = place => {
     const location = {
       // endpoint
@@ -75,6 +80,11 @@ class MotherMap extends Component {
     return (
       <>
         <div style={{ margin: "0 auto", width: "550px" }}>
+          <p>
+            {this.state.locked
+              ? "Search for your destination"
+              : "Search for your location"}
+          </p>
           <div className="google-search-container">
             <TextField
               label="Search for your location"
@@ -91,7 +101,7 @@ class MotherMap extends Component {
               style={!this.state.locked ? { opacity: 0, width: 0 } : {}}
             />
           </div>
-          <div style={{ height: "500px" }} className="google-maps-container">
+          <div className="google-maps-container" style={{ height: "500px" }}>
             <div id="map" />
             <Button
               onClick={this.toggleMarkLockHandler}
