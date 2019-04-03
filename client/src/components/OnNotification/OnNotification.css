@@ -10,6 +10,7 @@
     animation-fill-mode: both;
     transform: translateX(200px);
     z-index: 2000;
+    background-color: #b2dfdb;
 }
 @media (max-width: 450px) {
     .notification-container {

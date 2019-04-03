@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { Paper, Typography, withStyles, Button } from '@material-ui/core';
 import './OnNotification.css';
 
-const styles = theme => ({
+const styles = ({palette}) => ({
   root: {
     width: 'unset',
     padding: '10px',
@@ -15,6 +15,7 @@ class OnNotification extends Component {
     state = {
         notification: null,
         data: null,
+        timer: null,
     }
 
     onRejectHandler = () => {
@@ -39,7 +40,7 @@ class OnNotification extends Component {
           <Typography variant="h5" component="h3">{title}</Typography>
           <Typography component="p">{body}</Typography>
           <Button color="primary" onClick={this.onAcceptHandler}>Accept</Button>
-          <Button color="secondary" onClick={this.onRejectHandler}>Reject</Button>
+          <Button color="inherit" onClick={this.onRejectHandler}>Reject</Button>
         </Paper>
       </aside>
     )
@@ -47,8 +48,14 @@ class OnNotification extends Component {
   componentDidMount() {
       messaging.onMessage(({data, notification}) => {
           this.setState({notification, data});
-      })
-
+          const timer = setTimeout(() => {
+            this.setState({ notification: null, data: null });
+          }, 6000)
+          this.setState({ timer })
+      }) 
+  }
+  componentWillUnmount() {
+    clearTimeout(this.state.timer)
   }
 
 }

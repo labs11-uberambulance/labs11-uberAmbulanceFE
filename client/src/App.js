@@ -16,6 +16,7 @@ import "./App.css";
 import Logout from "./views/AuthenticationView/Logout";
 import { Button } from "@material-ui/core";
 import OnNotification from "./components/OnNotification/OnNotification";
+import MotherMap from "./components/GoogleMaps/MotherMap/MotherMap";
 
 class App extends Component {
   setTwilio = () => {
@@ -82,6 +83,7 @@ class App extends Component {
         <button onClick={this.setTwilio}>Get Twilio Updates</button>
         <Button onClick={this.requestPushNotificationsPermission}>Sign Up for Push Notifications</Button>
         <OnNotification />
+        <MotherMap />
       </div>
     );
   }
