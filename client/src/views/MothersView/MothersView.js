@@ -1,21 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
-import OriginMap from "../../components/GoogleMaps/OriginMap/OriginMap";
-import '../../components/GoogleMaps/OriginMap/OriginMap.css';
-import MomProfileMenu from './MomProfileMenu'
+import MotherHomePage from '../../components/Mothers/HomePage'
+
 
 
 function MothersView() {
+
   return (<>
-  <MomProfileMenu/>
-  <p className="welcome">MothersView</p>
+  <MotherHomePage/>
   
-  <OriginMap/>
   </>)
 }
 
 const mapStateToProps = state => ({
-  user: state.user,
+  user: state.auth.user,
   isRegisteringUser: state.isRegisteringUser
 });
 
