@@ -2,8 +2,8 @@ import React from 'react';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+// import AppBar from '@material-ui/core/AppBar';
+// import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -11,8 +11,8 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import RequestButtons from './requestButtons.js';
-import DestinationOptions from './DestinationOptions.js';
-import Waiting from './Waiting.js';
+import Dropoff from './DropOff.js';
+import Pickup from './Pickup.js';
 import SelectDriver from './SelectDriver';
 import Completed from './Confirmation.js';
 
@@ -56,32 +56,52 @@ const styles = theme => ({
   },
 });
 
-const steps = ['Request a Ride', 'Set Pickup and Drop off', 'Waiting', 'Select Driver', 'Waiting', 'Completed'];
+const steps = ['Request a Ride', 'Set Pickup ', 'Set Dropoff', 'Select Driver', 'Completed'];
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <RequestButtons />;
-    case 1:
-      return <DestinationOptions />;
-    case 2:
-      return <Waiting/>;
-    case 3:
-      return <SelectDriver />;
-    case 4:
-      return <Waiting />;
-    case 5:
-      return <Completed />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
+
 
 class Checkout extends React.Component {
-  state = {
-    activeStep: 0,
-  };
-
+  constructor(props){
+    super(props);
+    this.state ={
+      activeStep: 0,
+      orderRide: false,
+      origin: null,
+      destination: null,
+    }
+  }
+   getStepContent = (step)=> {
+    switch (step) {
+      case 0:
+        return <RequestButtons handleNext={this.handleNext}/>;
+      case 1:
+        return <Pickup 
+        setOrigin={this.setOrigin}
+        handleNext={this.handleNext}
+        />;
+      case 2:
+        return <Dropoff
+        setDestination={this.setDestination}
+        />;
+      case 3:
+        return <SelectDriver />;
+      case 4:
+        return <Completed />;
+      default:
+        throw new Error('Unknown step');
+    }
+  }
+  setOrigin = incoming => {
+    this.setState({origin: incoming})
+    this.handleNext()
+  }
+  setDestination = incoming => {
+    this.setState({
+      destination: incoming,
+      orderRide: true,
+    })
+    this.handleNext()
+  }
   handleNext = () => {
     this.setState(state => ({
       activeStep: state.activeStep + 1,
@@ -130,16 +150,15 @@ class Checkout extends React.Component {
               {activeStep === steps.length ? (
                 <>
                   <Typography variant="h5" gutterBottom>
-                    Thank you for your order.
+                    Thank you for your Requesting a ride! .
                   </Typography>
                   <Typography variant="subtitle1">
-                    Your order number is #2001539. We have emailed your order confirmation, and will
-                    send you an update when your order has shipped.
+                  We'll take the rest from here, please stay close to your phone for updates!
                   </Typography>
                 </>
               ) : (
                 <>
-                  {getStepContent(activeStep)}
+                  {this.getStepContent(activeStep)}
                   <div className={classes.buttons}>
                     {activeStep !== 0 && (
                       <Button onClick={this.handleBack} className={classes.button}>
