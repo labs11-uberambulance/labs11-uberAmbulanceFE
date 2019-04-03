@@ -21,6 +21,22 @@ export default class OnBoardingForm extends Component {
     this.phoneInp = React.createRef();
   }
 
+  scrollToNextInputHandler = nextInp => {
+    if (nextInp.current.type === "date") {
+      nextInp.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    nextInp.current.focus({ preventScroll: true });
+    nextInp.current.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
+  onPressEnterHandler = (e, nextInp) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      e.stopPropagation();
+      this.scrollToNextInputHandler(nextInp);
+    }
+  };
+
   submitForm = e => {
     e.preventDefault();
     const formValues = {
@@ -65,6 +81,7 @@ export default class OnBoardingForm extends Component {
               required
               inputRef={this.nameInp}
               fullWidth
+              onKeyPress={e => this.onPressEnterHandler(e, this.phoneInp)}
             />
           </div>
           <div className="inputHolder">

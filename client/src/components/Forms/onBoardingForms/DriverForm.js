@@ -25,6 +25,22 @@ export default class OnBoardingForm extends Component {
     };
   }
 
+  scrollToNextInputHandler = nextInp => {
+    if (nextInp.current.type === "date") {
+      nextInp.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    nextInp.current.focus({ preventScroll: true });
+    nextInp.current.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
+  onPressEnterHandler = (e, nextInp) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      e.stopPropagation();
+      this.scrollToNextInputHandler(nextInp);
+    }
+  };
+
   submitForm = async () => {
     const image = this.state.file;
     const storageRef = firebase
@@ -79,6 +95,7 @@ export default class OnBoardingForm extends Component {
             required
             inputRef={this.nameInp}
             fullWidth
+            onKeyPress={e => this.onPressEnterHandler(e, this.phoneInp)}
           />
         </div>
         {/* <div className="inputHolder">
@@ -99,6 +116,7 @@ export default class OnBoardingForm extends Component {
             }}
             fullWidth
             inputRef={this.phoneInp}
+            onKeyPress={e => this.onPressEnterHandler(e, this.photoInp)}
             helperText="This will be the number that mothers will use to contact you."
           />
         </div>
@@ -155,6 +173,6 @@ export default class OnBoardingForm extends Component {
     this.setState(prevState => {
       if (prevState.file && e.target.files.length === 0) return;
       return { file: e.target.files[0] };
-    });
+    }, this.scrollToNextInputHandler(this.rateForScroll));
   };
 }

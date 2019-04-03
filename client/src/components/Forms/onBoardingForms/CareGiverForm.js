@@ -26,38 +26,29 @@ export default class OnBoardingForm extends Component {
     // this.dueDateInp = React.createRef();
   }
 
-  // scrollToNextInputHandler = nextInp => {
-  //   if (nextInp.current.type === "date") {
-  //     nextInp.current.scrollIntoView({ behavior: "smooth", block: "start" });
-  //   }
-  //   nextInp.current.focus({ preventScroll: true });
-  //   nextInp.current.scrollIntoView({ behavior: "smooth", block: "center" });
-  // };
-  // onPressEnterHandler = (e, nextInp) => {
-  //   if (e.key === "Enter") {
-  //     this.scrollToNextInputHandler(nextInp);
-  //   }
-  // };
+  scrollToNextInputHandler = nextInp => {
+    if (nextInp.current.type === "date") {
+      nextInp.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    nextInp.current.focus({ preventScroll: true });
+    nextInp.current.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+  onPressEnterHandler = (e, nextInp) => {
+    if (e.key === "Enter") {
+      this.scrollToNextInputHandler(nextInp);
+    }
+  };
 
   submitForm = () => {
     const formValues = {
       type: "caregivers",
       caregiverName: this.caregiverNameInp.current.value,
       name: this.nameInp.current.value,
-      // email: this.emailInp.current.value,
       phone: this.phoneInp.current.value,
-      // town: this.townInp.current.value,
-      // description: this.descInp.current.value,
-      // dueDate: this.dueDateInp.current.value,
       ...this.state
     };
     this.props.onSubmitForm(this.props.user, formValues);
   };
-
-  // storeFormValues = () => {
-  //   this.props.storeFormValues(formValues);
-  //   return formValues;
-  // };
 
   storeLatLng = latLng => {
     const latLngArr = latLng.split(",");
@@ -91,6 +82,7 @@ export default class OnBoardingForm extends Component {
               inputRef={this.caregiverNameInp}
               fullWidth
               helperText="Your Full Name"
+              onKeyPress={e => this.onPressEnterHandler(e, this.nameInp)}
             />
           </div>
           <div className="inputHolder">
@@ -100,6 +92,7 @@ export default class OnBoardingForm extends Component {
               inputRef={this.nameInp}
               fullWidth
               helperText="Mother's Full Name"
+              onKeyPress={e => this.onPressEnterHandler(e, this.phoneInp)}
             />
           </div>
           <div className="inputHolder">
