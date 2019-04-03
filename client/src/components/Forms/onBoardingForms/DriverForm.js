@@ -6,6 +6,8 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import { Button } from "@material-ui/core";
 import "./onBoardingForm.css";
 
+import OnboardingSetLocation from "../../OnboardingComponents/OnboardingSetLocation";
+
 export default class OnBoardingForm extends Component {
   constructor(props) {
     super(props);
@@ -17,20 +19,11 @@ export default class OnBoardingForm extends Component {
     this.rateForScroll = React.createRef();
     this.state = {
       file: null,
-      rateInp: ""
+      rateInp: "",
+      latitude: 0,
+      longitude: 0
     };
   }
-
-  scrollToNextInputHandler = nextInp => {
-    nextInp.current.focus({ preventScroll: true });
-    nextInp.current.scrollIntoView({ behavior: "smooth", block: "center" });
-  };
-  onPressEnterHandler = (e, nextInp) => {
-    if (e.key === "Enter") {
-      nextInp.current.focus({ preventScroll: true });
-      nextInp.current.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-  };
 
   submitForm = async () => {
     const image = this.state.file;
@@ -51,25 +44,29 @@ export default class OnBoardingForm extends Component {
       },
       () => {
         return uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
-          this.storeFormValues(downloadURL);
-          this.props.onSubmitForm();
+          const formValues = {
+            type: "drivers",
+            name: this.nameInp.current.value,
+            email: this.emailInp.current.value,
+            phone: this.phoneInp.current.value,
+            rate: this.rateForScroll.current.value,
+            imageURL: downloadURL,
+            latitude: this.state.latitude,
+            longitude: this.state.longitude
+          };
+          this.props.onSubmitForm(this.props.user, formValues);
         });
       }
     );
   };
 
-  storeFormValues = downloadURL => {
-    const formValues = {
-      type: "drivers",
-      name: this.nameInp.current.value,
-      email: this.emailInp.current.value,
-      phone: this.phoneInp.current.value,
-      address: this.addressInp.current.value,
-      rate: this.rateForScroll.current.value,
-      imageURL: downloadURL
-    };
-    this.props.storeFormValues(formValues);
-    return formValues;
+  storeLatLng = latLng => {
+    const latLngArr = latLng.split(",");
+    this.setState(state => ({
+      ...state,
+      latitude: latLngArr[0],
+      longitude: latLngArr[1]
+    }));
   };
 
   render() {
@@ -82,15 +79,7 @@ export default class OnBoardingForm extends Component {
             required
             inputRef={this.nameInp}
             fullWidth
-            onKeyPress={e => this.onPressEnterHandler(e, this.emailInp)}
-            onBlur={() => this.storeFormValues("")}
           />
-          <Button
-            type="button"
-            onClick={() => this.scrollToNextInputHandler(this.emailInp)}
-          >
-            Next
-          </Button>
         </div>
         <div className="inputHolder">
           <TextField
@@ -98,15 +87,7 @@ export default class OnBoardingForm extends Component {
             required
             fullWidth
             inputRef={this.emailInp}
-            onKeyPress={e => this.onPressEnterHandler(e, this.phoneInp)}
-            onBlur={() => this.storeFormValues("")}
           />
-          <Button
-            type="button"
-            onClick={() => this.scrollToNextInputHandler(this.phoneInp)}
-          >
-            Next
-          </Button>
         </div>
         <div className="inputHolder">
           <TextField
@@ -118,33 +99,11 @@ export default class OnBoardingForm extends Component {
             }}
             fullWidth
             inputRef={this.phoneInp}
-            onKeyPress={e => this.onPressEnterHandler(e, this.addressInp)}
-            onBlur={() => this.storeFormValues("")}
             helperText="This will be the number that mothers will use to contact you."
           />
-          <Button
-            type="button"
-            onClick={() => this.scrollToNextInputHandler(this.addressInp)}
-          >
-            Next
-          </Button>
         </div>
-        <div className="inputHolder">
-          <TextField
-            label="Address"
-            required
-            fullWidth
-            inputRef={this.addressInp}
-            onKeyPress={e => this.onPressEnterHandler(e, this.rateForScroll)}
-            onBlur={() => this.storeFormValues("")}
-          />
-          <Button
-            type="button"
-            onClick={() => this.scrollToNextInputHandler(this.rateForScroll)}
-          >
-            Next
-          </Button>
-        </div>
+        Set your location:
+        <OnboardingSetLocation storeLatLng={this.storeLatLng} />
         <Button
           type="button"
           color="primary"
@@ -176,7 +135,6 @@ export default class OnBoardingForm extends Component {
             onChange={e => {
               this.setState({ rateInp: e.target.value });
             }}
-            onBlur={() => this.storeFormValues("")}
             helperText={`We recommend $2${
               this.state.rateInp !== ""
                 ? `, you pledge to never charge more than $${
