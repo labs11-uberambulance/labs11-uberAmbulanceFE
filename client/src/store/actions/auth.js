@@ -47,15 +47,17 @@ export const initOnbrd = (user, formValues) => dispatch => {
     name,
     phone,
     type,
-    hospital,
-    latitude,
-    longitude,
+    route,
     // driver specific
     imageURL,
     rate,
     // caregiver specific:
     caregiverName
   } = formValues;
+  const location =
+    type === "mothers" || "caregivers"
+      ? JSON.stringify(route.start)
+      : "driver location";
   // a user record was created automatically with first login but has no user info besides firebase ID.
   // the api checks if user type is set and will not allow creating a user type record if it is. Therefore, create the user type record before updating user record.
   // map formValues to api format:
@@ -64,8 +66,7 @@ export const initOnbrd = (user, formValues) => dispatch => {
       name,
       phone,
       user_type: type,
-      latitude,
-      longitude
+      location
     }
   };
   let typeData;
@@ -73,7 +74,8 @@ export const initOnbrd = (user, formValues) => dispatch => {
     typeData = {
       user_type: "mother",
       motherData: {
-        hospital
+        start: JSON.stringify(route.start),
+        destination: JSON.stringify(route.destination)
       }
     };
   } else if (formValues.type === "drivers") {
@@ -93,7 +95,8 @@ export const initOnbrd = (user, formValues) => dispatch => {
       user_type: "mother",
       motherData: {
         caretaker_name: caregiverName,
-        hospital
+        start: JSON.stringify(route.start),
+        destination: JSON.stringify(route.destination)
       }
     };
   } else {

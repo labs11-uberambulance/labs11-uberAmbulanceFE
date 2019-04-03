@@ -12,7 +12,7 @@ export default class OnBoardingForm extends Component {
   constructor(props) {
     super(props);
     this.nameInp = React.createRef();
-    this.emailInp = React.createRef();
+    // this.emailInp = React.createRef();
     this.phoneInp = React.createRef();
     this.addressInp = React.createRef();
     this.photoInp = React.createRef();
@@ -24,6 +24,22 @@ export default class OnBoardingForm extends Component {
       longitude: 0
     };
   }
+
+  scrollToNextInputHandler = nextInp => {
+    if (nextInp.current.type === "date") {
+      nextInp.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    nextInp.current.focus({ preventScroll: true });
+    nextInp.current.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
+  onPressEnterHandler = (e, nextInp) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      e.stopPropagation();
+      this.scrollToNextInputHandler(nextInp);
+    }
+  };
 
   submitForm = async () => {
     const image = this.state.file;
@@ -47,7 +63,7 @@ export default class OnBoardingForm extends Component {
           const formValues = {
             type: "drivers",
             name: this.nameInp.current.value,
-            email: this.emailInp.current.value,
+            // email: this.emailInp.current.value,
             phone: this.phoneInp.current.value,
             rate: this.rateForScroll.current.value,
             imageURL: downloadURL,
@@ -79,16 +95,17 @@ export default class OnBoardingForm extends Component {
             required
             inputRef={this.nameInp}
             fullWidth
+            onKeyPress={e => this.onPressEnterHandler(e, this.phoneInp)}
           />
         </div>
-        <div className="inputHolder">
+        {/* <div className="inputHolder">
           <TextField
             label="Email"
             required
             fullWidth
             inputRef={this.emailInp}
           />
-        </div>
+        </div> */}
         <div className="inputHolder">
           <TextField
             label="Phone Number"
@@ -99,6 +116,7 @@ export default class OnBoardingForm extends Component {
             }}
             fullWidth
             inputRef={this.phoneInp}
+            onKeyPress={e => this.onPressEnterHandler(e, this.photoInp)}
             helperText="This will be the number that mothers will use to contact you."
           />
         </div>
@@ -155,6 +173,6 @@ export default class OnBoardingForm extends Component {
     this.setState(prevState => {
       if (prevState.file && e.target.files.length === 0) return;
       return { file: e.target.files[0] };
-    });
+    }, this.scrollToNextInputHandler(this.rateForScroll));
   };
 }
