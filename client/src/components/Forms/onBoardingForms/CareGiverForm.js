@@ -5,25 +5,20 @@ import { TextMaskCustom } from "../Styling";
 import { Button } from "@material-ui/core";
 import "./onBoardingForm.css";
 
-import OnboardingSetLocation from "../../OnboardingComponents/OnboardingSetLocation";
-import OnboardingSetDestination from "../../OnboardingComponents/OnboardingSetDestination";
+import OnboardingMotherMap from "../../OnboardingComponents/OnboardingMotherMap";
 
 export default class OnBoardingForm extends Component {
   state = {
-    hospital: "",
-    latitude: 0,
-    longitude: 0
+    route: {
+      start: "",
+      destination: ""
+    }
   };
   constructor(props) {
     super(props);
     this.nameInp = React.createRef();
     this.caregiverNameInp = React.createRef();
-    // this.emailInp = React.createRef();
     this.phoneInp = React.createRef();
-    // this.townInp = React.createRef();
-    // this.descInp = React.createRef();
-    // this.dueDateHolder = React.createRef();
-    // this.dueDateInp = React.createRef();
   }
 
   scrollToNextInputHandler = nextInp => {
@@ -50,29 +45,16 @@ export default class OnBoardingForm extends Component {
     this.props.onSubmitForm(this.props.user, formValues);
   };
 
-  storeLatLng = latLng => {
-    const latLngArr = latLng.split(",");
-    this.setState(state => ({
-      ...state,
-      latitude: latLngArr[0],
-      longitude: latLngArr[1]
-    }));
+  storeRoute = route => {
+    console.log("CaregiverForm", route);
+    this.setState({ route });
   };
 
-  storeDest = dest => {
-    console.log("CareGivForm destination: ", dest);
-    this.setState(state => ({
-      ...state,
-      hospital: dest
-    }));
-  };
   render() {
     return (
       <>
-        {/* Set your location:
-        <OnboardingSetLocation storeLatLng={this.storeLatLng} /> */}
-        Choose a Destination:
-        <OnboardingSetDestination storeDest={this.storeDest} />;
+        Plan your ride:
+        <OnboardingMotherMap storeRoute={this.storeRoute} />
         <div>
           <div className="inputHolder">
             <TextField
