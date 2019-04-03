@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import firebase , { messaging } from "./firebase";
+import firebase, { messaging } from "./firebase";
 import actions from "./store/actions";
 import axios from "./axios-instance";
 import RegisterView from "./views/AuthenticationView/RegisterView";
@@ -20,18 +20,22 @@ import MotherMap from "./components/GoogleMaps/MotherMap/MotherMap";
 
 class App extends Component {
   setTwilio = () => {
-    axios.get('/api/twilio/text-me')
-  }
+    axios.get("/api/twilio/text-me");
+  };
   requestPushNotificationsPermission = () => {
-    messaging.requestPermission().then((result) => {
-      return messaging.getToken();
-    }).then(token => {
-      return axios.post('/api/users/notifications', {token});
-    }).catch(err => {
-      console.error(err.message);
-      return axios.post('/api/users/notifications', {token: false});
-    })
-  }
+    messaging
+      .requestPermission()
+      .then(result => {
+        return messaging.getToken();
+      })
+      .then(token => {
+        return axios.post("/api/users/notifications", { token });
+      })
+      .catch(err => {
+        console.error(err.message);
+        return axios.post("/api/users/notifications", { token: false });
+      });
+  };
   render() {
     let routes = (
       <Switch>
@@ -82,9 +86,11 @@ class App extends Component {
           Logout
         </button>
         <button onClick={this.setTwilio}>Get Twilio Updates</button>
-        <Button onClick={this.requestPushNotificationsPermission}>Sign Up for Push Notifications</Button>
+        <Button onClick={this.requestPushNotificationsPermission}>
+          Sign Up for Push Notifications
+        </Button>
         <OnNotification />
-        <MotherMap />
+        {/* <MotherMap /> */}
       </div>
     );
   }
@@ -97,7 +103,11 @@ class App extends Component {
           this.props.onAutoSignIn({ firebase_id: uid, email, ftoken: ra });
         } else {
           const { phoneNumber } = user;
-          this.props.onAutoSignIn({ firebase_id: uid, phoneNumber, ftoken: ra });
+          this.props.onAutoSignIn({
+            firebase_id: uid,
+            phoneNumber,
+            ftoken: ra
+          });
         }
       } else {
         // this.props.onLogout();
