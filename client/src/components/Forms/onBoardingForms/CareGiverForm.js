@@ -46,7 +46,7 @@ export default class OnBoardingForm extends Component {
   };
 
   storeRoute = route => {
-    console.log("CaregiverForm", route);
+    // console.log("CaregiverForm", route);
     this.setState({ route });
   };
 

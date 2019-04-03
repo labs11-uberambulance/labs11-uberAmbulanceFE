@@ -5,8 +5,6 @@ import { Button } from "@material-ui/core";
 import { TextMaskCustom } from "../Styling";
 import "./onBoardingForm.css";
 
-// import OnboardingSetLocation from "../../OnboardingComponents/OnboardingSetLocation";
-// import OnboardingSetDestination from "../../OnboardingComponents/OnboardingSetDestination";
 import OnboardingMotherMap from "../../OnboardingComponents/OnboardingMotherMap";
 
 export default class OnBoardingForm extends Component {
@@ -50,35 +48,14 @@ export default class OnBoardingForm extends Component {
     this.props.onSubmitForm(this.props.user, formValues);
   };
 
-  // storeLatLng = latLng => {
-  //   const latLngArr = latLng.split(",");
-  //   this.setState(state => ({
-  //     ...state,
-  //     latitude: latLngArr[0],
-  //     longitude: latLngArr[1]
-  //   }));
-  // };
-
-  // storeDest = dest => {
-  //   console.log("MotherForm destination: ", dest);
-  //   this.setState(state => ({
-  //     ...state,
-  //     hospital: dest
-  //   }));
-  // };
-
   storeRoute = route => {
-    console.log("MotherForm", route);
+    // console.log("MotherForm", route);
     this.setState({ route });
   };
 
   render() {
     return (
       <>
-        {/* Set your location:
-        <OnboardingSetLocation storeLatLng={this.storeLatLng} /> */}
-        {/* Choose a Destination:
-        <OnboardingSetDestination storeDest={this.storeDest} /> */}
         Plan your ride:
         <OnboardingMotherMap storeRoute={this.storeRoute} />
         <form onSubmit={this.submitForm}>
