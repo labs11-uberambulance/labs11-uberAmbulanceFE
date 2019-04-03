@@ -12,7 +12,7 @@ export default class OnBoardingForm extends Component {
   constructor(props) {
     super(props);
     this.nameInp = React.createRef();
-    this.emailInp = React.createRef();
+    // this.emailInp = React.createRef();
     this.phoneInp = React.createRef();
     this.addressInp = React.createRef();
     this.photoInp = React.createRef();
@@ -47,7 +47,7 @@ export default class OnBoardingForm extends Component {
           const formValues = {
             type: "drivers",
             name: this.nameInp.current.value,
-            email: this.emailInp.current.value,
+            // email: this.emailInp.current.value,
             phone: this.phoneInp.current.value,
             rate: this.rateForScroll.current.value,
             imageURL: downloadURL,
@@ -81,14 +81,14 @@ export default class OnBoardingForm extends Component {
             fullWidth
           />
         </div>
-        <div className="inputHolder">
+        {/* <div className="inputHolder">
           <TextField
             label="Email"
             required
             fullWidth
             inputRef={this.emailInp}
           />
-        </div>
+        </div> */}
         <div className="inputHolder">
           <TextField
             label="Phone Number"
