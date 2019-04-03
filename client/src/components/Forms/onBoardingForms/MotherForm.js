@@ -11,9 +11,10 @@ import OnboardingMotherMap from "../../OnboardingComponents/OnboardingMotherMap"
 
 export default class OnBoardingForm extends Component {
   state = {
-    hospital: "",
-    latitude: 0,
-    longitude: 0
+    route: {
+      start: "",
+      destination: ""
+    }
   };
 
   constructor(props) {
@@ -68,6 +69,7 @@ export default class OnBoardingForm extends Component {
 
   storeRoute = route => {
     console.log("MotherForm", route);
+    this.setState({ route });
   };
 
   render() {
