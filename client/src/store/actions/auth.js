@@ -69,9 +69,9 @@ export const initOnbrd = (user, formValues) => dispatch => {
       name,
       phone,
       user_type: type,
-      address: description ? description : address,
-      village: town,
-      email,
+      // address: description ? description : address,
+      // village: town,
+      // email,
       latitude,
       longitude
     }
@@ -81,7 +81,7 @@ export const initOnbrd = (user, formValues) => dispatch => {
     typeData = {
       user_type: "mother",
       motherData: {
-        due_date: dueDate,
+        // due_date: dueDate,
         hospital
       }
     };
