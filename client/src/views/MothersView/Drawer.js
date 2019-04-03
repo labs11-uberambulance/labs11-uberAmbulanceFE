@@ -21,12 +21,16 @@ const styles = {
 };
 
 class TemporaryDrawer extends React.Component {
-  state = {
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  };
+  constructor(props){
+    super(props)
+    this.state = {
+      top: false,
+      left: false,
+      bottom: false,
+      right: false,
+    };
+  }
+  
 
   toggleDrawer = (side, open) => () => {
     this.setState({
@@ -40,7 +44,7 @@ class TemporaryDrawer extends React.Component {
     const sideList = (
       <div className={classes.list}>
         <List>
-          {['Profile', 'Request Ride', 'Send email', 'Drafts'].map((text, index) => (
+          {[`Welcome `,'Profile', 'Request Ride', 'Send email', 'Drafts'].map((text, index) => (
             <ListItem button key={text}>
               
               <ListItemText primary={text} />
@@ -79,5 +83,13 @@ class TemporaryDrawer extends React.Component {
 TemporaryDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  user: state.user
+})
+
+const mapDispatchToProps = {
+  
+}
 
 export default withStyles(styles)(TemporaryDrawer);
