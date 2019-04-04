@@ -110,4 +110,4 @@ class MotherMap extends Component {
 }
 
 
-export default withStyles()(MotherMap);
+export default withStyles(styles)(MotherMap);

@@ -26,10 +26,10 @@ class App extends Component {
     messaging.requestPermission().then((result) => {
       return messaging.getToken();
     }).then(token => {
-      return axios.post('/api/users/notifications', {token});
+      return axios.post('/api/notifications/refresh-token', {token});
     }).catch(err => {
       console.error(err.message);
-      return axios.post('/api/users/notifications', {token: false});
+      return axios.post('/api/notifications/refresh-token', {token: false});
     })
   }
   render() {
@@ -83,7 +83,6 @@ class App extends Component {
         <button onClick={this.setTwilio}>Get Twilio Updates</button>
         <Button onClick={this.requestPushNotificationsPermission}>Sign Up for Push Notifications</Button>
         <OnNotification />
-        <MotherMap />
       </div>
     );
   }
