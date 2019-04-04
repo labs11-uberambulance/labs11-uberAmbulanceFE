@@ -27,7 +27,7 @@ class HomePage extends Component {
     const {name,phone} = this.props.user
     const info = {end,start,hospital,name,phone}
     console.log(info)
-    axios.post(`http://localhost:5000/api/rides/request/driver:${firebase_id}`, ({...info}) )
+    axios.post(`http://localhost:5000/api/rides/request/driver/${firebase_id}`, ({...info}) )
     this.setState({completed: true})
   }
 
