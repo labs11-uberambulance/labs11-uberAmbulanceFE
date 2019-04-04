@@ -15,22 +15,49 @@ export const initOauth = user => dispatch => {
       // GET to /api/user will check for user, create if not found.
       // returns found/created user data
       console.log("result: ", result);
-      const payload = {
-        userData: {
-          ...user,
-          ...result.data.user
-        },
-        driverData: {
-          ...result.data.driverData
-        },
-        motherData: {
-          ...result.data.motherData
-        }
-      };
-      dispatch({
-        type: authTypes.OAUTH_SUCCESS,
-        payload: payload
-      });
+      if (result.data.user.user_type === "drivers") {
+        // fetch rides data for drivers
+        axios
+          .get(`/api/rides/driver`)
+          .then(res => {
+            const rides = res.data;
+            const payload = {
+              userData: {
+                ...user,
+                ...result.data.user
+              },
+              driverData: {
+                ...result.data.driverData,
+                rides
+              }
+            };
+            dispatch({
+              type: authTypes.OAUTH_SUCCESS,
+              payload: payload
+            });
+          })
+          .catch(err => {
+            console.log(err);
+            dispatch({
+              type: authTypes.OAUTH_FAIL
+            });
+          });
+      } else {
+        // this is a mother or caregiver
+        const payload = {
+          userData: {
+            ...user,
+            ...result.data.user
+          },
+          motherData: {
+            ...result.data.motherData
+          }
+        };
+        dispatch({
+          type: authTypes.OAUTH_SUCCESS,
+          payload: payload
+        });
+      }
     })
     .catch(err => {
       console.log(err);
@@ -171,18 +198,18 @@ export const initUsrUpdate = (user, data) => dispatch => {
     .put(`/api/users/update/${userId}`, updates)
     .then(res => {
       const payload = {
-          user: {
-            ...user,
-            ...updates.user,
-            motherData: {
-              ...user.motherData,
-              ...updates.mother
-            },
-            driverData: {
-              ...user.driverData,
-              ...updates.driver
-            }
+        user: {
+          ...user,
+          ...updates.user,
+          motherData: {
+            ...user.motherData,
+            ...updates.mother
+          },
+          driverData: {
+            ...user.driverData,
+            ...updates.driver
           }
+        }
       };
       console.log("payload: ", payload);
       dispatch({
