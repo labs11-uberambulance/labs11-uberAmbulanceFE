@@ -58,7 +58,7 @@ class MotherMap extends Component {
       lat: place.geometry.location.lat(),
       lng: place.geometry.location.lng()
     };
-    this.props.setRideEnd && this.props.setRideEnd(location)
+    this.props.setRideEnd && this.props.setRideEnd(location, place)
     calcAndDisplayRoute(this.state.startCoords, location);
     this.props.storeRoute && this.props.storeRoute({
       start: {
