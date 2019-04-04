@@ -20,8 +20,9 @@ export default class OnBoardingForm extends Component {
     this.state = {
       file: null,
       rateInp: "",
-      latitude: 0,
-      longitude: 0
+      location: {
+        latlng: ""
+      }
     };
   }
 
@@ -67,8 +68,7 @@ export default class OnBoardingForm extends Component {
             phone: this.phoneInp.current.value,
             rate: this.rateForScroll.current.value,
             imageURL: downloadURL,
-            latitude: this.state.latitude,
-            longitude: this.state.longitude
+            location: this.state.location
           };
           this.props.onSubmitForm(this.props.user, formValues);
         });
@@ -77,11 +77,11 @@ export default class OnBoardingForm extends Component {
   };
 
   storeLatLng = latLng => {
-    const latLngArr = latLng.split(",");
     this.setState(state => ({
       ...state,
-      latitude: latLngArr[0],
-      longitude: latLngArr[1]
+      location: {
+        latlng: latLng
+      }
     }));
   };
 

@@ -12,13 +12,35 @@ export default (state = initialState, action) => {
       return state;
 
     case authTypes.OAUTH_SUCCESS:
-      return {
-        ...state,
-        user: {
-          ...action.payload
-        }
-      };
-
+      const usrType = action.payload.userData.user_type;
+      if (usrType === "drivers") {
+        return {
+          ...state,
+          user: {
+            ...action.payload.userData,
+            driverData: {
+              ...action.payload.driverData
+            }
+          }
+        };
+      } else if (usrType === "mothers") {
+        return {
+          ...state,
+          user: {
+            ...action.payload.userData,
+            motherData: {
+              ...action.payload.motherData
+            }
+          }
+        };
+      } else {
+        return {
+          ...state,
+          user: {
+            ...action.payload.userData
+          }
+        };
+      }
     case authTypes.OAUTH_LOGOUT:
       return initialState;
 
@@ -36,6 +58,24 @@ export default (state = initialState, action) => {
     case authTypes.ONBRD_FAIL:
       console.log("onboard fail reducer");
       return state;
+
+    case authTypes.USR_UPDATE_STARTING:
+      console.log("usr update start reducer");
+      return state;
+
+    case authTypes.USR_UPDATE_SUCCESS:
+      console.log("user update success reducer");
+      return {
+        ...state,
+        ...action.payload
+      };
+
+    case authTypes.USR_UPDATE_FAIL:
+      console.log("user updated fail reducer");
+      return {
+        ...state,
+        error: action.error
+      };
 
     default:
       return state;
