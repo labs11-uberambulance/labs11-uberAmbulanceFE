@@ -1,8 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import HomePage from "../../components/Drivers/HomePage";
+
 function DriversView() {
-  return <p>DriversView</p>;
+  return <HomePage />;
 }
 
 const mapStateToProps = state => ({

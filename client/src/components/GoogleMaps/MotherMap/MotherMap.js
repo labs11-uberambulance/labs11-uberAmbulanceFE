@@ -40,7 +40,7 @@ class MotherMap extends Component {
         return { search: "", places: null, markersSelected: [], locked: false };
       } else {
         const position = lockMarker();
-        this.props.setRideStart(position);
+        this.props.setRideStart && this.props.setRideStart(position);
         return { search: "", locked: true, startCoords: position };
       }
     });
@@ -59,7 +59,7 @@ class MotherMap extends Component {
       lng: place.geometry.location.lng()
     };
     calcAndDisplayRoute(this.state.startCoords, location);
-    this.props.storeRoute({
+    this.props.storeRoute && this.props.storeRoute({
       start: {
         latlng: `${this.state.startCoords.lat},${this.state.startCoords.lng}`
       },
