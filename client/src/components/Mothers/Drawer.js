@@ -45,9 +45,8 @@ class TemporaryDrawer extends React.Component {
     const sideList = (
       <div className={classes.list}>
         <List>
-          {[`Welcome ${this.props.user.name}`,'Profile', 'Request Ride', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              
+          {[`Welcome ${this.props.user.name}`,'Profile', 'Request Ride'].map((text, index) => (
+            <ListItem onClick={e=>console.log(e.target)} button key={text}>
               <ListItemText primary={text} />
             </ListItem>
           ))}
@@ -55,8 +54,7 @@ class TemporaryDrawer extends React.Component {
         <Divider />
         <List>
           {['Logout'].map((text, index) => (
-            <ListItem button key={text}>
-              
+            <ListItem onClick={e=>console.log(e.target,'logout')}button key={text}>
               <ListItemText primary={text} />
             </ListItem>
           ))}

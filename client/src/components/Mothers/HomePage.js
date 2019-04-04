@@ -6,6 +6,7 @@ import MotherMap from '../GoogleMaps/MotherMap/MotherMap'
 import { Button } from '@material-ui/core';
 import {getDrivers} from '../../store/actions/rides'
 import axios from 'axios'
+import MotherModal from './MotherModal'
 
 
 class HomePage extends Component {
@@ -18,7 +19,8 @@ class HomePage extends Component {
           selectedDriver: '',
           driverName: '',
           completed: false,
-          distance: ''
+          distance: '',
+          open: false
       }
   }
   submitFinalRideRequest = firebase_id =>{
@@ -30,7 +32,7 @@ class HomePage extends Component {
     const distance = this.state.distance;
     const info = {end,start,hospital,name,phone, distance}
     console.log(info)
-    axios.post(`http://localhost:5000/api/rides/request/driver:${firebase_id}`, ({...info}) )
+    axios.post(`http://localhost:5000/api/rides/request/driver/${firebase_id}`, ({...info}) )
     this.setState({completed: true})
   }
 
@@ -50,7 +52,6 @@ class HomePage extends Component {
   selectDriver = (e, id, name, distance) =>{
     this.setState({selectedDriver: id, driverName:name, distance: distance.text});
   }
-
   render() {
     return (
       // {this.state.completed ? <h1>Thanks for choosing BirthRide your driver will be contacting you shortly!</h1>
@@ -78,6 +79,8 @@ class HomePage extends Component {
         setRideStart={this.setRideStart}
         setRideEnd={this.setRideEnd}
       /> 
+    
+      <MotherModal user={this.props.user}/>
       </div> 
       </>
     )
