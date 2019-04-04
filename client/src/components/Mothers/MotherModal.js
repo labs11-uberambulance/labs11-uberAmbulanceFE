@@ -156,9 +156,6 @@ class ResponsiveDialog extends React.Component {
             </DialogContentText>
         </>
           }
-          {this.state.editing? <i className="far fa-edit"></i> : null}
-              
-              
              
           </DialogContent>
           <DialogActions>
