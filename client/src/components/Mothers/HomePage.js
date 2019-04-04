@@ -17,15 +17,17 @@ class HomePage extends Component {
           placeInfo: null,
           selectedDriver: '',
           driverName: '',
-          completed: false
+          completed: false,
+          distance: ''
       }
   }
   submitFinalRideRequest = firebase_id =>{
     const end = this.state.rideEnd;
     const start = this.state.rideStart;
     const hospital = this.state.placeInfo.name;
-    const {name,phone} = this.props.user
-    const info = {end,start,hospital,name,phone}
+    const {name,phone} = this.props.user;
+    const distance = this.state.distance;
+    const info = {end,start,hospital,name,phone, distance}
     console.log(info)
     axios.post(`http://localhost:5000/api/rides/request/driver:${firebase_id}`, ({...info}) )
     this.setState({completed: true})
@@ -44,8 +46,8 @@ class HomePage extends Component {
       console.log(test)
       this.setState({rideEnd: test.join(), placeInfo: place})
   }
-  selectDriver = (e, id, name) =>{
-    this.setState({selectedDriver: id, driverName:name,});
+  selectDriver = (e, id, name, distance) =>{
+    this.setState({selectedDriver: id, driverName:name, distance: distance.text});
   }
 
   render() {
@@ -66,7 +68,7 @@ class HomePage extends Component {
         <p>Pick A Driver: </p> 
         <p>{this.state.driverName ? `You've selected ${this.state.driverName} as your driver.`: null}</p>
         <div>{this.props.rides.map(ride=><button 
-        onClick={(e)=>this.selectDriver(e, ride.driver.firebase_id, ride.driver.name)}
+        onClick={(e)=>this.selectDriver(e, ride.driver.firebase_id, ride.driver.name, ride.distance)}
         key={ride.driver.id} >{ride.driver.name}</button>)}</div>
         </>
         :null
