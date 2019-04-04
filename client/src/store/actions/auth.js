@@ -1,5 +1,6 @@
 import { authTypes } from "./actionTypes";
 import axios from "../../axios-instance";
+import { auth } from "firebase";
 
 export const initOauth = user => dispatch => {
   // console.log(user);
@@ -154,6 +155,45 @@ export const initOnbrd = (user, formValues) => dispatch => {
       console.log(`error creating ${type} record: `, err);
       dispatch({
         type: authTypes.ONBRD_FAIL,
+        error: err
+      });
+    });
+};
+
+export const initUsrUpdate = (user, data) => dispatch => {
+  dispatch({
+    type: authTypes.USR_UPDATE_STARTING
+  });
+  const userId = user.id;
+  const updates = { ...data };
+  console.log("initUsrUpdate:", updates);
+  axios
+    .put(`/api/users/update/${userId}`, updates)
+    .then(res => {
+      const payload = {
+          user: {
+            ...user,
+            ...updates.user,
+            motherData: {
+              ...user.motherData,
+              ...updates.mother
+            },
+            driverData: {
+              ...user.driverData,
+              ...updates.driver
+            }
+          }
+      };
+      console.log("payload: ", payload);
+      dispatch({
+        type: authTypes.USR_UPDATE_SUCCESS,
+        payload
+      });
+    })
+    .catch(err => {
+      console.log(`error updating user id ${userId}'s data: `, err);
+      dispatch({
+        type: authTypes.USR_UPDATE_FAIL,
         error: err
       });
     });

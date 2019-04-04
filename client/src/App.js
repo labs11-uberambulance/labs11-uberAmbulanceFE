@@ -39,13 +39,6 @@ class App extends Component {
     let routes = (
       <Switch>
         <Route path="/" exact component={RegisterView} />
-        <Route path="/logout" component={Logout} />
-        <Route path="/onboarding" component={OnboardingView} />
-        <Route path="/drivers" component={DriversView} />
-        <Route path="/mothers" component={MothersView} />
-        <Route path="/destination" component={DestinationMap} />
-        <Route path="/location" component={OriginMap} />
-        <Route path="/newride" component={RequestRideView} />
         <Redirect to="/" />
       </Switch>
     );

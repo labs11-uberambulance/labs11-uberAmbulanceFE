@@ -59,6 +59,24 @@ export default (state = initialState, action) => {
       console.log("onboard fail reducer");
       return state;
 
+    case authTypes.USR_UPDATE_STARTING:
+      console.log("usr update start reducer");
+      return state;
+
+    case authTypes.USR_UPDATE_SUCCESS:
+      console.log("user update success reducer");
+      return {
+        ...state,
+        ...action.payload
+      };
+
+    case authTypes.USR_UPDATE_FAIL:
+      console.log("user updated fail reducer");
+      return {
+        ...state,
+        error: action.error
+      };
+
     default:
       return state;
   }
