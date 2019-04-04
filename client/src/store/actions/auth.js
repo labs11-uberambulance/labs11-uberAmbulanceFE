@@ -15,10 +15,16 @@ export const initOauth = user => dispatch => {
       // returns found/created user data
       console.log("result: ", result);
       const payload = {
-        ...user,
-        ...result.data.user,
-        ...result.data.motherData,
-        ...result.data.driverData
+        userData: {
+          ...user,
+          ...result.data.user
+        },
+        driverData: {
+          ...result.data.driverData
+        },
+        motherData: {
+          ...result.data.motherData
+        }
       };
       dispatch({
         type: authTypes.OAUTH_SUCCESS,
@@ -119,11 +125,15 @@ export const initOnbrd = (user, formValues) => dispatch => {
         .put(`/api/users/update/${user.id}`, userData)
         .then(res => {
           console.log(`success updating user record: ${res.body}`);
-          let payload = {
-            user: {
-              ...typeData,
-              ...user,
-              ...userData.user
+          const payload = {
+            userData: {
+              ...user
+            },
+            driverData: {
+              ...typeData.driverData
+            },
+            motherData: {
+              ...typeData.motherData
             }
           };
           console.log("payload: ", payload);
