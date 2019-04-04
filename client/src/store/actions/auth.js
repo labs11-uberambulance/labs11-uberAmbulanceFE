@@ -1,5 +1,6 @@
 import { authTypes } from "./actionTypes";
 import axios from "../../axios-instance";
+import { auth } from "firebase";
 
 export const initOauth = user => dispatch => {
   // console.log(user);
@@ -15,10 +16,16 @@ export const initOauth = user => dispatch => {
       // returns found/created user data
       console.log("result: ", result);
       const payload = {
-        ...user,
-        ...result.data.user,
-        ...result.data.motherData,
-        ...result.data.driverData
+        userData: {
+          ...user,
+          ...result.data.user
+        },
+        driverData: {
+          ...result.data.driverData
+        },
+        motherData: {
+          ...result.data.motherData
+        }
       };
       dispatch({
         type: authTypes.OAUTH_SUCCESS,
@@ -55,9 +62,9 @@ export const initOnbrd = (user, formValues) => dispatch => {
     caregiverName
   } = formValues;
   const location =
-    type === "mothers" || "caregivers"
-      ? JSON.stringify(route.start)
-      : "driver location";
+    type === "drivers"
+      ? JSON.stringify(formValues.location)
+      : JSON.stringify(route.start);
   // a user record was created automatically with first login but has no user info besides firebase ID.
   // the api checks if user type is set and will not allow creating a user type record if it is. Therefore, create the user type record before updating user record.
   // map formValues to api format:
@@ -82,6 +89,7 @@ export const initOnbrd = (user, formValues) => dispatch => {
     // console.log("create driver record");
     typeData = {
       user_type: "driver",
+      location,
       driverData: {
         price: rate,
         active: false, // initialize at false
@@ -118,11 +126,15 @@ export const initOnbrd = (user, formValues) => dispatch => {
         .put(`/api/users/update/${user.id}`, userData)
         .then(res => {
           console.log(`success updating user record: ${res.body}`);
-          let payload = {
-            user: {
-              ...typeData,
-              ...user,
-              ...userData.user
+          const payload = {
+            userData: {
+              ...user
+            },
+            driverData: {
+              ...typeData.driverData
+            },
+            motherData: {
+              ...typeData.motherData
             }
           };
           console.log("payload: ", payload);
@@ -143,6 +155,45 @@ export const initOnbrd = (user, formValues) => dispatch => {
       console.log(`error creating ${type} record: `, err);
       dispatch({
         type: authTypes.ONBRD_FAIL,
+        error: err
+      });
+    });
+};
+
+export const initUsrUpdate = (user, data) => dispatch => {
+  dispatch({
+    type: authTypes.USR_UPDATE_STARTING
+  });
+  const userId = user.id;
+  const updates = { ...data };
+  console.log("initUsrUpdate:", updates);
+  axios
+    .put(`/api/users/update/${userId}`, updates)
+    .then(res => {
+      const payload = {
+          user: {
+            ...user,
+            ...updates.user,
+            motherData: {
+              ...user.motherData,
+              ...updates.mother
+            },
+            driverData: {
+              ...user.driverData,
+              ...updates.driver
+            }
+          }
+      };
+      console.log("payload: ", payload);
+      dispatch({
+        type: authTypes.USR_UPDATE_SUCCESS,
+        payload
+      });
+    })
+    .catch(err => {
+      console.log(`error updating user id ${userId}'s data: `, err);
+      dispatch({
+        type: authTypes.USR_UPDATE_FAIL,
         error: err
       });
     });

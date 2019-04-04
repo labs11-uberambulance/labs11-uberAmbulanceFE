@@ -21,13 +21,13 @@ class OriginMap extends Component {
   originDeterminedHandler = () => {
     const originLatLng = fetchMarkerPosition();
     this.props.storeLatLng(originLatLng);
-    console.log(originLatLng);
+    // console.log(originLatLng);
   };
 
   render() {
     return (
       <div>
-        <div>
+        <div style={{ height: "500px" }}>
           <TextField
             inputRef={this.userInp}
             onKeyPress={this.searchForLocationHandler}
