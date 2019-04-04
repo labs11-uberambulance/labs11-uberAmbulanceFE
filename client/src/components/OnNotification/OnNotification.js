@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { messaging } from '../../firebase';
 import { withRouter } from 'react-router-dom';
 import { Paper, Typography, withStyles, Button } from '@material-ui/core';
+import axios from '../../axios-instance';
 import './OnNotification.css';
 
 const styles = ({palette}) => ({
@@ -25,8 +26,13 @@ class OnNotification extends Component {
     }
     onAcceptHandler = () => {
       // send acceptance to backend to update ride object (ride_id will be in 'data')
-
-      this.setState({ notification: null, data: null });
+      axios.get(`/api/rides/driver/accepts/${this.state.data.ride_id}`).then((result) => {
+        console.log(result)
+        this.setState({ notification: null, data: null });
+      }).catch((err) => {
+        console.log(err)
+        this.setState({ notification: null, data: null });
+      });
     }
 
   render() {
