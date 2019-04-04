@@ -22,6 +22,7 @@ class HomePage extends Component {
       }
   }
   submitFinalRideRequest = firebase_id =>{
+    console.log(this.state.placeInfo)
     const end = this.state.rideEnd;
     const start = this.state.rideStart;
     const hospital = this.state.placeInfo.name;
@@ -35,10 +36,10 @@ class HomePage extends Component {
 
 
   setRideStart = origin =>{
-      var test = []
-      test.push(Object.values(origin))
-      console.log(test)
-      this.setState({rideStart: test.join()})
+      var latlng = []
+      latlng.push(Object.values(origin))
+      console.log(latlng)
+      this.setState({rideStart: latlng.join()})
   }
   setRideEnd = (dest, place) =>{
        var test = []

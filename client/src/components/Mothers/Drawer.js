@@ -8,6 +8,7 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import {connect} from 'react-redux'
 
 
 
@@ -44,7 +45,7 @@ class TemporaryDrawer extends React.Component {
     const sideList = (
       <div className={classes.list}>
         <List>
-          {[`Welcome `,'Profile', 'Request Ride', 'Send email', 'Drafts'].map((text, index) => (
+          {[`Welcome ${this.props.user.name}`,'Profile', 'Request Ride', 'Send email', 'Drafts'].map((text, index) => (
             <ListItem button key={text}>
               
               <ListItemText primary={text} />
@@ -85,11 +86,10 @@ TemporaryDrawer.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.user
+  user: state.auth.user
 })
 
 const mapDispatchToProps = {
   
 }
-
-export default withStyles(styles)(TemporaryDrawer);
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(TemporaryDrawer));
