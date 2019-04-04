@@ -22,19 +22,15 @@ class App extends Component {
     axios.get("/api/twilio/text-me");
   };
   requestPushNotificationsPermission = () => {
-    messaging
-      .requestPermission()
-      .then(result => {
-        return messaging.getToken();
-      })
-      .then(token => {
-        return axios.post("/api/users/notifications", { token });
-      })
-      .catch(err => {
-        console.error(err.message);
-        return axios.post("/api/users/notifications", { token: false });
-      });
-  };
+    messaging.requestPermission().then((result) => {
+      return messaging.getToken();
+    }).then(token => {
+      return axios.post('/api/notifications/refresh-token', {token});
+    }).catch(err => {
+      console.error(err.message);
+      return axios.post('/api/notifications/refresh-token', {token: false});
+    })
+  }
   render() {
     let routes = (
       <Switch>

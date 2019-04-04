@@ -3,7 +3,7 @@ import "firebase/auth"
 import "firebase/storage"
 import "firebase/messaging";
 
-const sendTokenToServer = (token) => fetch('/api/users/notifications', { method: 'POST', body: {token} });
+const sendTokenToServer = (token) => fetch('/api/users/notifications/refresh-token', { method: 'POST', body: {token} });
 
 const config = {
     apiKey: process.env.REACT_APP_apiKey,
@@ -20,7 +20,6 @@ export const auth = firebase.auth();
 export const messaging = firebase.messaging();
 messaging.onTokenRefresh(() => {
     messaging.getToken().then((refreshToken) => {
-      console.log('refreshToken', refreshToken)
         return sendTokenToServer(refreshToken)
     }).catch((err) => {
         console.log(err);
