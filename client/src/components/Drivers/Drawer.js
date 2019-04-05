@@ -9,6 +9,11 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardActions from "@material-ui/core/CardActions";
+import DriverEditProfileModal from "./DriverEditProfileModal";
 
 const styles = {
   list: {
@@ -42,7 +47,20 @@ class TemporaryDrawer extends React.Component {
     const sideList = (
       <div className={classes.list}>
         <List>
-          {["Profile", "Ride History"].map((text, index) => (
+          <Card style={{ width: "140px", borderRadius: "100px" }}>
+            <CardActionArea onClick={this.toggleDrawer("left", true)}>
+              <CardMedia
+                component="img"
+                alt="DriverImg"
+                height="140"
+                width="140"
+                image={this.props.profileImg}
+                title="Driver"
+              />
+            </CardActionArea>
+          </Card>
+          <DriverEditProfileModal user={this.props.user} />
+          {["Ride History"].map((text, index) => (
             <ListItem button key={text}>
               <ListItemText primary={text} />
             </ListItem>
@@ -63,7 +81,18 @@ class TemporaryDrawer extends React.Component {
     );
     return (
       <div>
-        <Button onClick={this.toggleDrawer("left", true)}>Profile</Button>
+        <Card style={{ width: "140px", borderRadius: "100px" }}>
+          <CardActionArea onClick={this.toggleDrawer("left", true)}>
+            <CardMedia
+              component="img"
+              alt="DriverImg"
+              height="140"
+              width="140"
+              image={this.props.profileImg}
+              title="Driver"
+            />
+          </CardActionArea>
+        </Card>
         <Drawer
           open={this.state.left}
           onClose={this.toggleDrawer("left", false)}
@@ -73,9 +102,8 @@ class TemporaryDrawer extends React.Component {
             role="button"
             onClick={this.toggleDrawer("left", false)}
             onKeyDown={this.toggleDrawer("left", false)}
-          >
-            {sideList}
-          </div>
+          />
+          {sideList}
         </Drawer>
       </div>
     );

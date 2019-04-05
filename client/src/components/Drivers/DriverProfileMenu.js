@@ -1,10 +1,10 @@
-import React from 'react'
-import Drawer from './Drawer'
+import React from "react";
+import Drawer from "./Drawer";
 
-export default function MomProfileMenu() {
+export default function MomProfileMenu(props) {
   return (
     <div>
-      <Drawer/>
+      <Drawer user={props.user} profileImg={props.profileImg} />
     </div>
-  )
+  );
 }

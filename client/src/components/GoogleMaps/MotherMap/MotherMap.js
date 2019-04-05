@@ -41,6 +41,7 @@ class MotherMap extends Component {
       } else {
         const position = lockMarker();
         this.props.setRideStart && this.props.setRideStart(position);
+        console.log(position);
         return { search: "", locked: true, startCoords: position };
       }
     });

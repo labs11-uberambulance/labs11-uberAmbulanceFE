@@ -17,9 +17,24 @@ export default class HomePage extends Component {
   };
 
   render() {
+    const rides = this.props.user.driverData.rides.map(ride => {
+      const status_color = ride.ride_status === "complete" ? "green" : "red";
+      return (
+        <div key={ride.id}>
+          <h4> Ride: </h4>
+          <p>Mother {ride.mother_id}</p>
+          <p>From {ride.start}</p>
+          <p>To {ride.destination}</p>
+          <p style={{ color: status_color }}>Status: {ride.ride_status}</p>
+        </div>
+      );
+    });
     return (
       <div>
-        <DriverProfileMenu />
+        <DriverProfileMenu
+          user={this.props.user}
+          profileImg={this.props.user.driverData.photo_url}
+        />
         <Button
           color={this.props.user.driverData.active ? "secondary" : "primary"}
           variant="contained"
@@ -29,6 +44,14 @@ export default class HomePage extends Component {
         </Button>
         <p>Driver View</p>
         Welcome, {this.props.user.name}
+        <p>
+          You have set{" "}
+          <span style={{ color: "green" }}>
+            ${this.props.user.driverData.price}
+          </span>{" "}
+          as the maximum charge for a ride.
+        </p>
+        {rides}
       </div>
     );
   }
