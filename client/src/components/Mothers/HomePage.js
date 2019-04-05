@@ -5,7 +5,7 @@ import MomProfileMenu from './MomProfileMenu'
 import MotherMap from '../GoogleMaps/MotherMap/MotherMap'
 import { Button } from '@material-ui/core';
 import {getDrivers} from '../../store/actions/rides'
-import axios from 'axios'
+import axios from '../../axios-instance'
 import MotherModal from './MotherModal'
 
 
@@ -32,7 +32,7 @@ class HomePage extends Component {
     const distance = this.state.distance;
     const info = {end,start,hospital,name,phone, distance}
     console.log(info)
-    axios.post(`http://localhost:5000/api/rides/request/driver/${firebase_id}`, ({...info}) )
+    axios.post(`/api/rides/request/driver/${firebase_id}`, ({...info}) )
     this.setState({completed: true})
   }
 
