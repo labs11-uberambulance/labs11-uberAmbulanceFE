@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { messaging } from "../../firebase";
 import { withRouter } from "react-router-dom";
-import axios from "../../axios-instance";
 import { Paper, Typography, withStyles, Button } from "@material-ui/core";
+import axios from "../../axios-instance";
 import "./OnNotification.css";
 
 const styles = ({ palette }) => ({
