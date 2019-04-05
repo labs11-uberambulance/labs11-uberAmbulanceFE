@@ -5,7 +5,7 @@ import MomProfileMenu from './MomProfileMenu'
 import MotherMap from '../GoogleMaps/MotherMap/MotherMap'
 import { Button } from '@material-ui/core';
 import {getDrivers} from '../../store/actions/rides'
-import axios from 'axios'
+import axios from '../../axios-instance'
 
 
 class HomePage extends Component {
@@ -27,7 +27,7 @@ class HomePage extends Component {
     const {name,phone} = this.props.user
     const info = {end,start,hospital,name,phone}
     console.log(info)
-    axios.post(`http://localhost:5000/api/rides/request/driver/${firebase_id}`, ({...info}) )
+    axios.post(`/api/rides/request/driver/${firebase_id}`, ({...info}) )
     this.setState({completed: true})
   }
 
