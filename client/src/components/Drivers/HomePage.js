@@ -20,7 +20,7 @@ export default class HomePage extends Component {
     const rides = this.props.user.driverData.rides.map(ride => {
       const status_color = ride.ride_status === "complete" ? "green" : "red";
       return (
-        <div>
+        <div key={ride.id}>
           <h4> Ride: </h4>
           <p>Mother {ride.mother_id}</p>
           <p>From {ride.start}</p>
