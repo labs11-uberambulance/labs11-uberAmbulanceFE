@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { Paper, Typography, withStyles, Button } from '@material-ui/core';
 import axios from '../../axios-instance';
 import './OnNotification.css';
+import axios from '../../axios-instance'
 
 const styles = ({palette}) => ({
   root: {
