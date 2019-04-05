@@ -4,7 +4,7 @@ import Drawer from "./Drawer";
 export default function MomProfileMenu(props) {
   return (
     <div>
-      <Drawer profileImg={props.profileImg} />
+      <Drawer user={props.user} profileImg={props.profileImg} />
     </div>
   );
 }

@@ -31,7 +31,10 @@ export default class HomePage extends Component {
     });
     return (
       <div>
-        <DriverProfileMenu profileImg={this.props.user.driverData.photo_url} />
+        <DriverProfileMenu
+          user={this.props.user}
+          profileImg={this.props.user.driverData.photo_url}
+        />
         <Button
           color={this.props.user.driverData.active ? "secondary" : "primary"}
           variant="contained"
@@ -41,6 +44,13 @@ export default class HomePage extends Component {
         </Button>
         <p>Driver View</p>
         Welcome, {this.props.user.name}
+        <p>
+          You have set{" "}
+          <span style={{ color: "green" }}>
+            ${this.props.user.driverData.price}
+          </span>{" "}
+          as the maximum charge for a ride.
+        </p>
         {rides}
       </div>
     );
