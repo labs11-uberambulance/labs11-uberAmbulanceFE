@@ -31,7 +31,7 @@ export default class HomePage extends Component {
     });
     return (
       <div>
-        <DriverProfileMenu />
+        <DriverProfileMenu profileImg={this.props.user.driverData.photo_url} />
         <Button
           color={this.props.user.driverData.active ? "secondary" : "primary"}
           variant="contained"
