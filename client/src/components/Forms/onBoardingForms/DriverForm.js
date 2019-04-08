@@ -41,6 +41,15 @@ export default class OnBoardingForm extends Component {
     }
   };
 
+  storeLatLng = latLng => {
+    this.setState(state => ({
+      ...state,
+      location: {
+        latlng: latLng
+      }
+    }));
+  };
+
   submitForm = async () => {
     const image = this.state.file;
     const storageRef = firebase
@@ -74,16 +83,8 @@ export default class OnBoardingForm extends Component {
     );
   };
 
-  storeLatLng = latLng => {
-    this.setState(state => ({
-      ...state,
-      location: {
-        latlng: latLng
-      }
-    }));
-  };
-
   render() {
+    console.log("DriverForm Render: ", this.state.location.latlng);
     return (
       <div>
         <div className="inputHolder">
@@ -136,6 +137,14 @@ export default class OnBoardingForm extends Component {
           </div>
         </div>
         <DriverSetLocModal storeLatLng={this.storeLatLng} />
+        <p
+          style={{
+            color: "red",
+            display: this.state.location.latlng && "none"
+          }}
+        >
+          Required
+        </p>
         <Button
           type="button"
           color="primary"
@@ -143,6 +152,9 @@ export default class OnBoardingForm extends Component {
         >
           {this.state.file ? `${this.state.file.name}` : "Set Profile Image *"}
         </Button>
+        <p style={{ color: "red", display: this.state.file && "none" }}>
+          Required
+        </p>
         <input
           style={{ display: "none" }}
           accept="image/*"
