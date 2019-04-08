@@ -6,13 +6,12 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import { Button } from "@material-ui/core";
 import "./onBoardingForm.css";
 
-import OnboardingSetLocation from "../../OnboardingComponents/OnboardingSetLocation";
+import DriverSetLocModal from "./DriverSetLocModal";
 
 export default class OnBoardingForm extends Component {
   constructor(props) {
     super(props);
     this.nameInp = React.createRef();
-    // this.emailInp = React.createRef();
     this.phoneInp = React.createRef();
     this.addressInp = React.createRef();
     this.photoInp = React.createRef();
@@ -64,7 +63,6 @@ export default class OnBoardingForm extends Component {
           const formValues = {
             type: "drivers",
             name: this.nameInp.current.value,
-            // email: this.emailInp.current.value,
             phone: this.phoneInp.current.value,
             rate: this.rateForScroll.current.value,
             imageURL: downloadURL,
@@ -98,14 +96,6 @@ export default class OnBoardingForm extends Component {
             onKeyPress={e => this.onPressEnterHandler(e, this.phoneInp)}
           />
         </div>
-        {/* <div className="inputHolder">
-          <TextField
-            label="Email"
-            required
-            fullWidth
-            inputRef={this.emailInp}
-          />
-        </div> */}
         <div className="inputHolder">
           <TextField
             label="Phone Number"
@@ -119,9 +109,33 @@ export default class OnBoardingForm extends Component {
             onKeyPress={e => this.onPressEnterHandler(e, this.photoInp)}
             helperText="This will be the number that mothers will use to contact you."
           />
+          <br />
+          <div className="inputHolder" style={{ paddingTop: "0" }}>
+            <TextField
+              label="Rate per 10km"
+              required
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">$</InputAdornment>
+                )
+              }}
+              inputRef={this.rateForScroll}
+              value={this.state.rateInp}
+              onChange={e => {
+                this.setState({ rateInp: e.target.value });
+              }}
+              helperText={`We recommend $2${
+                this.state.rateInp !== ""
+                  ? `, you pledge to never charge more than $${
+                      this.state.rateInp
+                    } per 10km.`
+                  : "."
+              }`}
+            />
+          </div>
         </div>
-        Set your location:
-        <OnboardingSetLocation storeLatLng={this.storeLatLng} />
+        <DriverSetLocModal storeLatLng={this.storeLatLng} />
         <Button
           type="button"
           color="primary"
@@ -137,34 +151,14 @@ export default class OnBoardingForm extends Component {
           onChange={this.fileUploadHandler}
         />
         <br />
-        <br />
-        <div className="inputHolder" style={{ paddingTop: "0" }}>
-          <TextField
-            label="Rate per 10km"
-            required
-            fullWidth
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">$</InputAdornment>
-              )
-            }}
-            inputRef={this.rateForScroll}
-            value={this.state.rateInp}
-            onChange={e => {
-              this.setState({ rateInp: e.target.value });
-            }}
-            helperText={`We recommend $2${
-              this.state.rateInp !== ""
-                ? `, you pledge to never charge more than $${
-                    this.state.rateInp
-                  } per 10km.`
-                : "."
-            }`}
-          />
-          <Button type="button" color="secondary" onClick={this.submitForm}>
-            Submit
-          </Button>
-        </div>
+        <Button
+          disabled={!this.state.file || !this.state.location.latlng}
+          type="button"
+          color="secondary"
+          onClick={this.submitForm}
+        >
+          Submit
+        </Button>
       </div>
     );
   }

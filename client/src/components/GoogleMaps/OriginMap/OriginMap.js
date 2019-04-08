@@ -27,16 +27,20 @@ class OriginMap extends Component {
   render() {
     // console.log(this.props.latInit, this.props.lngInit);
     return (
-      <div>
-        <div style={{ height: "500px" }}>
-          <TextField
-            inputRef={this.userInp}
-            onKeyPress={this.searchForLocationHandler}
-          />
-          <div id="map" />
+      <>
+        <div>
+          <div style={{ height: "500px" }}>
+            <TextField
+              inputRef={this.userInp}
+              onKeyPress={this.searchForLocationHandler}
+            />
+            <div id="map" />
+          </div>
         </div>
-        <Button onClick={this.originDeterminedHandler}>Set Location</Button>
-      </div>
+        <Button color="primary" onClick={this.originDeterminedHandler}>
+          Set Location
+        </Button>
+      </>
     );
   }
   componentDidMount() {
