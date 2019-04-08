@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import DriverProfileMenu from "./DriverProfileMenu";
 import { Button } from "@material-ui/core";
+import DriverUpdateLocation from "./DriverUpdateLocation";
 
 export default class HomePage extends Component {
   constructor(props) {
@@ -13,6 +14,18 @@ export default class HomePage extends Component {
   handleStatusClick = () => {
     this.props.usrUpdate(this.props.user, {
       driver: { active: !this.props.user.driverData.active }
+    });
+  };
+
+  handleUpdateDriverLoc = driverLatLng => {
+    console.log("update driver loc to: ", driverLatLng);
+    // {"latlng":"0.9445402714964785,33.08937988281251"}
+    this.props.usrUpdate(this.props.user, {
+      user: {
+        location: {
+          latlng: `${driverLatLng}`
+        }
+      }
     });
   };
 
@@ -29,6 +42,9 @@ export default class HomePage extends Component {
         </div>
       );
     });
+    const driverLocArr = this.props.user.location.latlng.split(",");
+    const driverLat = parseFloat(driverLocArr[0]);
+    const driverLng = parseFloat(driverLocArr[1]);
     return (
       <div>
         <DriverProfileMenu
@@ -51,6 +67,11 @@ export default class HomePage extends Component {
           </span>{" "}
           as the maximum charge for a ride.
         </p>
+        <DriverUpdateLocation
+          latInit={driverLat}
+          lngInit={driverLng}
+          storeLatLng={driverLatLng => this.handleUpdateDriverLoc(driverLatLng)}
+        />
         {rides}
       </div>
     );
