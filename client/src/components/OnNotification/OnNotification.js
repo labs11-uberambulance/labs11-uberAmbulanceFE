@@ -21,7 +21,13 @@ class OnNotification extends Component {
 
   onRejectHandler = () => {
     // send rejection to backend to update ride object (ride_id will be in 'data')
-
+    axios.post(`/api/rides/driver/rejects/${this.state.data.ride_id}`, { ...this.state }).then(result => {
+      console.log(result);
+      this.setState({ notification: null, data: null });
+    }).catch(err => {
+      console.log(err);
+      this.setState({ notification: null, data: null });
+    });
     this.setState({ notification: null, data: null });
   };
   onAcceptHandler = () => {
