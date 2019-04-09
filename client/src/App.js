@@ -14,16 +14,6 @@ import OnNotification from "./components/OnNotification/OnNotification";
 import "./App.css";
 
 class App extends Component {
-  // requestPushNotificationsPermission = () => {
-  //   messaging.requestPermission().then((result) => {
-  //     return messaging.getToken();
-  //   }).then(token => {
-  //     return axios.post('/api/notifications/refresh-token', {token});
-  //   }).catch(err => {
-  //     console.error(err.message);
-  //     return axios.post('/api/notifications/refresh-token', {token: false});
-  //   })
-  // }
   render() {
     let routes = (
       <Switch>

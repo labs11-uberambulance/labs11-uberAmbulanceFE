@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import firebase, { auth, googleProvider } from "../../firebase";
-
+import intlTelInput from 'intl-tel-input';
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Input from "@material-ui/core/Input";
@@ -66,7 +66,6 @@ class OauthForm extends Component {
       .confirm(this.state.inputCode)
       .catch(err => console.error(err));
   };
-
   render() {
     return (
       <div className="authentication-background">
@@ -118,13 +117,16 @@ class OauthForm extends Component {
               {this.props.signup ? "Sign up " : "Log in "} with Phone
             </Button>
           )}
-          {this.state.usingPhone && (
             <TextField
               required
               value={this.state.phoneNumber}
+              style={ this.state.usingPhone ? {marginLeft: "0"} : {width: "0px", opacity: "0"}}
+              inputRef={this.phoneInp}
               InputProps={{
                 placeholder: "(  )    -    ",
-                inputComponent: TextMaskCustom
+                inputComponent: TextMaskCustom,
+                type: "tel",
+                id: "phone"
               }}
               name="phoneNumber"
               onBlur={() => {
@@ -135,7 +137,6 @@ class OauthForm extends Component {
               onKeyPress={(e) => { e.key==="Enter" && this.initOauthWithPhone()}}
               onChange={this.inputChangeHandler}
             />
-          )}
         </form>
         {this.state.verifyCode && (
           <Modal open={this.state.verifyCode}>
@@ -180,6 +181,7 @@ class OauthForm extends Component {
       inputCode: "",
       errorMessage: null,
     };
+    this.phoneInp = React.createRef();
     this.emailInp = React.createRef();
     this.passwordInp = React.createRef();
   }
@@ -193,6 +195,8 @@ class OauthForm extends Component {
       "sign-captcha",
       { size: "invisible" }
     );
+    const iti = intlTelInput(this.phoneInp.current, { initialCountry: "ug" })
+    this.setState({ iti })
   };
   componentWillUnmount = () => {
     window.recaptchaVerifier = null;
