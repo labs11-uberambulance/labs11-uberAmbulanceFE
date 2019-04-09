@@ -41,7 +41,7 @@ class OauthForm extends Component {
   }
 
   initOauthWithPhone = e => {
-    e.preventDefault();
+    console.log('HERE')
     const appVerifier = window.recaptchaVerifier;
     const firebaseNumber = normalizePhone(`+1${this.state.phoneNumber}`);
     if (!firebaseNumber) {
@@ -70,7 +70,7 @@ class OauthForm extends Component {
   render() {
     return (
       <div className="authentication-background">
-        <form onSubmit={this.initOauthWithPhone} className="auth-form">
+        <form className="auth-form">
         <div className="manual-auth">
           <TextField 
             autoFocus
@@ -89,6 +89,7 @@ class OauthForm extends Component {
             label="Password"
           />
           <Button 
+            type="button"
             className="login-button" 
             color="primary"
             onClick={ this.props.signup ? this.createEmailPasswordAccount : this.signInEmailPassword }>
@@ -128,9 +129,10 @@ class OauthForm extends Component {
               name="phoneNumber"
               onBlur={() => {
                 this.setState(prevState => ({
-                  usingPhone: !prevState.usingPhone
+                  usingPhone: !prevState.usingPhone, phoneNumber:''
                 }));
               }}
+              onKeyPress={(e) => { e.key==="Enter" && this.initOauthWithPhone()}}
               onChange={this.inputChangeHandler}
             />
           )}
