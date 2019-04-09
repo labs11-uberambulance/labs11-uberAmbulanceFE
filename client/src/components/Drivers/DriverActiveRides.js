@@ -22,11 +22,7 @@ const styles = {
 class DriverActiveRides extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      activeRides: this.props.user.driverData.rides.filter(
-        ride => ride.status != "complete"
-      )
-    };
+    this.state = {};
   }
 
   onRejectHandler = (id, rideData) => {
@@ -52,6 +48,7 @@ class DriverActiveRides extends Component {
         this.props.usrUpdate(this.props.user, {
           driver: { active: false }
         });
+        // need to do this since ride data is not automatically updated on application state with update to user data.
         this.props.refreshUserData(this.props.user);
       })
       .catch(err => {
@@ -61,8 +58,10 @@ class DriverActiveRides extends Component {
 
   render() {
     const { classes } = this.props;
-    // console.log("driverActiveRides, ", navigator.languages[0]);
-    const rideRequests = this.state.activeRides.map(ride => {
+    const activeRides = this.props.user.driverData.rides.filter(
+      ride => ride.status != "complete"
+    );
+    const rideRequests = activeRides.map(ride => {
       if (ride.ride_status === "waiting_on_driver") {
         const rideDestLoc = ride.destName
           ? ride.destName.plus_code.compound_code
