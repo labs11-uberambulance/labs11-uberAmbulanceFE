@@ -1,9 +1,12 @@
 import React, { Component } from "react";
-import firebase from "../../../firebase";
-import TextField from "@material-ui/core/TextField";
+import firebase, { messaging } from "../../../firebase";
+import axios from '../../../axios-instance';
+import {TextField } from "@material-ui/core";
+import { normalizePhone } from './Styling';
 import { TextMaskCustom } from "../Styling";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { Button } from "@material-ui/core";
+import intlTelInput from 'intl-tel-input';
 import "./onBoardingForm.css";
 
 import DriverSetLocModal from "./DriverSetLocModal";
@@ -21,7 +24,9 @@ export default class OnBoardingForm extends Component {
       rateInp: "",
       location: {
         latlng: ""
-      }
+      },
+      notificationsOn: false,
+      iti: null
     };
   }
 
@@ -40,7 +45,18 @@ export default class OnBoardingForm extends Component {
       this.scrollToNextInputHandler(nextInp);
     }
   };
-
+  requestPushNotificationsPermission = () => {
+    messaging.requestPermission().then((result) => {
+      return messaging.getToken();
+    }).then(token => {
+      this.setState({ notificationsOn: true })
+      return axios.post('/api/notifications/refresh-token', {token});
+    }).catch(err => {
+      console.error(err.message);
+      this.setState({ notificationsOn: false })
+      return axios.post('/api/notifications/refresh-token', {token: false});
+    })
+  }
   storeLatLng = latLng => {
     this.setState(state => ({
       ...state,
@@ -51,6 +67,9 @@ export default class OnBoardingForm extends Component {
   };
 
   submitForm = async () => {
+    const countryData = this.state.iti.getSelectedCountryData();
+    const { dialCode } = countryData
+    const phone = normalizePhone(`+${dialCode}${this.phoneInp.current.value}`);
     const image = this.state.file;
     const storageRef = firebase
       .storage()
@@ -71,8 +90,7 @@ export default class OnBoardingForm extends Component {
         return uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
           const formValues = {
             type: "drivers",
-            name: this.nameInp.current.value,
-            phone: this.phoneInp.current.value,
+            name: this.nameInp.current.value, phone,
             rate: this.rateForScroll.current.value,
             imageURL: downloadURL,
             location: this.state.location
@@ -86,7 +104,7 @@ export default class OnBoardingForm extends Component {
   render() {
     console.log("DriverForm Render: ", this.state.location.latlng);
     return (
-      <div>
+      <div style={{padding: "60px"}}>
         <div className="inputHolder">
           <TextField
             autoFocus
@@ -103,7 +121,9 @@ export default class OnBoardingForm extends Component {
             required
             InputProps={{
               placeholder: "(  )    -    ",
-              inputComponent: TextMaskCustom
+              inputComponent: TextMaskCustom,
+              type: "tel",
+              id: "phone"
             }}
             fullWidth
             inputRef={this.phoneInp}
@@ -163,14 +183,20 @@ export default class OnBoardingForm extends Component {
           onChange={this.fileUploadHandler}
         />
         <br />
-        <Button
+        {this.state.notificationsOn && <Button
           disabled={!this.state.file || !this.state.location.latlng}
           type="button"
           color="secondary"
           onClick={this.submitForm}
         >
           Submit
-        </Button>
+        </Button>}
+        {!this.state.notificationsOn && <Button
+          type="button"
+          onClick={this.requestPushNotificationsPermission}
+        >
+          Notification
+        </Button>}
       </div>
     );
   }
@@ -181,4 +207,10 @@ export default class OnBoardingForm extends Component {
       return { file: e.target.files[0] };
     }, this.scrollToNextInputHandler(this.rateForScroll));
   };
+  componentDidMount() {
+    const iti = intlTelInput(this.phoneInp.current, {
+      initialCountry: "ug"
+    })
+    this.setState({ iti })
+  }
 }
