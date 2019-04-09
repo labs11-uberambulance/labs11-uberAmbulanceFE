@@ -32,6 +32,7 @@ class App extends Component {
         <Redirect to="/" />
       </Switch>
     );
+    console.log(this.props.user)
     if (this.props.user.ftoken) {
       const userType = this.props.user.user_type;
       console.log(this.props.user.user_type)
