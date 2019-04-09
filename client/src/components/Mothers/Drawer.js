@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { withRouter } from 'react-router-dom';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
@@ -9,6 +10,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import {connect} from 'react-redux'
+import MotherModal from './MotherModal'
 
 
 
@@ -54,7 +56,7 @@ class TemporaryDrawer extends React.Component {
         <Divider />
         <List>
           {['Logout'].map((text, index) => (
-            <ListItem onClick={e=>console.log(e.target,'logout')}button key={text}>
+            <ListItem onClick={() => {this.props.history.push('/logout')}}button key={text}>
               <ListItemText primary={text} />
             </ListItem>
           ))}
@@ -73,6 +75,7 @@ class TemporaryDrawer extends React.Component {
           >
             {sideList}
           </div>
+          <MotherModal user={this.props.user}/>
         </Drawer>
       </div>
     );
@@ -90,4 +93,4 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(TemporaryDrawer));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(TemporaryDrawer)));

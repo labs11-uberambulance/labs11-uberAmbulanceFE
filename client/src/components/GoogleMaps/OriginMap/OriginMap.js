@@ -25,21 +25,30 @@ class OriginMap extends Component {
   };
 
   render() {
+    // console.log(this.props.latInit, this.props.lngInit);
     return (
-      <div>
-        <div style={{ height: "500px" }}>
-          <TextField
-            inputRef={this.userInp}
-            onKeyPress={this.searchForLocationHandler}
-          />
-          <div id="map" />
+      <>
+        <div>
+          <div style={{ height: "500px" }}>
+            <TextField
+              inputRef={this.userInp}
+              onKeyPress={this.searchForLocationHandler}
+            />
+            <div id="map" />
+          </div>
         </div>
-        <Button onClick={this.originDeterminedHandler}>Set Location</Button>
-      </div>
+        <Button color="primary" onClick={this.originDeterminedHandler}>
+          Set Location
+        </Button>
+      </>
     );
   }
   componentDidMount() {
-    initGoogleScript();
+    // console.log("CDM Origin Map: ", this.props.latInit, this.props.lngInit);
+    // pass in latInit, lngInit to set origin at custom point, otherwise default value is set.
+    const lat = this.props.latInit || 1.453;
+    const lng = this.props.lngInit || 32.697;
+    initGoogleScript(lat, lng);
   }
   componentWillUnmount() {
     destroyGoogleScript();
