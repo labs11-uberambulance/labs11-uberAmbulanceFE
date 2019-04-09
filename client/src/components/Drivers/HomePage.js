@@ -42,7 +42,10 @@ export default class HomePage extends Component {
             profileImg={this.props.user.driverData.photo_url}
           />
           <DriverHUD user={this.props.user} usrUpdate={this.props.usrUpdate} />
-          <DriverActiveRides user={this.props.user} />
+          <DriverActiveRides
+            user={this.props.user}
+            usrUpdate={this.props.usrUpdate}
+          />
         </Grid>
         Your current Location: <br />
         (search or adjust pin and press "Set Location" to update)
