@@ -52,7 +52,9 @@ class HomePage extends Component {
   selectDriver = (e, id, name, distance) =>{
     this.setState({selectedDriver: id, driverName:name, distance: distance.text});
   }
+
   render() {
+    console.log(this.props.user)
     return (
       // {this.state.completed ? <h1>Thanks for choosing BirthRide your driver will be contacting you shortly!</h1>
       // :
@@ -60,7 +62,6 @@ class HomePage extends Component {
       {this.state.selectedDriver.length>1 ? <button onClick={e=>this.submitFinalRideRequest(this.state.selectedDriver)}>Final Request</button> :null }
       <div>
         <MomProfileMenu/>
-            <p className="welcome">MothersView</p>
         {this.state.rideStart && this.state.rideEnd ?
         <Button onClick={e=>this.props.getDrivers(this.state.rideStart)}>Request Ride</Button> :
         null

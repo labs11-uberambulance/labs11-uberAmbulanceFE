@@ -80,7 +80,7 @@ class MotherMap extends Component {
     };
     return (
       <>
-        <div style={{ margin: "0 auto", width: "550px" }}>
+        <div style={{ margin: "0 auto", width: "100%" }}>
           <p>
             {this.state.locked
               ? "Search for your destination"
@@ -102,7 +102,7 @@ class MotherMap extends Component {
               style={!this.state.locked ? { opacity: 0, width: 0 } : {}}
             />
           </div>
-          <div className="google-maps-container" style={{ height: "500px" }}>
+          <div className="google-maps-container" style={{ height: "100vh" }}>
             <div id="map" />
             <Button
               onClick={this.toggleMarkLockHandler}
