@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { messaging } from "../../firebase";
-import { withRouter } from "react-router-dom";
+// import { withRouter } from "react-router-dom";
 import { Paper, Typography, withStyles, Button } from "@material-ui/core";
 import axios from "../../axios-instance";
 import "./OnNotification.css";

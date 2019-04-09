@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import firebase, { messaging } from "./firebase";
+import { auth } from "./firebase";
 import actions from "./store/actions";
 import RegisterView from "./views/AuthenticationView/RegisterView";
 import OnboardingView from "./views/OnboardingView/OnboardingView";
@@ -34,24 +34,19 @@ class App extends Component {
     );
     if (this.props.user.ftoken) {
       const userType = this.props.user.user_type;
-      // routes = (
-      //   <Switch>
-      //     <Route path="/logout" component={Logout} />
-      //     {userType === "drivers" && <Redirect from="/" exact to="/drivers" />}
-      //     {userType === "drivers" && (
-      //       <Redirect from="/onboarding" exact to="/drivers" />
-      //     )}
-      //     {userType === "mothers" && <Redirect from="/" exact to="/mothers" />}
-      //     {userType === "mothers" && (
-      //       <Redirect from="/onboarding" exact to="/mothers" />
-      //     )}
-      //     <Route path="/onboarding" component={OnboardingView} />
-      //     {!userType && <Redirect exact to="/onboarding" />}
-      //     <Route path="/drivers" component={DriversView} />
-      //     <Route path="/mothers" component={MothersView} />
-      //     <Route path="/newride" component={RequestRideView} />
-      //   </Switch>
-      // );
+      console.log(this.props.user.user_type)
+      routes = (
+        <Switch>
+          <Route path="/onboarding" component={OnboardingView} />
+          {!userType && <Redirect exact to="/onboarding" />}
+          <Route path="/drivers" component={DriversView} />
+          <Route path="/mothers" component={MothersView} />
+          <Route path="/newride" component={RequestRideView} />
+          <Route path="/logout" component={Logout} />
+          { userType === "drivers" && <Redirect to="/drivers" />}
+          { userType === "mothers" && <Redirect to="/mothers" />}
+        </Switch>
+      );
     }
 
     return (
@@ -62,7 +57,7 @@ class App extends Component {
     );
   }
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
+    auth.onAuthStateChanged(user => {
       if (user) {
         const { uid, ra } = user;
         if (user.email) {
