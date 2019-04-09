@@ -14,6 +14,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardActions from "@material-ui/core/CardActions";
 import DriverEditProfileModal from "./DriverEditProfileModal";
+import DriverRideHistoryModal from "./DriverRideHistoryModal";
 
 const styles = {
   list: {
@@ -60,11 +61,7 @@ class TemporaryDrawer extends React.Component {
             </CardActionArea>
           </Card>
           <DriverEditProfileModal user={this.props.user} />
-          {["Ride History"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <DriverRideHistoryModal user={this.props.user} />
         </List>
         <Divider />
         <List>

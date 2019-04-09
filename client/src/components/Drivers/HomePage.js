@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import Grid from "@material-ui/core/Grid";
 import DriverProfileMenu from "./DriverProfileMenu";
-import { Button } from "@material-ui/core";
+import DriverHUD from "./DriverHUD";
+import DriverActiveRides from "./DriverActiveRides";
 import DriverUpdateLocation from "./DriverUpdateLocation";
 
 export default class HomePage extends Component {
@@ -10,12 +12,6 @@ export default class HomePage extends Component {
       nothing: ""
     };
   }
-
-  handleStatusClick = () => {
-    this.props.usrUpdate(this.props.user, {
-      driver: { active: !this.props.user.driverData.active }
-    });
-  };
 
   handleUpdateDriverLoc = driverLatLng => {
     console.log("update driver loc to: ", driverLatLng);
@@ -30,49 +26,35 @@ export default class HomePage extends Component {
   };
 
   render() {
-    const rides = this.props.user.driverData.rides.map(ride => {
-      const status_color = ride.ride_status === "complete" ? "green" : "red";
-      return (
-        <div key={ride.id}>
-          <h4> Ride: </h4>
-          <p>Mother {ride.mother_id}</p>
-          <p>From {ride.start}</p>
-          <p>To {ride.destination}</p>
-          <p style={{ color: status_color }}>Status: {ride.ride_status}</p>
-        </div>
-      );
-    });
     const driverLocArr = this.props.user.location.latlng.split(",");
     const driverLat = parseFloat(driverLocArr[0]);
     const driverLng = parseFloat(driverLocArr[1]);
     return (
       <div>
-        <DriverProfileMenu
-          user={this.props.user}
-          profileImg={this.props.user.driverData.photo_url}
-        />
-        <Button
-          color={this.props.user.driverData.active ? "secondary" : "primary"}
-          variant="contained"
-          onClick={this.handleStatusClick}
+        <Grid
+          container
+          direction="row"
+          justify="space-around"
+          alignItems="center"
         >
-          {this.props.user.driverData.active ? "Set Inactive" : "Set Active"}
-        </Button>
-        <p>Driver View</p>
-        Welcome, {this.props.user.name}
-        <p>
-          You have set{" "}
-          <span style={{ color: "green" }}>
-            ${this.props.user.driverData.price}
-          </span>{" "}
-          as the maximum charge for a ride.
-        </p>
+          <DriverProfileMenu
+            user={this.props.user}
+            profileImg={this.props.user.driverData.photo_url}
+          />
+          <DriverHUD user={this.props.user} usrUpdate={this.props.usrUpdate} />
+          <DriverActiveRides
+            user={this.props.user}
+            usrUpdate={this.props.usrUpdate}
+            refreshUserData={this.props.refreshUserData}
+          />
+        </Grid>
+        Your current Location: <br />
+        (search or adjust pin and press "Set Location" to update)
         <DriverUpdateLocation
           latInit={driverLat}
           lngInit={driverLng}
           storeLatLng={driverLatLng => this.handleUpdateDriverLoc(driverLatLng)}
         />
-        {rides}
       </div>
     );
   }

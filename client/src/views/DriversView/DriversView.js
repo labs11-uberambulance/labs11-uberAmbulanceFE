@@ -6,7 +6,13 @@ import HomePage from "../../components/Drivers/HomePage";
 
 function DriversView(props) {
   console.log("DriverView ", props.user);
-  return <HomePage user={props.user} usrUpdate={props.usrUpdate} />;
+  return (
+    <HomePage
+      user={props.user}
+      usrUpdate={props.usrUpdate}
+      refreshUserData={props.refreshUserData}
+    />
+  );
 }
 
 const mapStateToProps = state => ({
@@ -15,7 +21,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    usrUpdate: (user, data) => dispatch(actions.auth.initUsrUpdate(user, data))
+    usrUpdate: (user, data) => dispatch(actions.auth.initUsrUpdate(user, data)),
+    refreshUserData: user => dispatch(actions.auth.initOauth(user))
   };
 };
 
