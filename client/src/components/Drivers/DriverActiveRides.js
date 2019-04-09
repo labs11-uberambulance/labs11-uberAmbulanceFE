@@ -29,7 +29,9 @@ class DriverActiveRides extends Component {
           <div key={ride.id}>
             Date {moment(ride.updated_at).format("LLLL")}
             <br />
-            To {ride.destName.plus_code.compound_code}
+            To{" "}
+            {ride.destName.plus_code.compound_code &&
+              ride.destName.plus_code.compound_code}
             <p style={{ color: "red" }}>Status: {ride.ride_status}</p>
           </div>
         );
