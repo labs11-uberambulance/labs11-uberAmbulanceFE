@@ -45,6 +45,7 @@ export default class HomePage extends Component {
           <DriverActiveRides
             user={this.props.user}
             usrUpdate={this.props.usrUpdate}
+            refreshUserData={this.props.refreshUserData}
           />
         </Grid>
         Your current Location: <br />

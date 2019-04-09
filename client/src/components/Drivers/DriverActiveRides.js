@@ -52,6 +52,7 @@ class DriverActiveRides extends Component {
         this.props.usrUpdate(this.props.user, {
           driver: { active: false }
         });
+        this.props.refreshUserData(this.props.user);
       })
       .catch(err => {
         console.log(err);
