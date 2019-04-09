@@ -30,18 +30,6 @@ export default class HomePage extends Component {
   };
 
   render() {
-    const rides = this.props.user.driverData.rides.map(ride => {
-      const status_color = ride.ride_status === "complete" ? "green" : "red";
-      return (
-        <div key={ride.id}>
-          <h4> Ride: </h4>
-          <p>Mother {ride.mother_id}</p>
-          <p>From {ride.start}</p>
-          <p>To {ride.destination}</p>
-          <p style={{ color: status_color }}>Status: {ride.ride_status}</p>
-        </div>
-      );
-    });
     const driverLocArr = this.props.user.location.latlng.split(",");
     const driverLat = parseFloat(driverLocArr[0]);
     const driverLng = parseFloat(driverLocArr[1]);
@@ -63,7 +51,7 @@ export default class HomePage extends Component {
         <p>
           You have set{" "}
           <span style={{ color: "green" }}>
-            ${this.props.user.driverData.price}
+            USh{this.props.user.driverData.price}
           </span>{" "}
           as the maximum charge for a ride.
         </p>
@@ -72,7 +60,6 @@ export default class HomePage extends Component {
           lngInit={driverLng}
           storeLatLng={driverLatLng => this.handleUpdateDriverLoc(driverLatLng)}
         />
-        {rides}
       </div>
     );
   }
