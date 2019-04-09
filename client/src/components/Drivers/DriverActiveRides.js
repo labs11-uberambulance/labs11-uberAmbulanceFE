@@ -25,13 +25,14 @@ class DriverActiveRides extends Component {
     // console.log("driverActiveRides, ", navigator.languages[0]);
     const rides = this.props.user.driverData.rides.map(ride => {
       if (ride.ride_status != "complete") {
+        const rideDestLoc = ride.destName
+          ? ride.destName.plus_code.compound_code
+          : "Unknown Location";
         return (
           <div key={ride.id}>
-            Date {moment(ride.updated_at).format("LLLL")}
+            Date: {moment(ride.updated_at).format("LLLL")}
             <br />
-            To{" "}
-            {ride.destName.plus_code.compound_code &&
-              ride.destName.plus_code.compound_code}
+            To: {rideDestLoc}
             <p style={{ color: "red" }}>Status: {ride.ride_status}</p>
           </div>
         );
