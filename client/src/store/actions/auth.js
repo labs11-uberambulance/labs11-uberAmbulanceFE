@@ -1,6 +1,5 @@
 import { authTypes } from "./actionTypes";
 import axios from "../../axios-instance";
-import { auth } from "firebase";
 
 export const initOauth = user => dispatch => {
   // console.log(user);

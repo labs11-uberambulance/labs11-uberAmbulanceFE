@@ -1,0 +1,30 @@
+.landing-header {
+    display: flex;
+    width: 100vw;
+}
+.landing-header > nav {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.landing-header > nav ul {
+    display: flex;
+    width: fit-content;
+    align-items: baseline;
+    margin-right: 2rem;
+}
+.landing-header ul > li > a {
+    padding: 4px 5px;
+    margin: 0 calc(3vw - 10px);
+    color: black;
+}
+
+.landing-header ul > li > button {
+    height: 1.9rem;
+    width: 5.3rem;
+    color: white;
+    font-size: 1rem;
+    background: linear-gradient(to right, rgba(103, 58, 183, 0.6), rgba(33, 150, 243, 0.6));
+    border-radius: 5px;
+    cursor: pointer;
+}
