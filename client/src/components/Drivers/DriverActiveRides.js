@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { withStyles } from "@material-ui/core/styles";
-
 import moment from "moment";
 
 const styles = {
@@ -30,9 +29,7 @@ class DriverActiveRides extends Component {
           <div key={ride.id}>
             Date {moment(ride.updated_at).format("LLLL")}
             <br />
-            Price "PUT THE REAL PRICE HERE"
-            <br />
-            To {ride.destination}
+            To {ride.destName.plus_code.compound_code}
             <p style={{ color: "red" }}>Status: {ride.ride_status}</p>
           </div>
         );
