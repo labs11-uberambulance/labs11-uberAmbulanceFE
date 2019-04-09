@@ -3,6 +3,8 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { withStyles } from "@material-ui/core/styles";
 
+import moment from "moment";
+
 const styles = {
   card: {
     minWidth: 275,
@@ -21,12 +23,15 @@ class DriverActiveRides extends Component {
 
   render() {
     const { classes } = this.props;
+    // console.log("driverActiveRides, ", navigator.languages[0]);
     const rides = this.props.user.driverData.rides.map(ride => {
       if (ride.ride_status != "complete") {
         return (
           <div key={ride.id}>
-            Date {ride.updated_at}
-            From {ride.start}
+            Date {moment(ride.updated_at).format("LLLL")}
+            <br />
+            Price "PUT THE REAL PRICE HERE"
+            <br />
             To {ride.destination}
             <p style={{ color: "red" }}>Status: {ride.ride_status}</p>
           </div>
