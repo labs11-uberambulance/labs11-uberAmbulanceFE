@@ -1,63 +1,41 @@
 import React, { Component } from "react";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import firebase, { messaging } from "./firebase";
+import { auth } from "./firebase";
 import actions from "./store/actions";
-import axios from "./axios-instance";
 import RegisterView from "./views/AuthenticationView/RegisterView";
 import OnboardingView from "./views/OnboardingView/OnboardingView";
 import DriversView from "./views/DriversView/DriversView";
 import MothersView from "./views/MothersView/MothersView";
 import RequestRideView from "./views/RequestRideView/RequestRideView";
-import DestinationMap from "./components/GoogleMaps/DestinationMap/DestinationMap";
-import OriginMap from "./components/GoogleMaps/OriginMap/OriginMap";
-
-import "./App.css";
+import LandingView from './views/LandingView/LandingView';
 import Logout from "./views/AuthenticationView/Logout";
-import { Button } from "@material-ui/core";
 import OnNotification from "./components/OnNotification/OnNotification";
+import "./App.css";
 
 class App extends Component {
-  setTwilio = () => {
-    axios.get("/api/twilio/text-me");
-  };
-  requestPushNotificationsPermission = () => {
-    messaging.requestPermission().then((result) => {
-      return messaging.getToken();
-    }).then(token => {
-      return axios.post('/api/notifications/refresh-token', {token});
-    }).catch(err => {
-      console.error(err.message);
-      return axios.post('/api/notifications/refresh-token', {token: false});
-    })
-  }
   render() {
     let routes = (
       <Switch>
-        <Route path="/" exact component={RegisterView} />
+        <Route path="/" exact component={LandingView} />
+        <Route path={["/register", "/login"]} component={RegisterView} />
         <Redirect to="/" />
       </Switch>
     );
+    console.log(this.props.user)
     if (this.props.user.ftoken) {
       const userType = this.props.user.user_type;
+      console.log(this.props.user.user_type)
       routes = (
         <Switch>
-          <Route path="/logout" component={Logout} />
-          {userType === "drivers" && <Redirect from="/" exact to="/drivers" />}
-          {userType === "drivers" && (
-            <Redirect from="/onboarding" exact to="/drivers" />
-          )}
-          {userType === "mothers" && <Redirect from="/" exact to="/mothers" />}
-          {userType === "mothers" && (
-            <Redirect from="/onboarding" exact to="/mothers" />
-          )}
           <Route path="/onboarding" component={OnboardingView} />
           {!userType && <Redirect exact to="/onboarding" />}
           <Route path="/drivers" component={DriversView} />
           <Route path="/mothers" component={MothersView} />
-          <Route path="/destination" component={DestinationMap} />
-          <Route path="/location" component={OriginMap} />
           <Route path="/newride" component={RequestRideView} />
+          <Route path="/logout" component={Logout} />
+          { userType === "drivers" && <Redirect to="/drivers" />}
+          { userType === "mothers" && <Redirect to="/mothers" />}
         </Switch>
       );
     }
@@ -65,24 +43,12 @@ class App extends Component {
     return (
       <div className="App">
         {routes}
-        <button
-          type="button"
-          onClick={() => {
-            this.props.history.push("/logout");
-          }}
-        >
-          Logout
-        </button>
-        <button onClick={this.setTwilio}>Get Twilio Updates</button>
-        <Button onClick={this.requestPushNotificationsPermission}>
-          Sign Up for Push Notifications
-        </Button>
         <OnNotification />
       </div>
     );
   }
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
+    auth.onAuthStateChanged(user => {
       if (user) {
         const { uid, ra } = user;
         if (user.email) {

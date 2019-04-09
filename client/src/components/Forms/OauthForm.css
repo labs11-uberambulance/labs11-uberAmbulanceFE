@@ -1,0 +1,48 @@
+.authentication-background {
+    background: rgb(121, 121, 121);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-form {
+    background-color: white;
+    height: 500px;
+    width: 400px;
+    padding: 5rem;
+    border-radius: 8px;
+    animation: auth-form;
+    animation-duration: .3s;
+}
+.manual-auth {
+    margin-bottom: 1rem;
+}
+button.google-button {
+    width:100%;
+}
+button.phone-button {
+    width: 100%;
+    margin-top: 1rem;
+}
+button.google-button:hover {
+    box-shadow: 0px 10px 49px -26px rgba(0,0,0,0.75);
+}
+button.phone-button:hover {
+    box-shadow: 0px 10px 49px -26px rgba(0,0,0,0.75);
+    
+}
+button.login-button {
+    width:100%;
+    margin-top: 10px;
+}
+
+@keyframes auth-form {
+    from {
+        transform: translateY(-500px);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
