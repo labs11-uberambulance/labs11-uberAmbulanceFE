@@ -208,15 +208,6 @@ class MotherMap extends Component {
             return { markersSelected: markers }
         })
     }
-    // // componentDidMount() {
-    // //     initGoogleScript(this.passPlacesToComponent, this.markerSelectedHandler, this.state.lat, this.state.lng)
-    // //     setTimeout(()=>{
-    // //         calcAndDisplayRoute({lat: 0.918607, lng: 33.409670999999996}, {lat: 0.988607, lng: 33.509670999999996})
-    // //     }, 1000)
-    // // }
-    // componentWillUnmount() {
-    //     destroyGoogleScript()
-    // }
 }
 
 const mapStateToProps = (state) => ({
