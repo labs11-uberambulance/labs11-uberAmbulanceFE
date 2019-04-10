@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
 import { TextMaskCustom } from "../Styling";
+import { normalizePhone }  from './Styling';
+import intlTelInput from 'intl-tel-input';
 import "./onBoardingForm.css";
 
 import OnboardingMotherMap from "../../OnboardingComponents/OnboardingMotherMap";
@@ -12,7 +14,8 @@ export default class OnBoardingForm extends Component {
     route: {
       start: "",
       destination: ""
-    }
+    },
+    iti: null
   };
 
   constructor(props) {
@@ -39,10 +42,13 @@ export default class OnBoardingForm extends Component {
 
   submitForm = e => {
     e.preventDefault();
+    const countryData = this.state.iti.getSelectedCountryData();
+    const { dialCode } = countryData
+    const phone = normalizePhone(`+${dialCode}${this.phoneInp.current.value}`);
     const formValues = {
       type: "mothers",
       name: this.nameInp.current.value,
-      phone: this.phoneInp.current.value,
+      phone,
       ...this.state
     };
     this.props.onSubmitForm(this.props.user, formValues);
@@ -58,7 +64,7 @@ export default class OnBoardingForm extends Component {
       <>
         Plan your ride:
         <OnboardingMotherMap storeRoute={this.storeRoute} />
-        <form onSubmit={this.submitForm}>
+        <form onSubmit={this.submitForm} style={{padding: "60px"}}>
           <div className="inputHolder">
             <TextField
               autoFocus
@@ -72,10 +78,13 @@ export default class OnBoardingForm extends Component {
           </div>
           <div className="inputHolder">
             <TextField
+              required
               label="Phone Number"
               InputProps={{
                 placeholder: "(  )    -    ",
-                inputComponent: TextMaskCustom
+                inputComponent: TextMaskCustom,
+                type: "tel",
+                id: "phone"
               }}
               fullWidth
               inputRef={this.phoneInp}
@@ -88,5 +97,11 @@ export default class OnBoardingForm extends Component {
         </form>
       </>
     );
+  }
+  componentDidMount() {
+    const iti = intlTelInput(this.phoneInp.current, {
+      initialCountry: "ug"
+    })
+    this.setState({ iti })
   }
 }

@@ -1,79 +1,101 @@
 import React, { Component } from "react";
+import Grid from "@material-ui/core/Grid";
 import DriverProfileMenu from "./DriverProfileMenu";
-import { Button } from "@material-ui/core";
+import DriverHUD from "./DriverHUD";
+import DriverActiveRides from "./DriverActiveRides";
 import DriverUpdateLocation from "./DriverUpdateLocation";
+import RouteMap from "../../components/GoogleMaps/RouteMap/RouteMap";
+import DriverInactive from "./DriverInactive";
+import DriverActiveNoRide from "./DriverActiveNoRide";
+import DriverActiveOnRide from "./DriverActiveOnRide";
 
 export default class HomePage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      nothing: ""
-    };
+    this.state = {};
   }
 
-  handleStatusClick = () => {
-    this.props.usrUpdate(this.props.user, {
-      driver: { active: !this.props.user.driverData.active }
-    });
-  };
-
-  handleUpdateDriverLoc = driverLatLng => {
-    console.log("update driver loc to: ", driverLatLng);
-    // {"latlng":"0.9445402714964785,33.08937988281251"}
-    this.props.usrUpdate(this.props.user, {
-      user: {
-        location: {
-          latlng: `${driverLatLng}`
-        }
-      }
-    });
-  };
+  // handleUpdateDriverLoc = driverLatLng => {
+  //   console.log("update driver loc to: ", driverLatLng);
+  //   // {"latlng":"0.9445402714964785,33.08937988281251"}
+  //   this.props.usrUpdate(this.props.user, {
+  //     user: {
+  //       location: {
+  //         latlng: `${driverLatLng}`
+  //       }
+  //     }
+  //   });
+  // };
 
   render() {
-    const rides = this.props.user.driverData.rides.map(ride => {
-      const status_color = ride.ride_status === "complete" ? "green" : "red";
-      return (
-        <div key={ride.id}>
-          <h4> Ride: </h4>
-          <p>Mother {ride.mother_id}</p>
-          <p>From {ride.start}</p>
-          <p>To {ride.destination}</p>
-          <p style={{ color: status_color }}>Status: {ride.ride_status}</p>
-        </div>
-      );
-    });
-    const driverLocArr = this.props.user.location.latlng.split(",");
-    const driverLat = parseFloat(driverLocArr[0]);
-    const driverLng = parseFloat(driverLocArr[1]);
-    return (
-      <div>
-        <DriverProfileMenu
+    // const driverLocArr = this.props.user.location.latlng.split(",");
+    // const driverLat = parseFloat(driverLocArr[0]);
+    // const driverLng = parseFloat(driverLocArr[1]);
+
+    // const currentRide = this.props.user.driverData.rides.filter(
+    //   ride => ride.ride_status === "Driver en route"
+    // );
+    // let relevantMap = (
+    //   <DriverUpdateLocation
+    //     latInit={driverLat}
+    //     lngInit={driverLng}
+    //     storeLatLng={driverLatLng => this.handleUpdateDriverLoc(driverLatLng)}
+    //   />
+    // );
+    // if (currentRide.length) {
+    //   relevantMap = (
+    //     <RouteMap
+    //       start={this.props.user.location.latlng}
+    //       stop={currentRide[0].start}
+    //     />
+    //   );
+    // }
+    let relevantView = (
+      <DriverInactive user={this.props.user} usrUpdate={this.props.usrUpdate} />
+    );
+    const activeRides = this.props.user.driverData.rides.filter(
+      ride => ride.ride_status === "Driver en route"
+    );
+    const rideRequests = this.props.user.driverData.rides.filter(
+      ride => ride.ride_status === "waiting_on_driver"
+    );
+    if (activeRides.length > 0) {
+      relevantView = (
+        <DriverActiveOnRide
           user={this.props.user}
-          profileImg={this.props.user.driverData.photo_url}
+          currentRide={activeRides[0]}
         />
-        <Button
-          color={this.props.user.driverData.active ? "secondary" : "primary"}
-          variant="contained"
-          onClick={this.handleStatusClick}
+      );
+    } else if (rideRequests.length > 0) {
+      relevantView = (
+        <DriverActiveNoRide
+          user={this.props.user}
+          usrUpdate={this.props.usrUpdate}
+        />
+      );
+    }
+    return (
+      <>
+        {relevantView}
+        {/* <Grid
+          container
+          direction="row"
+          justify="space-around"
+          alignItems="center"
         >
-          {this.props.user.driverData.active ? "Set Inactive" : "Set Active"}
-        </Button>
-        <p>Driver View</p>
-        Welcome, {this.props.user.name}
-        <p>
-          You have set{" "}
-          <span style={{ color: "green" }}>
-            ${this.props.user.driverData.price}
-          </span>{" "}
-          as the maximum charge for a ride.
-        </p>
-        <DriverUpdateLocation
-          latInit={driverLat}
-          lngInit={driverLng}
-          storeLatLng={driverLatLng => this.handleUpdateDriverLoc(driverLatLng)}
-        />
-        {rides}
-      </div>
+          <DriverProfileMenu
+            user={this.props.user}
+            profileImg={this.props.user.driverData.photo_url}
+          />
+          <DriverHUD user={this.props.user} usrUpdate={this.props.usrUpdate} />
+          <DriverActiveRides
+            user={this.props.user}
+            usrUpdate={this.props.usrUpdate}
+            refreshUserData={this.props.refreshUserData}
+          />
+        </Grid>
+        {relevantMap} */}
+      </>
     );
   }
 }

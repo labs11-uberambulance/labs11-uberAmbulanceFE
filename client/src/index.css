@@ -1,3 +1,4 @@
+@import "../node_modules/intl-tel-input/build/css/intlTelInput.css";
 body {
   margin: 0;
   padding: 0;
@@ -11,4 +12,15 @@ li, a{
 
 * {
   box-sizing: border-box;
+}
+.iti-flag {background-image: url("../node_modules//intl-tel-input/build/img/flags.png");}
+ 
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .iti-flag {background-image: url("../node_modules//intl-tel-input/build/img/flags@2x.png");}
+}
+div.flag-container {
+  left: -50px !important;
+}
+input[type="tel"] {
+  padding-left: 0 !important;
 }

@@ -74,8 +74,6 @@ class ResponsiveDialog extends React.Component {
   };
   render() {
     const { fullScreen } = this.props;
-
-    /// START HERE...update form to match state
     return (
       <div>
         <Button
