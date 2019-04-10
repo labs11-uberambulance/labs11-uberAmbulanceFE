@@ -5,5 +5,6 @@ import ridesReducer from './rides'
 
 export default combineReducers({
   auth: authReducer,
-  rides: ridesReducer
+  rides: ridesReducer,
+  
 });

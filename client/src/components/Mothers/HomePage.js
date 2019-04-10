@@ -49,6 +49,9 @@ class HomePage extends Component {
   selectDriver = (e, id, name, distance) =>{
     this.setState({selectedDriver: id, driverName:name, distance: distance.text});
   }
+  removeDriver = ()=>{
+    this.setState({selectedDriver: '', driverName:"", distance: ""})
+  }
 
   render() {
     console.log(this.props.user)
@@ -57,23 +60,19 @@ class HomePage extends Component {
       {this.state.selectedDriver.length>1 ? <button onClick={e=>this.submitFinalRideRequest(this.state.selectedDriver)}>Final Request</button> :null }
       <div>
         <MomProfileMenu/>
-        {this.state.rideStart && this.state.rideEnd ?
-        <Button onClick={e=>this.props.getDrivers(this.state.rideStart)}>Request Ride</Button> :
-        null
-        }
-        {this.props.rides.length>0 ? 
-        <>
-        <p>Pick A Driver: </p> 
-        <p>{this.state.driverName ? `You've selected ${this.state.driverName} as your driver.`: null}</p>
-        <div>{this.props.rides.map(ride=><button 
-        onClick={(e)=>this.selectDriver(e, ride.driver.firebase_id, ride.driver.name, ride.distance)}
-        key={ride.driver.id} >{ride.driver.name}</button>)}</div>
-        </>
-        :null
-        }
+
         <MotherMap 
         setRideStart={this.setRideStart}
         setRideEnd={this.setRideEnd}
+        selectDriver={this.selectDriver}
+        getDrivers={this.props.getDrivers}
+        submitFinalRideRequest={this.submitFinalRideRequest}
+        rideStart={this.state.rideStart}
+        selectDriver={this.selectDriver}
+        selectedDriver={this.state.selectedDriver}
+        submitFinalRideRequest={this.submitFinalRideRequest}
+        removeDriver = {this.removeDriver}
+        driverName={this.state.driverName}
       /> 
     
       </div> 

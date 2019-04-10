@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {connect} from 'react-redux'
-
+import { clearRides } from "../../../store/actions/rides";
 
 
 import {TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, withStyles } from "@material-ui/core";
@@ -18,8 +18,17 @@ import "./MotherMap.css";
 const styles = ({ palette }) => ({
   root: {
     zIndex: "40",
+    color: palette.primary.contrastText,
+    backgroundColor: palette.primary.dark,
+    width: "90%",
+    margin: "0 auto"
+  },
+  firstButton: {
+    zIndex: "40",
     color: palette.secondary.contrastText,
-    backgroundColor: palette.secondary.dark
+    backgroundColor: palette.secondary.dark,
+    width: "90%",
+    margin: "0 auto"
   },
   hidden:{
     opacity: 0,
@@ -45,10 +54,15 @@ class MotherMap extends Component {
       lat: Number(this.props.user.location.latlng.split(",")[0]),
       lng: Number(this.props.user.location.latlng.split(",")[1]),
       open: true,
-      toggleModal: false
+      toggleModal: false,
     };
   }
-
+  goBack= () =>{
+    this.setState({
+      search: ""
+    })
+    this.props.clearRides()
+  }
   handleClickOpen = () => {
     this.setState({ toggleModal: true });
   };
@@ -104,80 +118,83 @@ class MotherMap extends Component {
       fullWidth: true
     };
     return (
-      <>
-        <div style={{ margin: "0 auto", width: "97.5%" }}>
-          <div className="google-maps-container" style={{ }}>
-            <div id="map" />
-            <div className="reqBox">
-            {this.state.locked? <i className="fas fa-arrow-circle-left" onClick={this.toggleMarkLockHandler}></i>:null}
-            
-              <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-               {!this.state.locked? `Your Location: ${this.state.startCoords.lat},  ${this.state.startCoords.lng}` : `Set Destination`}
-              </Button>
-              {this.state.locked?
-              <Button>Request Drivers</Button>
-              :
-              <Button
-              onClick={this.toggleMarkLockHandler}
-              className={this.props.classes.root}
-              color="secondary"
-            
+      <div style={{ margin: "0 auto", width: "97.5%" }}>
+        <div className="google-maps-container" style={{ }}>
+          <div id="map" />
+            <div className={this.state.locked?"reqBoxTwo" :"reqBox"}
+
             >
-              {this.state.locked && "Un"}Lock Marker
-            </Button>
+            {!this.props.selectedDriver ? this.props.rides.length>0 ?
+                <> 
+                <i className="fas fa-arrow-circle-left" onClick={()=>this.goBack()}></i>
+                
+                {this.props.rides.map(ride=><button onClick={(e)=>this.props.selectDriver(e, ride.driver.firebase_id, ride.driver.name, ride.distance)}
+            key={ride.driver.id} >{ride.driver.name}</button>)} 
+                </>
+            :
+              <>{this.state.locked? <i className="fas fa-arrow-circle-left" onClick={this.toggleMarkLockHandler}></i>:null}
+                <Button
+                  mx="auto"
+                 className={this.props.classes.firstButton}
+                 onClick={this.handleClickOpen}>
+                  {!this.state.locked? `Search Pickup Location: ${this.state.startCoords.lat},  ${this.state.startCoords.lng}` : `Set Destination`}
+                </Button>
+                {this.state.locked? null :<Button mx="auto" onClick={this.toggleMarkLockHandler} className={this.props.classes.root} color="secondary" >Confirm Pickup</Button>}
+              </>
+            : 
+            <>
+             <i className="fas fa-arrow-circle-left" onClick={()=>this.props.removeDriver()}></i>
+            <Button onClick={()=>this.props.submitFinalRideRequest(this.state.selectedDriver)}>Final Request with {this.props.driverName}</Button>
+            </>
             }
-              
             </div>
-          </div>
-        </div>
-        <div className={this.state.toggleModal?this.props.classes.show:this.props.classes.hidden}>
-        <Dialog
-          // fullScreen={fullScreen}
-          open={this.state.open}
-          className={this.state.toggleModal?this.props.classes.show:this.props.classes.hidden}
-          fullWidth
-          onClose={this.handleClose}
-          aria-labelledby="responsive-dialog-title"
-        >
-          <h3 id="responsive-dialog-title">{!this.state.locked?'Search Pick Up Location': "Search Destinations"}</h3>
-          <TextField
+            <div className={this.state.toggleModal?this.props.classes.show:this.props.classes.hidden}>
+              <Dialog
+              // fullScreen={fullScreen}
+              open={this.state.open}
+              className={this.state.toggleModal?this.props.classes.show:this.props.classes.hidden}
+              fullWidth
+              onClose={this.handleClose}
+              aria-labelledby="responsive-dialog-title"
+              >
+              <h3 id="responsive-dialog-title">{!this.state.locked?'Search Pick Up Location': "Search Destinations"}</h3>
+              <TextField
               label="Search for your location"
               {...commonTextProps}
               onKeyPress={this.searchForLocationHandler}
               // need to always have this rendered so when google tries to connect to it we dont get an error
               // since React hasn't placed it on the DOM.
               style={this.state.locked ? { display: "none" } : {}}
-            />
-            <TextField
+              />
+              <TextField
               id="google-search"
               label="Search for your destination"
               {...commonTextProps}
               style={!this.state.locked ? { opacity: 0, width: 0 } : {}}
-            />
-            <div>
-            {this.state.places && (
-              <GooglePlacesList
-                places={Array.isArray(places) ? places : [places]}
-                setDestination={this.mapOutRoute}
               />
-            )}
-            </div>
-          <div className="modal-btns">
-            <Button onClick={this.handleClose} color="primary">
+              <div>
+              {this.state.places && (
+              <GooglePlacesList
+              places={Array.isArray(places) ? places : [places]}
+              setDestination={this.mapOutRoute}
+              getDrivers={this.props.getDrivers}
+              rideStart={this.props.rideStart}
+              handleClose={this.handleClose}
+              />
+              )}
+              </div>
+              <div className="modal-btns">
+              <Button onClick={this.handleClose} color="primary">
               Disagree
-            </Button>
-            <Button onClick={this.handleClose} color="primary" autoFocus>
+              </Button>
+              <Button onClick={this.handleClose} color="primary" autoFocus>
               Agree
-            </Button>
-          </div>
-        </Dialog>
-       
+              </Button>
+              </div>
+              </Dialog>
+            </div>
         </div>
-
-
-
-
-      </>
+      </div>
     );
   }
   //   call backs for getting places and markers clicked
@@ -211,12 +228,13 @@ class MotherMap extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.auth.user
+  user: state.auth.user,
+  rides: state.rides.rides
 })
 
 const mapDispatchToProps = {
-  
+  clearRides
 }
 
 
-export default connect(mapStateToProps)(withStyles(styles)(MotherMap));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(MotherMap));

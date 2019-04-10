@@ -24,3 +24,7 @@ export const createRide = (start, destination) => dispatch => {
     )
     .catch(err => dispatch({ type: rideTypes.CREATE_RIDE_FAIL, payload: err }));
 };
+
+export const clearRides = ()=> dispatch =>{
+  dispatch({ type: rideTypes.CLEAR_RIDES});
+}

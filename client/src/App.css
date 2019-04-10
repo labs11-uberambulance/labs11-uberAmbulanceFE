@@ -7,17 +7,31 @@
 }
 .fa-arrow-circle-left{
   font-size: 2rem;
+  width: 10%;
 }
 .reqBox{
   width: 50%;
-  height: 250px;
+  height: 175px;
   border: 3px solid purple;
-  color: purple;
-  background: pink;
   z-index: 10;
   display: flex;
   flex-direction: column;
+  justify-items: center;
 }
+.w-90{
+  width: 90%
+}
+.reqBoxTwo{
+    width: 50%;
+    height: 175px;
+    border: 3px solid purple;
+    z-index: 10;
+    display: flex;
+    align-items: flex-start;
+    justify-items: center;
+}
+
+
 .MuiDialog-paperFullWidth-63{
   height: 100%;
 }
