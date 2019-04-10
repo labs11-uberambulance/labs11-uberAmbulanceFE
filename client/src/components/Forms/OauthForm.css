@@ -46,3 +46,11 @@ button.login-button {
         transform: translateY(0);
     }
 }
+
+@media (max-width: 450px) {
+    .auth-form {
+        width: 90vw;
+        max-width: 360px;
+        padding: 5rem 1.5rem;
+    }
+}
