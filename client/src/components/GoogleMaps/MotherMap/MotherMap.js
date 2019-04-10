@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {connect} from 'react-redux'
-import RequestBox from './RequestBox.js'
+
 
 
 import {TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, withStyles } from "@material-ui/core";
@@ -109,10 +109,14 @@ class MotherMap extends Component {
           <div className="google-maps-container" style={{ }}>
             <div id="map" />
             <div className="reqBox">
-              <h1>This is a test</h1>
+            {this.state.locked? <i className="fas fa-arrow-circle-left" onClick={this.toggleMarkLockHandler}></i>:null}
+            
               <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-                Your Location: {this.state.startCoords.lat},  {this.state.startCoords.lng}
+               {!this.state.locked? `Your Location: ${this.state.startCoords.lat},  ${this.state.startCoords.lng}` : `Set Destination`}
               </Button>
+              {this.state.locked?
+              <Button>Request Drivers</Button>
+              :
               <Button
               onClick={this.toggleMarkLockHandler}
               className={this.props.classes.root}
@@ -121,6 +125,8 @@ class MotherMap extends Component {
             >
               {this.state.locked && "Un"}Lock Marker
             </Button>
+            }
+              
             </div>
           </div>
         </div>

@@ -5,7 +5,9 @@
   z-index: 1;
   font-size: 3rem;
 }
-
+.fa-arrow-circle-left{
+  font-size: 2rem;
+}
 .reqBox{
   width: 50%;
   height: 250px;
