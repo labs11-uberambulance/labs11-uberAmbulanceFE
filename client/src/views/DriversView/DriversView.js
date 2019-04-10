@@ -7,11 +7,13 @@ import HomePage from "../../components/Drivers/HomePage";
 function DriversView(props) {
   console.log("DriverView ", props.user);
   return (
-    <HomePage
-      user={props.user}
-      usrUpdate={props.usrUpdate}
-      refreshUserData={props.refreshUserData}
-    />
+    <>
+      <HomePage
+        user={props.user}
+        usrUpdate={props.usrUpdate}
+        refreshUserData={props.refreshUserData}
+      />
+    </>
   );
 }
 
