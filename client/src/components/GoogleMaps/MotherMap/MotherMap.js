@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import RequestBox from './RequestBox.js'
 
 
-import { Button, withStyles } from "@material-ui/core";
+import {TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, withStyles } from "@material-ui/core";
 import GooglePlacesList from "../../GooglePlacesList/GooglePlacesList";
 import {
   initGoogleScript,
@@ -17,12 +17,17 @@ import "./MotherMap.css";
 
 const styles = ({ palette }) => ({
   root: {
-    position: "absolute",
     zIndex: "40",
-    top: "10px",
-    left: "5px",
     color: palette.secondary.contrastText,
     backgroundColor: palette.secondary.dark
+  },
+  hidden:{
+    opacity: 0,
+    zIndex:-10
+  },
+  show:{
+    opacity: 1,
+    zIndex: 20
   }
 });
 class MotherMap extends Component {
@@ -33,13 +38,21 @@ class MotherMap extends Component {
       search: "",
       markersSelected: [],
       locked: false,
-      startCoords: null,
+      startCoords: {lat: Number(this.props.user.location.latlng.split(",")[0]), lng:Number(this.props.user.location.latlng.split(",")[1])},
       lat: Number(this.props.user.location.latlng.split(",")[0]),
-      lng: Number(this.props.user.location.latlng.split(",")[1])
+      lng: Number(this.props.user.location.latlng.split(",")[1]),
+      open: true,
+      toggleModal: false
     };
   }
 
-  // {32.092681121826146}
+  handleClickOpen = () => {
+    this.setState({ toggleModal: true });
+  };
+
+  handleClose = () => {
+    this.setState({ toggleModal: false });
+  };
 
   toggleMarkLockHandler = () => {
     this.setState(({ locked }) => {
@@ -92,14 +105,21 @@ class MotherMap extends Component {
         <div style={{ margin: "0 auto", width: "97.5%" }}>
           <div className="google-maps-container" style={{ }}>
             <div id="map" />
-            <RequestBox
-            toggleMarkLockHandler={this.toggleMarkLockHandler}
-            searchForLocationHandler={this.searchForLocationHandler}
-            commonTextProps={commonTextProps}
-            locked={this.state.locked}
-            />
+            <div className="reqBox">
+              <h1>This is a test</h1>
+              <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
+                Your Location: {this.state.startCoords.lat},  {this.state.startCoords.lng}
+              </Button>
+              <Button
+              onClick={this.toggleMarkLockHandler}
+              className={this.props.classes.root}
+              color="secondary"
+            
+            >
+              {this.state.locked && "Un"}Lock Marker
+            </Button>
+            </div>
           </div>
-          
         </div>
         {places && (
           <GooglePlacesList
@@ -107,6 +127,45 @@ class MotherMap extends Component {
             setDestination={this.mapOutRoute}
           />
         )}
+        <div className={this.state.toggleModal?this.props.classes.show:this.props.classes.hidden}>
+        <Dialog
+          // fullScreen={fullScreen}
+          open={this.state.open}
+          className={this.state.toggleModal?this.props.classes.show:this.props.classes.hidden}
+          fullWidth
+          onClose={this.handleClose}
+          aria-labelledby="responsive-dialog-title"
+        >
+          <DialogTitle id="responsive-dialog-title">{"Use Google's location service?"}</DialogTitle>
+          <TextField
+              label="Search for your location"
+              {...commonTextProps}
+              onKeyPress={this.searchForLocationHandler}
+              // need to always have this rendered so when google tries to connect to it we dont get an error
+              // since React hasn't placed it on the DOM.
+              style={this.state.locked ? { display: "none" } : {}}
+            />
+            <TextField
+              id="google-search"
+              label="Search for your destination"
+              {...commonTextProps}
+              style={!this.state.locked ? { opacity: 0, width: 0 } : {}}
+            />
+
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Disagree
+            </Button>
+            <Button onClick={this.handleClose} color="primary" autoFocus>
+              Agree
+            </Button>
+          </DialogActions>
+        </Dialog>
+        </div>
+
+
+
+
       </>
     );
   }
