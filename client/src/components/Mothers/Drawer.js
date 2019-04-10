@@ -10,6 +10,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import {connect} from 'react-redux'
+import MotherModal from './MotherModal'
 
 
 
@@ -74,6 +75,7 @@ class TemporaryDrawer extends React.Component {
           >
             {sideList}
           </div>
+          <MotherModal user={this.props.user}/>
         </Drawer>
       </div>
     );
