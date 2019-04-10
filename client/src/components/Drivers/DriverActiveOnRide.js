@@ -45,8 +45,7 @@ export default class DriverActiveOnRide extends Component {
   onCancelHandler = id => {
     console.log("Cancel Ride ", id);
     const data = {
-      ride_id: id,
-      price: 999
+      ride_id: id
     };
     axios
       .post(`/api/rides/driver/rejects/${id}`, { data })

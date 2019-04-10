@@ -36,8 +36,7 @@ class DriverActiveRides extends Component {
     //   hospital: `${rideInfo.hospital}`
     // }
     const data = {
-      ride_id: rideData.id,
-      price: 999
+      ride_id: rideData.id
     };
     console.log("Ride rejected, rideData: ", rideData);
     axios
@@ -90,6 +89,9 @@ class DriverActiveRides extends Component {
           From: {rideDestMother}
           <br />
           To: {rideDestHospital}
+          <br />
+          Price: {ride.price}
+          <br />
           <p style={{ color: "red" }}>Status: {ride.ride_status}</p>
           <Button onClick={() => this.onAcceptHandler(ride.id)} color="primary">
             Accept Request
