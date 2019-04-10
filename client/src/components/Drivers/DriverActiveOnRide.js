@@ -34,8 +34,10 @@ export default class DriverActiveOnRide extends Component {
             profileImg={this.props.user.driverData.photo_url}
           />
           <Card>
-            Mother's Location: {currentRide.destName.plus_code.compound_code}
-            Hospital Name: "Hospital Name HERE"
+            Mother's Location:{" "}
+            {currentRide.destNameMother.plus_code.compound_code}
+            Hospital Name:{" "}
+            {currentRide.destNameHospital.plus_code.compound_code}
             <Button
               onClick={() => this.onArriveHandler(currentRide.id)}
               color="primary"
