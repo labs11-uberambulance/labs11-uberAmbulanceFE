@@ -3,6 +3,7 @@ let map, marker, directionsService, directionsDisplay;
 const initMap = (latStart, lngStart, latStop, lngStop) => () => {
   directionsService = new window.google.maps.DirectionsService();
   directionsDisplay = new window.google.maps.DirectionsRenderer();
+  console.log("center: ", latStart, lngStart);
   map = new window.google.maps.Map(document.getElementById("map"), {
     center: { lat: latStart, lng: lngStart },
     zoom: 8,
@@ -15,8 +16,8 @@ const initMap = (latStart, lngStart, latStop, lngStop) => () => {
     streetViewControl: false
   });
   directionsDisplay.setMap(map);
-  createAndDisplayMarker(latStart, lngStart, "Start Location");
-  createAndDisplayMarker(latStop, lngStop, "Stop Location");
+  // createAndDisplayMarker(latStart, lngStart, "Start Location");
+  // createAndDisplayMarker(latStop, lngStop, "Stop Location");
   calcAndDisplayRoute(
     { lat: latStart, lng: lngStart },
     { lat: latStop, lng: lngStop }

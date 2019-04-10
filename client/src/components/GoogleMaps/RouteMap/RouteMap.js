@@ -17,28 +17,8 @@ class RouteMap extends Component {
       places = places.filter(place => markersSelected.includes(place.name));
     }
     return (
-      <div style={{ display: "flex" }}>
-        <div>
-          <div className="google-search-container">
-            <TextField
-              id="google-search"
-              value={this.state.search}
-              onChange={e => this.setState({ search: e.target.value })}
-              fullWidth
-            />
-            {places < this.state.places && (
-              <Button
-                type="button"
-                onClick={() => this.setState({ markersSelected: [] })}
-              >
-                Show All
-              </Button>
-            )}
-          </div>
-          <div id="map" />
-        </div>
-        {/* uncomment if we want to display a list of places next to map
-        { places && <GooglePlacesList places={Array.isArray(places) ? places: [places]} /> } */}
+      <div style={{ display: "flex", height: "500px" }}>
+        <div id="map" />
       </div>
     );
   }
