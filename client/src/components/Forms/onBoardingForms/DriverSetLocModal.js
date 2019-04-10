@@ -35,8 +35,8 @@ class ResponsiveDialog extends React.Component {
 
     return (
       <div>
-        <Button color="primary" onClick={this.handleClickOpen}>
-          Set Your Location
+        <Button style={this.props.isSet ? { backgroundColor: "#03a9f4", color: "white" } : { backgroundColor: "#9e9e9e", color: "white" }} onClick={this.handleClickOpen}>
+          Set Base Location
         </Button>
         <Dialog
           fullWidth
