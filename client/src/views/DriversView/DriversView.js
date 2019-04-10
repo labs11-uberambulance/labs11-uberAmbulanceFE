@@ -3,24 +3,16 @@ import { connect } from "react-redux";
 import actions from "../../store/actions";
 
 import HomePage from "../../components/Drivers/HomePage";
-import RouteMap from "../../components/GoogleMaps/RouteMap/RouteMap";
 
 function DriversView(props) {
   console.log("DriverView ", props.user);
-  const currentRide = props.user.driverData.rides.filter(
-    ride => ride.ride_status === "Driver en route"
-  );
   return (
     <>
-      <RouteMap
-        start={props.user.location.latlng}
-        stop={currentRide[0].start}
-      />
-      {/* <HomePage
+      <HomePage
         user={props.user}
         usrUpdate={props.usrUpdate}
         refreshUserData={props.refreshUserData}
-      /> */}
+      />
     </>
   );
 }
