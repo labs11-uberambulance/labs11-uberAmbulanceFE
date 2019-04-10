@@ -37,7 +37,9 @@ export const initGoogleScript = (latStart, lngStart, latStop, lngStop) => {
 
 // MAIN GOOGLE MAPS LOGIC
 export const calcAndDisplayRoute = (origin, destination) => {
+  if (!directionsService) return;
   const request = { origin, destination, travelMode: "DRIVING" };
+  // clear old routes here
   directionsService.route(request, (result, status) => {
     if (status === "OK") {
       directionsDisplay.setDirections(result);
