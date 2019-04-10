@@ -27,7 +27,10 @@ const styles = ({ palette }) => ({
   },
   show:{
     opacity: 1,
-    zIndex: 20
+    zIndex: 20,
+  },
+  modalHeight:{
+    
   }
 });
 class MotherMap extends Component {
@@ -121,12 +124,6 @@ class MotherMap extends Component {
             </div>
           </div>
         </div>
-        {places && (
-          <GooglePlacesList
-            places={Array.isArray(places) ? places : [places]}
-            setDestination={this.mapOutRoute}
-          />
-        )}
         <div className={this.state.toggleModal?this.props.classes.show:this.props.classes.hidden}>
         <Dialog
           // fullScreen={fullScreen}
@@ -136,7 +133,7 @@ class MotherMap extends Component {
           onClose={this.handleClose}
           aria-labelledby="responsive-dialog-title"
         >
-          <DialogTitle id="responsive-dialog-title">{"Use Google's location service?"}</DialogTitle>
+          <h3 id="responsive-dialog-title">{!this.state.locked?'Search Pick Up Location': "Search Destinations"}</h3>
           <TextField
               label="Search for your location"
               {...commonTextProps}
@@ -151,16 +148,24 @@ class MotherMap extends Component {
               {...commonTextProps}
               style={!this.state.locked ? { opacity: 0, width: 0 } : {}}
             />
-
-          <DialogActions>
+            <div>
+            {this.state.places && (
+              <GooglePlacesList
+                places={Array.isArray(places) ? places : [places]}
+                setDestination={this.mapOutRoute}
+              />
+            )}
+            </div>
+          <div className="modal-btns">
             <Button onClick={this.handleClose} color="primary">
               Disagree
             </Button>
             <Button onClick={this.handleClose} color="primary" autoFocus>
               Agree
             </Button>
-          </DialogActions>
+          </div>
         </Dialog>
+       
         </div>
 
 
