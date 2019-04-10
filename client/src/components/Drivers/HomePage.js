@@ -13,7 +13,9 @@ export default class HomePage extends Component {
   render() {
     let relevantView;
     const activeRides = this.props.user.driverData.rides.filter(
-      ride => ride.ride_status === "Driver en route"
+      ride =>
+        ride.ride_status != "waiting_on_driver" &&
+        ride.ride_status != "complete"
     );
     const driverActive = this.props.user.driverData.active;
 
@@ -30,6 +32,7 @@ export default class HomePage extends Component {
         <DriverActiveOnRide
           user={this.props.user}
           currentRide={activeRides[0]}
+          refreshUserData={this.props.refreshUserData}
         />
       );
     } else if (driverActive) {

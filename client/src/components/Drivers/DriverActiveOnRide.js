@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "../../axios-instance";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
@@ -11,16 +12,56 @@ export default class DriverActiveOnRide extends Component {
     this.state = {};
   }
 
-  onArriveHandler = () => {
-    console.log("Arrived at mother.");
+  onArriveHandler = id => {
+    console.log("Arrived at mother. ride id: ", id);
+    // update ride status, notifies mother of driver's arrival
+    axios
+      .get(`/api/rides/driver/arrives/${id}`)
+      .then(result => {
+        console.log("Ride status updated. status: ", result.status);
+        // need to do this since ride data is not automatically updated on application state with update to user data.
+        this.props.refreshUserData(this.props.user);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
-  onRejectHandler = () => {
+  onCompleteHandler = id => {
+    console.log("Ride Complete. ride id: ", id);
+    // update ride status, notifies mother of driver's arrival
+    axios
+      .get(`/api/rides/driver/delivers/${id}`)
+      .then(result => {
+        console.log("Ride status updated. status: ", result.status);
+        // need to do this since ride data is not automatically updated on application state with update to user data.
+        this.props.refreshUserData(this.props.user);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  onRejectHandler = id => {
     console.log("Cancel Ride");
   };
 
   render() {
     const currentRide = this.props.currentRide;
+    let start, stop;
+    console.log(currentRide);
+    if (currentRide.ride_status === "Driver en route") {
+      start = this.props.user.location.latlng;
+      stop = currentRide.start;
+      console.log("en route: ", start, stop);
+    } else if (currentRide.ride_status === "arrived_at_mother") {
+      start = currentRide.start;
+      stop = currentRide.destination;
+      console.log("at mother: ", start, stop);
+    } else {
+      start = "0,0";
+      stop = "0,0";
+    }
     return (
       <div>
         <Grid
@@ -33,26 +74,32 @@ export default class DriverActiveOnRide extends Component {
             user={this.props.user}
             profileImg={this.props.user.driverData.photo_url}
           />
-          <Card>
+          <Card style={{ width: "300px" }}>
             Mother's Location:{" "}
             {currentRide.destNameMother.plus_code.compound_code}
             Hospital Name:{" "}
             {currentRide.destNameHospital.plus_code.compound_code}
-            <Button
-              onClick={() => this.onArriveHandler(currentRide.id)}
-              color="primary"
-            >
-              Arrived at Mother
-            </Button>
+            {currentRide.ride_status === "Driver en route" ? (
+              <Button
+                onClick={() => this.onArriveHandler(currentRide.id)}
+                color="primary"
+              >
+                Arrived at Mother
+              </Button>
+            ) : (
+              <Button
+                onClick={() => this.onCompleteHandler(currentRide.id)}
+                color="primary"
+              >
+                Ride Complete
+              </Button>
+            )}
             <Button onClick={() => this.onRejectHandler(currentRide.id)}>
               Cancel Ride
             </Button>
           </Card>
         </Grid>
-        <RouteMap
-          start={this.props.user.location.latlng}
-          stop={currentRide.start}
-        />
+        <RouteMap start={start} stop={stop} />
       </div>
     );
   }
