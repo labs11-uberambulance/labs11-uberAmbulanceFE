@@ -1,10 +1,12 @@
 let map, searchBox, marker, markerListener, directionsService, directionsDisplay;
 
 const initMap = (placesCB, markerCB, lat, lng) => () => {
+    console.log(lat,lng)
     directionsService = new window.google.maps.DirectionsService();
     directionsDisplay = new window.google.maps.DirectionsRenderer();
     map = new window.google.maps.Map(document.getElementById('map'), {
-        center: { lat, lng }, zoom: 8,
+        center: { lat, lng }, 
+        zoom: 12,
         clickableIcons: false, mapTypeControl: false, minZoom: 5,
         restriction: { latLngBounds: { north: 4.35, south: -1.5, west: 29.55, east: 34.6 } },
         streetViewControl: false
@@ -39,16 +41,24 @@ export const initSearchBox = (placesCB, markerCB) => {
     })
 }
 const createAndDisplayMarker = (lat, lng) => {
+    console.log("createDisplayMarker", lat,lng)
     marker = new window.google.maps.Marker({
-        map, position: { lat, lng }, draggable: true,
+        map, 
+        position: { lat, lng },
+        draggable: true,
         animation: window.google.maps.Animation.DROP,
         title: "Your Location"
     });
+    marker.setPosition({lat, lng});
+    map.setCenter({lat,lng})
     markerListener = map.addListener('bounds_changed', () => {
-        marker.setPosition(map.getCenter());
+        // marker.setPosition(map.getCenter());
     });
+    // marker.setPosition( {lat, lng});
+    // map.setCenter({lat,lng})
 }
-export const initGoogleScript = (placesCB, markerCB, lat = 1.153, lng = 32.3) => {
+export const initGoogleScript = (placesCB, markerCB, lat, lng) => {
+    console.log("INTI GOOG", lat ,lng)
     if (!window.google) {
         window.initMap = initMap(placesCB, markerCB, lat, lng);
         const googleAPI = document.createElement('script');

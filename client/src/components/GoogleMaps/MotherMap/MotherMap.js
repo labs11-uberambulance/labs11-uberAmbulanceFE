@@ -1,5 +1,9 @@
 import React, { Component } from "react";
-import { TextField, Button, withStyles } from "@material-ui/core";
+import {connect} from 'react-redux'
+
+
+
+import {TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, withStyles } from "@material-ui/core";
 import GooglePlacesList from "../../GooglePlacesList/GooglePlacesList";
 import {
   initGoogleScript,
@@ -13,12 +17,20 @@ import "./MotherMap.css";
 
 const styles = ({ palette }) => ({
   root: {
-    position: "absolute",
     zIndex: "40",
-    top: "10px",
-    left: "5px",
     color: palette.secondary.contrastText,
     backgroundColor: palette.secondary.dark
+  },
+  hidden:{
+    opacity: 0,
+    zIndex:-10
+  },
+  show:{
+    opacity: 1,
+    zIndex: 20,
+  },
+  modalHeight:{
+    
   }
 });
 class MotherMap extends Component {
@@ -29,9 +41,21 @@ class MotherMap extends Component {
       search: "",
       markersSelected: [],
       locked: false,
-      startCoords: null
+      startCoords: {lat: Number(this.props.user.location.latlng.split(",")[0]), lng:Number(this.props.user.location.latlng.split(",")[1])},
+      lat: Number(this.props.user.location.latlng.split(",")[0]),
+      lng: Number(this.props.user.location.latlng.split(",")[1]),
+      open: true,
+      toggleModal: false
     };
   }
+
+  handleClickOpen = () => {
+    this.setState({ toggleModal: true });
+  };
+
+  handleClose = () => {
+    this.setState({ toggleModal: false });
+  };
 
   toggleMarkLockHandler = () => {
     this.setState(({ locked }) => {
@@ -68,8 +92,8 @@ class MotherMap extends Component {
       destination: { latlng: `${location.lat},${location.lng}` }
     });
   };
-
   render() {
+    
     let { places, markersSelected } = { ...this.state };
     if (markersSelected.length > 0) {
       places = places.filter(place => markersSelected.includes(place.name));
@@ -81,14 +105,42 @@ class MotherMap extends Component {
     };
     return (
       <>
-        <div style={{ margin: "0 auto", width: "550px" }}>
-          <p>
-            {this.state.locked
-              ? "Search for your destination"
-              : "Search for your location"}
-          </p>
-          <div className="google-search-container">
-            <TextField
+        <div style={{ margin: "0 auto", width: "97.5%" }}>
+          <div className="google-maps-container" style={{ }}>
+            <div id="map" />
+            <div className="reqBox">
+            {this.state.locked? <i className="fas fa-arrow-circle-left" onClick={this.toggleMarkLockHandler}></i>:null}
+            
+              <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
+               {!this.state.locked? `Your Location: ${this.state.startCoords.lat},  ${this.state.startCoords.lng}` : `Set Destination`}
+              </Button>
+              {this.state.locked?
+              <Button>Request Drivers</Button>
+              :
+              <Button
+              onClick={this.toggleMarkLockHandler}
+              className={this.props.classes.root}
+              color="secondary"
+            
+            >
+              {this.state.locked && "Un"}Lock Marker
+            </Button>
+            }
+              
+            </div>
+          </div>
+        </div>
+        <div className={this.state.toggleModal?this.props.classes.show:this.props.classes.hidden}>
+        <Dialog
+          // fullScreen={fullScreen}
+          open={this.state.open}
+          className={this.state.toggleModal?this.props.classes.show:this.props.classes.hidden}
+          fullWidth
+          onClose={this.handleClose}
+          aria-labelledby="responsive-dialog-title"
+        >
+          <h3 id="responsive-dialog-title">{!this.state.locked?'Search Pick Up Location': "Search Destinations"}</h3>
+          <TextField
               label="Search for your location"
               {...commonTextProps}
               onKeyPress={this.searchForLocationHandler}
@@ -102,24 +154,29 @@ class MotherMap extends Component {
               {...commonTextProps}
               style={!this.state.locked ? { opacity: 0, width: 0 } : {}}
             />
-          </div>
-          <div className="google-maps-container" style={{ height: "500px" }}>
-            <div id="map" />
-            <Button
-              onClick={this.toggleMarkLockHandler}
-              className={this.props.classes.root}
-              color="secondary"
-            >
-              {this.state.locked && "Un"}Lock Marker
+            <div>
+            {this.state.places && (
+              <GooglePlacesList
+                places={Array.isArray(places) ? places : [places]}
+                setDestination={this.mapOutRoute}
+              />
+            )}
+            </div>
+          <div className="modal-btns">
+            <Button onClick={this.handleClose} color="primary">
+              Disagree
+            </Button>
+            <Button onClick={this.handleClose} color="primary" autoFocus>
+              Agree
             </Button>
           </div>
+        </Dialog>
+       
         </div>
-        {places && (
-          <GooglePlacesList
-            places={Array.isArray(places) ? places : [places]}
-            setDestination={this.mapOutRoute}
-          />
-        )}
+
+
+
+
       </>
     );
   }
@@ -135,7 +192,7 @@ class MotherMap extends Component {
     });
   };
   componentDidMount() {
-    initGoogleScript(this.passPlacesToComponent, this.markerSelectedHandler); // takes lat/long as 3rd/4th args, sets start pin & zooms there
+    initGoogleScript(this.passPlacesToComponent, this.markerSelectedHandler, this.state.lat, this.state.lng ); // takes lat/long as 3rd/4th args, sets start pin & zooms there
   }
   componentWillUnmount() {
     destroyGoogleScript();
@@ -151,15 +208,6 @@ class MotherMap extends Component {
             return { markersSelected: markers }
         })
     }
-    componentDidMount() {
-        initGoogleScript(this.passPlacesToComponent, this.markerSelectedHandler, 0.918607, 33.409670999999996)
-        setTimeout(()=>{
-            calcAndDisplayRoute({lat: 0.918607, lng: 33.409670999999996}, {lat: 0.988607, lng: 33.509670999999996})
-        }, 1000)
-    }
-    componentWillUnmount() {
-        destroyGoogleScript()
-    }
 }
 
 const mapStateToProps = (state) => ({
@@ -171,4 +219,4 @@ const mapDispatchToProps = {
 }
 
 
-export default withStyles(styles)(MotherMap);
+export default connect(mapStateToProps)(withStyles(styles)(MotherMap));

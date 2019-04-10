@@ -5,7 +5,7 @@ import './GooglePlacesList.css'
 
 const googlePlacesList = ({places, ...props}) => (
     <List
-        style={{height: "60vh", overflowY: "scroll"}}
+        style={{height: "100%", overflowY: "scroll",}}
         className="google-search-list"
     >
         {places.map(place => <GooglePlacesItem key={place.id} place={place} clicked={props.setDestination} />)}
