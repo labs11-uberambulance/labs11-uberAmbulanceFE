@@ -37,6 +37,7 @@ export default class HomePage extends Component {
         <DriverActiveNoRide
           user={this.props.user}
           usrUpdate={this.props.usrUpdate}
+          refreshUserData={this.props.refreshUserData}
         />
       );
     }

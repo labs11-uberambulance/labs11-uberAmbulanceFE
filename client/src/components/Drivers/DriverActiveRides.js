@@ -43,7 +43,7 @@ class DriverActiveRides extends Component {
     axios
       .post(`/api/rides/driver/rejects/${rideData.id}`, { data })
       .then(result => {
-        console.log(result);
+        console.log("ride reject success: ", result);
         // need to do this since ride data is not automatically updated on application state with update to user data.
         this.props.refreshUserData(this.props.user);
       })
