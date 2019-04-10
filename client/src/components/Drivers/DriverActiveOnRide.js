@@ -42,8 +42,22 @@ export default class DriverActiveOnRide extends Component {
       });
   };
 
-  onRejectHandler = id => {
-    console.log("Cancel Ride");
+  onCancelHandler = id => {
+    console.log("Cancel Ride ", id);
+    const data = {
+      ride_id: id,
+      price: 999
+    };
+    axios
+      .post(`/api/rides/driver/rejects/${id}`, { data })
+      .then(result => {
+        console.log("ride reject success: ", result);
+        // need to do this since ride data is not automatically updated on application state with update to user data.
+        this.props.refreshUserData(this.props.user);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   render() {
@@ -94,11 +108,18 @@ export default class DriverActiveOnRide extends Component {
                 Ride Complete
               </Button>
             )}
-            <Button onClick={() => this.onRejectHandler(currentRide.id)}>
-              Cancel Ride
-            </Button>
+            {currentRide.ride_status != "arrived_at_mother" && (
+              <Button onClick={() => this.onCancelHandler(currentRide.id)}>
+                Cancel Ride
+              </Button>
+            )}
           </Card>
         </Grid>
+        {currentRide.ride_status === "Driver en route" ? (
+          <h1>Route To Mother </h1>
+        ) : (
+          <h1> Route To Hospital</h1>
+        )}
         <RouteMap start={start} stop={stop} />
       </div>
     );
