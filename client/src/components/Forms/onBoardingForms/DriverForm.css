@@ -1,0 +1,84 @@
+.driver-form--container {
+    max-width: 1000px;
+    width: 90vw;
+    margin: 5rem auto;
+    border: 1px solid #ccc;
+    padding: 6rem 3rem;
+    border-radius: 4px;
+    box-shadow: 0px 6px 16px -6px rgba(0,0,0,0.75);
+    text-align: start;
+    position: relative;
+}
+
+.driver-form--title {
+    position: relative;
+    top: -1.3rem;
+    color: white;
+    position: absolute;
+    background-color: #03a9f4;
+    width: 100%;
+    left: 0;
+    padding: 1rem;
+}
+.driver-form--main {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.driver-form--inputs, .driver-form--buttons {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    width: 50.5%;
+    max-width: 350px;
+}
+.driver-form--buttons {
+    height: 20rem;  
+    padding: 2rem 3rem;
+    border-radius: 10px;
+    box-shadow: 5px 7px 16px -6px rgba(107,107,107,1);
+}
+.driver-form--buttons button {
+    width: 100%;
+}
+.driver-form--buttons button:hover {
+    transition-duration: 500ms !important;
+    background-color: #03a9f4 !important;
+    box-shadow: 0px 6px 25px -15px rgba(0,0,0,0.75);
+}
+button[type="button"].driver-form--button-submit {
+    font-size: 1.2rem;
+    margin-top: 2rem;
+}
+
+@media (max-width: 886px) {
+    .driver-form--container {
+        padding: 5rem 3rem;
+        padding-bottom: 1rem;
+    }
+    .driver-form--main {
+        height: unset;
+    }
+    .driver-form--inputs, .driver-form--buttons {
+        width: 90%;
+    }
+    .driver-form--buttons {
+        margin: 2rem 0;
+    }
+}
+@media (max-width: 450px) {
+    .driver-form--container {
+        padding: 5rem 2rem;
+        padding-bottom: 1rem;
+    }
+    .driver-form--inputs, section.driver-form--buttons {
+        width: 78% ;
+    }
+    .driver-form--buttons {
+        padding: 2rem 1rem;
+        height: 15rem;
+    }
+    .driver-form--buttons button {
+        font-size: calc(10px + ( 16 - 10 ) * (100vw - 300px ) / (450 - 300) );
+    }
+}

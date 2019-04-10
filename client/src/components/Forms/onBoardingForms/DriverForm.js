@@ -8,6 +8,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import { Button } from "@material-ui/core";
 import intlTelInput from 'intl-tel-input';
 import "./onBoardingForm.css";
+import "./DriverForm.css";
 
 import DriverSetLocModal from "./DriverSetLocModal";
 
@@ -77,16 +78,7 @@ export default class OnBoardingForm extends Component {
         `profile_images/${this.props.user.fireBId}@${new Date().toISOString()}`
       );
     const uploadTask = storageRef.put(image, { contentType: image.type });
-    return uploadTask.on(
-      "state_changed",
-      snapshot => {
-        //if we wont handle progress change .on() to .then()
-        // handle progress here
-      },
-      error => {
-        // Handle unsuccessful uploads here
-      },
-      () => {
+    return uploadTask.then(() => {
         return uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
           const formValues = {
             type: "drivers",
@@ -102,79 +94,37 @@ export default class OnBoardingForm extends Component {
   };
 
   render() {
-    console.log("DriverForm Render: ", this.state.location.latlng);
+    const requiredBtn = { backgroundColor: "#9e9e9e", color: "white" }
+    const setBtn = { backgroundColor: "#03a9f4", color: "white" }
+    const { file, location, notificationsOn } = this.state;
     return (
-      <div style={{padding: "60px"}}>
-        <div className="inputHolder">
-          <TextField
-            autoFocus
-            label="Full Name"
-            required
-            inputRef={this.nameInp}
-            fullWidth
-            onKeyPress={e => this.onPressEnterHandler(e, this.phoneInp)}
-          />
-        </div>
-        <div className="inputHolder">
-          <TextField
-            label="Phone Number"
-            required
-            InputProps={{
-              placeholder: "(  )    -    ",
-              inputComponent: TextMaskCustom,
-              type: "tel",
-              id: "phone"
-            }}
-            fullWidth
-            inputRef={this.phoneInp}
-            onKeyPress={e => this.onPressEnterHandler(e, this.photoInp)}
+      <div className="driver-form--container">
+        <h2 className="driver-form--title">Driver Registration</h2>
+        <main className="driver-form--main">
+        <section className="driver-form--inputs">
+          <TextField autoFocus label="Full Name" required inputRef={this.nameInp} onKeyPress={e => this.onPressEnterHandler(e, this.phoneInp)} />
+          <TextField label="Phone Number" required
+            InputProps={{ placeholder: "(  )    -    ", inputComponent: TextMaskCustom, type: "tel", id: "phone" }}
+            inputRef={this.phoneInp} onKeyPress={e => this.onPressEnterHandler(e, this.photoInp)}
             helperText="This will be the number that mothers will use to contact you."
           />
-          <br />
-          <div className="inputHolder" style={{ paddingTop: "0" }}>
-            <TextField
-              label="Rate per 10km"
-              required
-              fullWidth
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">$</InputAdornment>
-                )
-              }}
-              inputRef={this.rateForScroll}
-              value={this.state.rateInp}
-              onChange={e => {
-                this.setState({ rateInp: e.target.value });
-              }}
-              helperText={`We recommend $2${
-                this.state.rateInp !== ""
-                  ? `, you pledge to never charge more than $${
-                      this.state.rateInp
-                    } per 10km.`
-                  : "."
-              }`}
-            />
-          </div>
-        </div>
-        <DriverSetLocModal storeLatLng={this.storeLatLng} />
-        <p
-          style={{
-            color: "red",
-            display: this.state.location.latlng && "none"
-          }}
-        >
-          Required
-        </p>
-        <Button
-          type="button"
-          color="primary"
-          onClick={() => this.photoInp.current.click()}
-        >
-          {this.state.file ? `${this.state.file.name}` : "Set Profile Image *"}
-        </Button>
-        <p style={{ color: "red", display: this.state.file && "none" }}>
-          Required
-        </p>
+          <TextField label="Rate per 10km" required
+              InputProps={{ startAdornment: ( <InputAdornment position="start">$</InputAdornment> ) }}
+              inputRef={this.rateForScroll} value={this.state.rateInp}
+              onChange={e => { this.setState({ rateInp: e.target.value }); }}
+              helperText='We recommend $2'
+          />
+        </section>
+        <section className="driver-form--buttons" style={(!file || !notificationsOn || !location.latlng) ? {border: "1px solid #b71c1c"} : {border: "1px solid green"} }>
+          <DriverSetLocModal isSet={!!location.latlng} storeLatLng={this.storeLatLng} />
+          <Button type="button" style={!file ? requiredBtn : setBtn} onClick={() => this.photoInp.current.click()} >
+            {this.state.file ? `${this.state.file.name.slice(0, 10)}...` : "Save Profile Image"}
+          </Button>
+          <Button type="button" style={!notificationsOn ? requiredBtn : setBtn}  onClick={this.requestPushNotificationsPermission} >
+            Enable Notification
+          </Button>
+        </section>
+        </main>
         <input
           style={{ display: "none" }}
           accept="image/*"
@@ -183,20 +133,10 @@ export default class OnBoardingForm extends Component {
           onChange={this.fileUploadHandler}
         />
         <br />
-        {this.state.notificationsOn && <Button
-          disabled={!this.state.file || !this.state.location.latlng}
-          type="button"
-          color="secondary"
-          onClick={this.submitForm}
-        >
-          Submit
-        </Button>}
-        {!this.state.notificationsOn && <Button
-          type="button"
-          onClick={this.requestPushNotificationsPermission}
-        >
-          Notification
-        </Button>}
+        <Button
+          disabled={!file || !location.latlng || !notificationsOn}
+          type="button" color="secondary" className="driver-form--button-submit" onClick={this.submitForm}
+        >Submit</Button>
       </div>
     );
   }
