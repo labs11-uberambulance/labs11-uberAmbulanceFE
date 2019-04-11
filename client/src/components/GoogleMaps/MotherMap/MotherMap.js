@@ -242,6 +242,7 @@ class MotherMap extends Component {
         lng: Number(this.props.user.location.latlng.split(",")[1]),
       })
     }
+  }
     
   componentWillUnmount() {
     destroyGoogleScript();
