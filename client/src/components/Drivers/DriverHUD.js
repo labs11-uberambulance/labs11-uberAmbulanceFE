@@ -34,7 +34,9 @@ const styles = {
 class DriverHUD extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      prevRides: false
+    };
   }
 
   handleStatusClick = () => {
@@ -43,9 +45,26 @@ class DriverHUD extends Component {
     });
   };
 
+  togglePrevRides = () => {
+    this.setState(state => ({ prevRides: !state.prevRides }));
+  };
+
   render() {
     const { classes } = this.props;
     const statusColor = this.props.user.driverData.active ? "green" : "red";
+    const rides = this.props.user.driverData.rides.map(ride => {
+      const status_color = ride.ride_status === "complete" ? "green" : "red";
+      return (
+        <Card key={ride.id}>
+          <Typography variant="body1">Date {ride.updated_at}</Typography>
+          <Typography variant="body1">From {ride.start}</Typography>
+          <Typography variant="body1">To {ride.destination}</Typography>
+          <Typography variant="body1">
+            <p style={{ color: status_color }}>Status: {ride.ride_status}</p>
+          </Typography>
+        </Card>
+      );
+    });
     return (
       <Card className={classes.card}>
         {/* Status indication card */}
@@ -134,11 +153,22 @@ class DriverHUD extends Component {
           </Card>
         </CardContent>
         <CardActions>
-          <DriverEditProfileModal
-            className={classes.button}
-            user={this.props.user}
-          />
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            alignItems="center"
+          >
+            <DriverEditProfileModal
+              className={classes.button}
+              user={this.props.user}
+            />
+            <Button variant="outlined" onClick={this.togglePrevRides}>
+              Previous Rides
+            </Button>
+          </Grid>
         </CardActions>
+        {this.state.prevRides && rides}
       </Card>
     );
   }
