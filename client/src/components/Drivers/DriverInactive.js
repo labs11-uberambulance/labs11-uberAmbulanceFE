@@ -30,18 +30,28 @@ export default class DriverInactive extends Component {
       <div>
         <Grid
           container
+          spacing={16}
           direction="row"
           justify="space-around"
           alignItems="center"
         >
-          <DriverHUD user={this.props.user} usrUpdate={this.props.usrUpdate} />
+          <Grid item xs={12} sm={6}>
+            <DriverHUD
+              user={this.props.user}
+              usrUpdate={this.props.usrUpdate}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            My Current Location:
+            <DriverUpdateLocation
+              latInit={driverLat}
+              lngInit={driverLng}
+              storeLatLng={driverLatLng =>
+                this.handleUpdateDriverLoc(driverLatLng)
+              }
+            />
+          </Grid>
         </Grid>
-        My Current Location:
-        <DriverUpdateLocation
-          latInit={driverLat}
-          lngInit={driverLng}
-          storeLatLng={driverLatLng => this.handleUpdateDriverLoc(driverLatLng)}
-        />
       </div>
     );
   }
