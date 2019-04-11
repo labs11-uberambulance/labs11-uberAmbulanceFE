@@ -51,7 +51,9 @@ class DriverHUD extends Component {
 
   render() {
     const { classes } = this.props;
-    const statusColor = this.props.user.driverData.active ? "green" : "red";
+    const statusColor = this.props.user.driverData.active
+      ? "darkgreen"
+      : "darkred";
     const rides = this.props.user.driverData.rides.map(ride => {
       const status_color = ride.ride_status === "complete" ? "green" : "red";
       return (
