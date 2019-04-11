@@ -1,45 +1,39 @@
 import React, { Component } from "react";
 
 import TextField from "@material-ui/core/TextField";
-import { Button } from "@material-ui/core";
+import { 
+  Button, Dialog, DialogContent, DialogTitle, 
+  Typography ,withMobileDialog } from "@material-ui/core";
 import { TextMaskCustom } from "../Styling";
 import { normalizePhone }  from './Styling';
 import intlTelInput from 'intl-tel-input';
 import "./onBoardingForm.css";
+import "./MotherForm.css";
+import OnboardingSetLocation from '../../OnboardingComponents/OnboardingSetLocation';
 
-import OnboardingMotherMap from "../../OnboardingComponents/OnboardingMotherMap";
 
-export default class OnBoardingForm extends Component {
-  state = {
-    route: {
-      start: "",
-      destination: ""
-    },
-    iti: null
-  };
-
+class OnBoardingForm extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      location: { latlng: '' },
+      iti: null,
+      name: '',
+      phone: '',
+      open: false,
+      pass: false
+    };
     this.nameInp = React.createRef();
     this.phoneInp = React.createRef();
   }
-
-  scrollToNextInputHandler = nextInp => {
-    if (nextInp.current.type === "date") {
-      nextInp.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-    nextInp.current.focus({ preventScroll: true });
-    nextInp.current.scrollIntoView({ behavior: "smooth", block: "center" });
-  };
 
   onPressEnterHandler = (e, nextInp) => {
     if (e.key === "Enter") {
       e.preventDefault();
       e.stopPropagation();
-      this.scrollToNextInputHandler(nextInp);
+      nextInp.current.focus();
     }
   };
-
   submitForm = e => {
     e.preventDefault();
     const countryData = this.state.iti.getSelectedCountryData();
@@ -49,52 +43,62 @@ export default class OnBoardingForm extends Component {
       type: "mothers",
       name: this.nameInp.current.value,
       phone,
-      ...this.state
+      route: {start: {...this.state.location}}
     };
     this.props.onSubmitForm(this.props.user, formValues);
   };
 
-  storeRoute = route => {
-    // console.log("MotherForm", route);
-    this.setState({ route });
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+  storeLatLng = latLng => {
+    this.setState({ location: { latlng: latLng }, open: false });
   };
 
   render() {
     return (
       <>
-        Plan your ride:
-        <OnboardingMotherMap storeRoute={this.storeRoute} />
-        <form onSubmit={this.submitForm} style={{padding: "60px"}}>
-          <div className="inputHolder">
+        <form onSubmit={this.submitForm} className="mother-form--container">
+          <h2 className="mother-form--title">Rider Registration</h2>
+          <main className="mother-form--inputs">
             <TextField
-              autoFocus
-              inputProps={{ pattern: "[a-zA-Z- ]+" }}
-              label="Full Name"
-              required
-              inputRef={this.nameInp}
-              fullWidth
+              autoFocus inputProps={{ pattern: "[a-zA-Z- ]+" }} required fullWidth
+              label="Full Name" inputRef={this.nameInp} value={this.state.name}
               onKeyPress={e => this.onPressEnterHandler(e, this.phoneInp)}
+              onChange={(e) => {this.setState({ name: e.target.value })}}
             />
-          </div>
-          <div className="inputHolder">
-            <TextField
-              required
-              label="Phone Number"
-              InputProps={{
-                placeholder: "(  )    -    ",
-                inputComponent: TextMaskCustom,
-                type: "tel",
-                id: "phone"
-              }}
-              fullWidth
-              inputRef={this.phoneInp}
-              helperText="If you plan to use SMS to request transport this is required."
+            <TextField required label="Phone Number" fullWidth inputRef={this.phoneInp} value={this.state.phone}
+              InputProps={{ placeholder: "(  )    -    ", inputComponent: TextMaskCustom,   type: "tel", id: "phone" }}
+              helperText="When you place a ride we'll update you here."
+              onChange={(e) => {this.setState({ phone: e.target.value })}}
             />
-            <Button type="submit" color="secondary">
-              Submit
-            </Button>
-          </div>
+            <section className="mother-form--address">
+              <Typography
+                align="center"
+                component="p"
+               >Would you like to save a default address now?</Typography>
+              <div className="mother-form-add-buttons">
+                <Button color="secondary" className="mother-form-add-yes" onClick={this.handleClickOpen}>Yes</Button>
+                <Button color="secondary" className="mother-form-add-no" onClick={() => {this.setState({ pass: true })}} >No</Button>
+              </div>
+            </section>
+            <Button 
+              disabled={!this.state.name || !this.state.phone || (!this.state.location.latlng && !this.state.pass )}
+              type="submit" 
+              color="secondary"
+              className="mother-form--button-submit"
+            >Submit</Button>
+          </main>
         </form>
+        <Dialog fullWidth open={this.state.open} onClose={this.handleClose} aria-labelledby="responsive-dialog-title" >
+          <DialogTitle id="responsive-dialog-title">Set your location: </DialogTitle>
+          <DialogContent>
+            <OnboardingSetLocation storeLatLng={(latLng => this.storeLatLng(latLng))} />
+          </DialogContent>
+        </Dialog>
       </>
     );
   }
@@ -105,3 +109,5 @@ export default class OnBoardingForm extends Component {
     this.setState({ iti })
   }
 }
+
+export default withMobileDialog()(OnBoardingForm);

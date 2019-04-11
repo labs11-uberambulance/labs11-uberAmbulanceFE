@@ -5,7 +5,7 @@ const authenticationView = (props) => {
   const isSignUp = props.match.path === "/register";
   return (
     <div>
-      <OauthForm signup={isSignUp} />
+      <OauthForm history={props.history} signup={isSignUp} />
     </div>
   )
 }
