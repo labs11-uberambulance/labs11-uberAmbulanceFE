@@ -1,8 +1,12 @@
 .CTA{
     width: 100%;
-    height: 80vh;
+    height: 70vh;
     background: red;
     border-radius: 0 0 25% 25%;
+    position: relative;
+}
+.h-80{
+    height: 80%;
 }
 .w-50 {
     width: 50%;
@@ -13,8 +17,49 @@
 .flex{
     display:flex;
 }
+.flex-col{
+    flex-direction: column;
+}
 .center-content{
     justify-content: center;
     align-items: center;
 }
 
+.header-font{
+    font-size:4rem;
+}
+.self-end{
+    align-self:flex-end;
+}
+.absolute-cards{
+    position: relative;
+    height: 124px;
+    width: 100%;
+    display: flex;
+    margin: 0 0 100px;
+}
+@media only screen and (max-width: 750px) {
+    .header-font{
+        font-size: 3rem;
+    }
+    .CTA{
+        height: 60vh;
+        border-radius: 0 0 20% 20%;
+    }
+    .absolute-cards{
+        position: none;
+        height: auto;
+        width: 100%;
+        flex-wrap: wrap;
+        margin: 30px auto;
+    }
+  }
+  @media only screen and (max-width: 400px) {
+    .header-font{
+        font-size: 2.5rem;
+    }
+    .CTA{
+        height: 50vh;
+        border-radius: 0 0 5% 5%;
+    }
+  }

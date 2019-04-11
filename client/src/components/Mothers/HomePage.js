@@ -18,10 +18,12 @@ class HomePage extends Component {
       driverName: "",
       completed: false,
       distance: "",
-      open: false
+      open: false,
+      finished: false
     };
   }
   submitFinalRideRequest = firebase_id => {
+    this.setState({finished:true})
     console.log(this.state.placeInfo);
     const end = this.state.rideEnd;
     const start = this.state.rideStart;
@@ -33,7 +35,6 @@ class HomePage extends Component {
     axios.post(`/api/rides/request/driver/${firebase_id}`, { ...info });
     this.setState({ completed: true });
   };
-
   setRideStart = origin =>{
       var latlng = []
       latlng.push(Object.values(origin))
@@ -54,13 +55,11 @@ class HomePage extends Component {
   }
 
   render() {
-    console.log(this.props.user)
     return (
       <>
       {this.state.selectedDriver.length>1 ? <button onClick={e=>this.submitFinalRideRequest(this.state.selectedDriver)}>Final Request</button> :null }
       <div>
         <MomProfileMenu/>
-
         <MotherMap 
         setRideStart={this.setRideStart}
         setRideEnd={this.setRideEnd}
@@ -73,6 +72,8 @@ class HomePage extends Component {
         submitFinalRideRequest={this.submitFinalRideRequest}
         removeDriver = {this.removeDriver}
         driverName={this.state.driverName}
+        finished={this.state.finished}
+        history={this.props.history}
       /> 
     
       </div> 
