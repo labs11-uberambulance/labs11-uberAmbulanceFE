@@ -18,8 +18,8 @@ import {
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import DriverProfileMenu from "./DriverProfileMenu";
-
 import DriverEditProfileModal from "./DriverEditProfileModal";
+import DriverEditPricePopover from "./DriverEditPricePopover";
 
 const styles = {
   card: {
@@ -70,16 +70,17 @@ class DriverHUD extends Component {
               </Typography>
               <Card>
                 <List>
-                  <ListItem button>
-                    <ListItemIcon>
+                  {/* <ListItem button> */}
+                  <DriverEditPricePopover />
+                  {/* <ListItemIcon>
                       <span style={{ color: "green" }}>
                         USh{this.props.user.driverData.price}
                       </span>
                     </ListItemIcon>
                     <ListItemText>
                       Your current maximum ride charge
-                    </ListItemText>
-                  </ListItem>
+                    </ListItemText> */}
+                  {/* </ListItem> */}
                   <ListItem button>
                     <ListItemIcon>
                       <span style={{ color: "green" }}>
