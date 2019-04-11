@@ -19,16 +19,19 @@ export default class DriverActiveNoRide extends Component {
           justify="space-around"
           alignItems="center"
         >
-          <DriverProfileMenu
-            user={this.props.user}
-            profileImg={this.props.user.driverData.photo_url}
-          />
-          <DriverHUD user={this.props.user} usrUpdate={this.props.usrUpdate} />
-          <DriverActiveRides
-            user={this.props.user}
-            usrUpdate={this.props.usrUpdate}
-            refreshUserData={this.props.refreshUserData}
-          />
+          <Grid item xs={12} sm={6}>
+            <DriverHUD
+              user={this.props.user}
+              usrUpdate={this.props.usrUpdate}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <DriverActiveRides
+              user={this.props.user}
+              usrUpdate={this.props.usrUpdate}
+              refreshUserData={this.props.refreshUserData}
+            />
+          </Grid>
         </Grid>
       </div>
     );

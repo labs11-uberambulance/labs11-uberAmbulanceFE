@@ -6,6 +6,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -15,6 +16,7 @@ import { withStyles } from "@material-ui/core/styles";
 import DriverProfileMenu from "./DriverProfileMenu";
 import DriverEditProfileModal from "./DriverEditProfileModal";
 import DriverEditPricePopover from "./DriverEditPricePopover";
+import EditIcon from "@material-ui/icons/Edit";
 
 const styles = {
   card: {
@@ -107,6 +109,12 @@ class DriverHUD extends Component {
                 marginTop: "-70px"
               }}
             />
+            <IconButton
+              style={{ marginTop: "-20px", marginRight: "-130px" }}
+              onClick={() => console.log("edit profile pic")}
+            >
+              <EditIcon fontSize={"small"} />
+            </IconButton>
           </Grid>
         </Grid>
         <CardContent>
