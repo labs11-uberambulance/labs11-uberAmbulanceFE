@@ -236,7 +236,7 @@ class MotherMap extends Component {
   componentDidMount() {
     initGoogleScript(this.passPlacesToComponent, this.markerSelectedHandler, this.state.lat, this.state.lng ); // takes lat/long as 3rd/4th args, sets start pin & zooms there
     if(this.props.user.location.latlng){
-      setState({
+      this.setState({
         startCoords: {lat: Number(this.props.user.location.latlng.split(",")[0]), lng:Number(this.props.user.location.latlng.split(",")[1])},
         lat: Number(this.props.user.location.latlng.split(",")[0]),
         lng: Number(this.props.user.location.latlng.split(",")[1]),
