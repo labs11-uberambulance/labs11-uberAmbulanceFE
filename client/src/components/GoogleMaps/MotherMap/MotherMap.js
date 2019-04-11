@@ -53,13 +53,14 @@ class MotherMap extends Component {
       search: "",
       markersSelected: [],
       locked: false,
-      startCoords: {lat: Number(this.props.user.location.latlng.split(",")[0]), lng:Number(this.props.user.location.latlng.split(",")[1])},
-      lat: Number(this.props.user.location.latlng.split(",")[0]),
-      lng: Number(this.props.user.location.latlng.split(",")[1]),
+      startCoords: {lat: 0.346996, lng:32.578201,
+      lat: 0.346996,
+      lng: 32.578201,
       open: true,
       toggleModal: false,
     };
   }
+  // Default values: Middle of Uganada 0.346996, 32.578201
   goBack= () =>{
     this.setState({
       search: ""
@@ -234,7 +235,14 @@ class MotherMap extends Component {
   };
   componentDidMount() {
     initGoogleScript(this.passPlacesToComponent, this.markerSelectedHandler, this.state.lat, this.state.lng ); // takes lat/long as 3rd/4th args, sets start pin & zooms there
-  }
+    if(this.props.user.location.latlng){
+      setState({
+        startCoords: {lat: Number(this.props.user.location.latlng.split(",")[0]), lng:Number(this.props.user.location.latlng.split(",")[1])},
+        lat: Number(this.props.user.location.latlng.split(",")[0]),
+        lng: Number(this.props.user.location.latlng.split(",")[1]),
+      })
+    }
+    
   componentWillUnmount() {
     destroyGoogleScript();
   }
