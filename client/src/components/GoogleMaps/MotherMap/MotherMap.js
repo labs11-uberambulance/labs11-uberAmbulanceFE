@@ -23,15 +23,22 @@ const styles = ({ palette }) => ({
     backgroundColor: palette.primary.dark,
     width: "90%",
     margin: "10px auto",
-    
+    fontSize: "1.5rem",
+    '&:hover': {
+      backgroundColor: 'green'
+   }
   },
   firstButton: {
     zIndex: "40",
-    color: palette.secondary.contrastText,
+    color: palette.primary.contrastText,
     backgroundColor: palette.secondary.dark,
     width: "90%",
     margin: "10px auto",
-    alignSelf: "flex-start"
+    alignSelf: "flex-start",
+    fontSize: "1.5rem",
+    '&:hover': {
+      backgroundColor: 'purple'
+   }
   },
   hidden:{
     opacity: 0,
@@ -43,7 +50,17 @@ const styles = ({ palette }) => ({
   },
   modalHeight:{
     
-  }
+  },
+  finalMessage:{
+    zIndex: "100",
+    width: "80%",
+    backgroundColor: "white",
+    alignSelf: "center",
+    fontSize: "2.5rem",
+    borderRadius: "15px",
+    padding: "10px 10px 32px",
+    boxShadow: "0 4px 8px 0 rgba(0,0,0,0.12), 0 2px 4px 0 rgba(0,0,0,0.08)",
+}
 });
 class MotherMap extends Component {
   constructor(props) {
@@ -123,58 +140,89 @@ class MotherMap extends Component {
     };
     return (
       <div style={{ margin: "0 auto", width: "97.5%" }}>
+      
         <div className="google-maps-container" style={{ }}>
           <div id="map" />
-            <div className={this.state.locked?"reqBoxTwo" :"reqBox"}
+        {this.props.finished?
+        <section className={this.props.classes.finalMessage}>
+          <h3 
+          >Thank you for requesting a ride! Please check your phone for updates from Birthride and your driver. If {this.props.driverName} is unavailable we'll find another similar driver in the area.</h3> 
+          <Button
+          variant="contained"
+              width="50%"
+                className={this.props.classes.firstButton}
+                onClick={()=>window.location.reload()}>
+                Try Again?
+              </Button>
+              <Button
+              variant="contained"
+              width="50%"
+                className={this.props.classes.firstButton}
+                onClick={() => {this.props.history.push('/logout')}}>
+                Logout
+              </Button>
+        </section>
+        :
+        <>
+          <div className={this.state.locked?"reqBoxTwo" :"reqBox"}
 
-            >
-            {!this.props.selectedDriver ? this.props.rides.length>0 ?
-                <> 
-                <i className="fas fa-arrow-circle-left" onClick={()=>this.goBack()}></i>
-                
-                {this.props.rides.map(ride=>{
-                  return <DriverCard key={ride.driver.id} selectDriver={this.props.selectDriver} ride={ride}/>
-                })}
-                </>
-            :
-              <>{this.state.locked? <i className="fas fa-arrow-circle-left" onClick={this.toggleMarkLockHandler}></i>:null}
-                {!this.state.locked?
-                <div
-                mx="auto"
-                >
-                <Button
-                width="50%"
-                 className={this.props.classes.firstButton}
-                 onClick={this.handleClickOpen}>
-                  {!this.state.locked? 'Search New Pickup Location' : `Set Destination`}
-                </Button>
-                <Button
-                width="50%"
-                 className={this.props.classes.firstButton}
-                 onClick={this.toggleMarkLockHandler}
-                 >
-                  Continue default
-                </Button>
-                </div>
-                :
-                <Button
-                width="90%"
-                 className={this.props.classes.firstButton}
-                 onClick={this.handleClickOpen}>
-                  {!this.state.locked? 'Search New Pickup Location' : `Set Destination`}
-                </Button>
-                }
-                {this.state.locked? null :<Button mx="auto" onClick={this.toggleMarkLockHandler} className={this.props.classes.root} color="secondary" >Confirm Pickup</Button>}
+          >
+          
+          {!this.props.selectedDriver ? this.props.rides.length>0 ?
+              <> 
+              <i className="fas fa-arrow-circle-left hover-cursor" onClick={()=>this.goBack()}></i>
+              
+              {this.props.rides.map(ride=>{
+                return <DriverCard key={ride.driver.id} selectDriver={this.props.selectDriver} ride={ride}/>
+              })}
               </>
-            : 
-            <>
-             <i className="fas fa-arrow-circle-left" onClick={()=>this.props.removeDriver()}></i>
-             {console.log(this.props.selectedDriver)}
-            <Button onClick={()=>this.props.submitFinalRideRequest(this.props.selectedDriver)}>Final Request with {this.props.driverName}</Button>
+          :
+            <>{this.state.locked? <i className="fas fa-arrow-circle-left hover-cursor" onClick={this.toggleMarkLockHandler}></i>:null}
+              {!this.state.locked?
+              <div
+              mx="auto"
+              >
+              <Button
+              variant="contained"
+              width="50%"
+              color="primary"
+                className={!this.state.locked? this.props.classes.firstButton : this.props.classes.root}
+                onClick={this.handleClickOpen}>
+                {!this.state.locked? 'Search New Pickup Location' : `Set Destination`}
+              </Button>
+              <Button
+              variant="contained"
+              width="50%"
+                className={this.props.classes.root}
+                onClick={this.toggleMarkLockHandler}
+                >
+                Continue default
+              </Button>
+              </div>
+              :
+              <Button
+              variant="contained"
+              width="90%"
+              className={!this.state.locked? this.props.classes.firstButton : this.props.classes.root}
+                onClick={this.handleClickOpen}>
+                {!this.state.locked? 'Search New Pickup Location' : `Set Destination`}
+              </Button>
+              }
+              {this.state.locked? null :<Button variant="contained"
+              mx="auto" onClick={this.toggleMarkLockHandler} className={this.props.classes.root} color="secondary" >Confirm Pickup</Button>}
             </>
-            }
-            </div>
-            <div className={this.state.toggleModal?this.props.classes.show:this.props.classes.hidden}>
+          : 
+          <>
+            <i className="fas fa-arrow-circle-left hover-cursor" onClick={()=>this.props.removeDriver()}></i>
+            {console.log(this.props.selectedDriver)}
+          <Button 
+          variant="contained"
+          className={this.props.classes.firstButton}
+          onClick={()=>this.props.submitFinalRideRequest(this.props.selectedDriver)}>Final Request with {this.props.driverName}</Button>
+          </>
+          }
+          </div>
+          <div className={this.state.toggleModal?this.props.classes.show:this.props.classes.hidden}>
               <Dialog
               // fullScreen={fullScreen}
               open={this.state.open}
@@ -219,8 +267,11 @@ class MotherMap extends Component {
               </div>
               </Dialog>
             </div>
-        </div>
-      </div>
+        </>
+        }
+       </div>
+      
+     </div>
     );
   }
   //   call backs for getting places and markers clicked

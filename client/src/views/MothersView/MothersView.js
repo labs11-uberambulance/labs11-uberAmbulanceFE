@@ -11,7 +11,7 @@ const name = 'Lauren'
 const distance = '10';
 const phone = '+11111111111'
 
-function MothersView() {
+function MothersView(props) {
   const requestDriverHandler = () => {
     axios.post('/api/rides/request/driver/VhuBXHKe4cQFvdpwOMpqhGv2EHx1', 
     {
@@ -25,7 +25,7 @@ function MothersView() {
     })
   }
   return (<>
-  <MotherHomePage/>
+  <MotherHomePage history={props.history}/>
     <button onClick={requestDriverHandler}>Request Driver</button>
   </>)
 }
