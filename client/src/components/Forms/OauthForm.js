@@ -67,6 +67,7 @@ class OauthForm extends Component {
       .catch(err => console.error(err));
   };
   render() {
+    const path = this.props.signup ? '/login' : '/register'
     return (
       <div className="authentication-background">
         <form className="auth-form">
@@ -137,6 +138,11 @@ class OauthForm extends Component {
               onKeyPress={(e) => { e.key==="Enter" && this.initOauthWithPhone()}}
               onChange={this.inputChangeHandler}
             />
+            <br />
+            <br />
+            <Button onClick={() => {this.props.history.replace(path)}}>
+              {!this.props.signup ? "Switch to Sign up " : "Switch to Log in "}
+            </Button>
         </form>
         {this.state.verifyCode && (
           <Modal open={this.state.verifyCode}>
