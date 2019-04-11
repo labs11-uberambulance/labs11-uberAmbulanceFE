@@ -8,3 +8,6 @@
 #map{
   position: absolute;
 }
+.hover-cursor{
+  cursor: pointer;
+}
