@@ -13,7 +13,6 @@
 .reqBox{
   width: 50%;
   height: 235px;
-  border: 3px solid purple;
   z-index: 10;
   display: flex;
   flex-direction: column;
@@ -25,7 +24,6 @@
 .reqBoxTwo{
     width: 50%;
     height: 235px;
-    border: 3px solid purple;
     z-index: 10;
     display: flex;
     /* align-items: flex-start; */
