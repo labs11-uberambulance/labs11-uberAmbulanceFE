@@ -1,37 +1,32 @@
 import React, { Component } from "react";
-import { initGoogleScript, destroyGoogleScript } from "./GoogleAPI";
-import { TextField, Button } from "@material-ui/core";
+import {
+  initGoogleScript,
+  destroyGoogleScript,
+  calcAndDisplayRoute
+} from "./GoogleAPI";
 
 import "./RouteMap.css";
 
 class RouteMap extends Component {
-  state = {
-    places: null,
-    search: "",
-    markersSelected: []
-  };
+  state = {};
 
   render() {
-    let { places, markersSelected } = { ...this.state };
-    if (markersSelected.length > 0) {
-      places = places.filter(place => markersSelected.includes(place.name));
-    }
+    const startArr = this.props.start.split(",");
+    const stopArr = this.props.stop.split(",");
+    calcAndDisplayRoute(
+      { lat: +startArr[0], lng: +startArr[1] },
+      { lat: +stopArr[0], lng: +stopArr[1] }
+    );
     return (
       <div style={{ display: "flex", height: "500px" }}>
         <div id="map" />
       </div>
     );
   }
-  //   call backs for getting places and markers clicked
   componentDidMount() {
     const startArr = this.props.start.split(",");
     const stopArr = this.props.stop.split(",");
-    initGoogleScript(
-      parseFloat(startArr[0]),
-      parseFloat(startArr[1]),
-      parseFloat(stopArr[0]),
-      parseFloat(stopArr[1])
-    );
+    initGoogleScript(+startArr[0], +startArr[1], +stopArr[0], +stopArr[1]);
   }
   componentWillUnmount() {
     destroyGoogleScript();

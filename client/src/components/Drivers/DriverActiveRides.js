@@ -25,13 +25,26 @@ class DriverActiveRides extends Component {
     this.state = {};
   }
 
-  onRejectHandler = (id, rideData) => {
-    // send rejection to backend to update ride object (ride_id will be in 'data')
-    console.log("Ride rejected, id: ", id);
+  onRejectHandler = rideData => {
+    // send rejection to backend to update ride object (ride_id in 'data')
+    // data: {
+    //   distance: `${rideInfo.distance}`,
+    //   name: rideInfo.name,
+    //   phone: rideInfo.phone,
+    //   price: `${rideInfo.price}`,
+    //   ride_id: `${rideInfo.ride_id}`,
+    //   hospital: `${rideInfo.hospital}`
+    // }
+    const data = {
+      ride_id: rideData.id
+    };
+    console.log("Ride rejected, rideData: ", rideData);
     axios
-      .post(`/api/rides/driver/rejects/${id}`, rideData)
+      .post(`/api/rides/driver/rejects/${rideData.id}`, { data })
       .then(result => {
-        console.log(result);
+        console.log("ride reject success: ", result);
+        // need to do this since ride data is not automatically updated on application state with update to user data.
+        this.props.refreshUserData(this.props.user);
       })
       .catch(err => {
         console.log(err);
@@ -59,53 +72,41 @@ class DriverActiveRides extends Component {
   render() {
     const { classes } = this.props;
     const activeRides = this.props.user.driverData.rides.filter(
-      ride => ride.status != "complete"
+      ride => ride.ride_status != "complete"
     );
     const rideRequests = activeRides.map(ride => {
-      if (ride.ride_status === "waiting_on_driver") {
-        const rideDestLoc = ride.destName
-          ? ride.destName.plus_code.compound_code
-          : "Unknown Location";
-        return (
-          <div key={ride.id}>
-            Date: {moment(ride.updated_at).format("LLLL")}
-            <br />
-            To: {rideDestLoc}
-            <p style={{ color: "red" }}>Status: {ride.ride_status}</p>
-            <Button
-              onClick={() => this.onAcceptHandler(ride.id)}
-              color="primary"
-            >
-              Accept Request
-            </Button>
-            <Button onClick={() => this.onRejectHandler(ride.id)}>
-              Reject Request
-            </Button>
-          </div>
-        );
-      } else if (ride.ride_status === "Driver en route") {
-        const rideDestLoc = ride.destName
-          ? ride.destName.plus_code.compound_code
-          : "Unknown Location";
-        return (
-          <div key={ride.id}>
-            Date: {moment(ride.updated_at).format("LLLL")}
-            <br />
-            To: {rideDestLoc}
-            <p style={{ color: "green" }}>Status: {ride.ride_status}</p>
-            <Button onClick={() => this.onRejectHandler(ride.id)}>
-              Cancel Request
-            </Button>
-          </div>
-        );
-      }
+      console.log("ride: ", ride);
+      const rideDestMother = ride.destNameMother
+        ? ride.destNameMother.plus_code.compound_code
+        : "Unknown Location";
+      const rideDestHospital = ride.destNameHospital
+        ? ride.destNameHospital.plus_code.compound_code
+        : "Unknown Location";
+      return (
+        <div key={ride.id}>
+          Date: {moment(ride.updated_at).format("LLLL")}
+          <br />
+          From: {rideDestMother}
+          <br />
+          To: {rideDestHospital}
+          <br />
+          Price: {ride.price}
+          <br />
+          <p style={{ color: "red" }}>Status: {ride.ride_status}</p>
+          <Button onClick={() => this.onAcceptHandler(ride.id)} color="primary">
+            Accept Request
+          </Button>
+          <Button onClick={() => this.onRejectHandler(ride)}>
+            Reject Request
+          </Button>
+        </div>
+      );
     });
     return (
       <Card className={classes.card}>
         <CardContent>
           Ride Requests:
           {rideRequests}
-          Current Ride:
         </CardContent>
       </Card>
     );
