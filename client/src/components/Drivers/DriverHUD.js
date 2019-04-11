@@ -1,16 +1,29 @@
 import React, { Component } from "react";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
+// import Button from "@material-ui/core/Button";
+// import Card from "@material-ui/core/Card";
+// import CardActions from "@material-ui/core/CardActions";
+// import CardContent from "@material-ui/core/CardContent";
+// import Grid from "@material-ui/core/Grid";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Grid,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Typography
+} from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import DriverProfileMenu from "./DriverProfileMenu";
 
 import DriverEditProfileModal from "./DriverEditProfileModal";
 
 const styles = {
   card: {
-    minWidth: 275,
-    maxWidth: 400
+    minWidth: 275
   },
   button: {
     width: "100%"
@@ -44,14 +57,43 @@ class DriverHUD extends Component {
           </Button>
         </CardActions>
         <CardContent>
-          Welcome, {this.props.user.name}
-          <p>
-            You have set{" "}
-            <span style={{ color: "green" }}>
-              USh{this.props.user.driverData.price}
-            </span>{" "}
-            as the maximum charge for a ride.
-          </p>
+          <Grid container spacing={24}>
+            <Grid item xs={4}>
+              <DriverProfileMenu
+                user={this.props.user}
+                profileImg={this.props.user.driverData.photo_url}
+              />
+            </Grid>
+            <Grid item xs={8}>
+              <Typography variant="h6" gutterBottom>
+                Welcome, {this.props.user.name}
+              </Typography>
+              <Card>
+                <List>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <span style={{ color: "green" }}>
+                        USh{this.props.user.driverData.price}
+                      </span>
+                    </ListItemIcon>
+                    <ListItemText>
+                      Your current maximum ride charge
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <span style={{ color: "green" }}>
+                        {this.props.user.phone}
+                      </span>
+                    </ListItemIcon>
+                    <ListItemText>
+                      Phone number Mothers can contact you on
+                    </ListItemText>
+                  </ListItem>
+                </List>
+              </Card>
+            </Grid>
+          </Grid>
         </CardContent>
         <CardActions>
           <DriverEditProfileModal

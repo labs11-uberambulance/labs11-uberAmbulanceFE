@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
-import DriverProfileMenu from "./DriverProfileMenu";
 import DriverHUD from "./DriverHUD";
 import DriverUpdateLocation from "./DriverUpdateLocation";
 
@@ -35,10 +34,6 @@ export default class DriverInactive extends Component {
           justify="space-around"
           alignItems="center"
         >
-          <DriverProfileMenu
-            user={this.props.user}
-            profileImg={this.props.user.driverData.photo_url}
-          />
           <DriverHUD user={this.props.user} usrUpdate={this.props.usrUpdate} />
         </Grid>
         My Current Location:
