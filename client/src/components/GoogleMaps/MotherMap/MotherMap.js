@@ -53,7 +53,7 @@ class MotherMap extends Component {
       search: "",
       markersSelected: [],
       locked: false,
-      startCoords: {lat: 0.346996, lng:32.578201,
+      startCoords: {lat: 0.346996, lng:32.578201},
       lat: 0.346996,
       lng: 32.578201,
       open: true,
