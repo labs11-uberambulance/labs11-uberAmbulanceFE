@@ -169,6 +169,7 @@ class MotherMap extends Component {
             : 
             <>
              <i className="fas fa-arrow-circle-left" onClick={()=>this.props.removeDriver()}></i>
+             {console.log(this.props.selectedDriver)}
             <Button onClick={()=>this.props.submitFinalRideRequest(this.props.selectedDriver)}>Final Request with {this.props.driverName}</Button>
             </>
             }
