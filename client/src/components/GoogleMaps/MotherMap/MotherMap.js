@@ -14,6 +14,7 @@ import {
   destroyGoogleScript
 } from "./GoogleAPI";
 import "./MotherMap.css";
+import DriverCard from './DriverCard'
 
 const styles = ({ palette }) => ({
   root: {
@@ -21,14 +22,16 @@ const styles = ({ palette }) => ({
     color: palette.primary.contrastText,
     backgroundColor: palette.primary.dark,
     width: "90%",
-    margin: "0 auto"
+    margin: "10px auto",
+    
   },
   firstButton: {
     zIndex: "40",
     color: palette.secondary.contrastText,
     backgroundColor: palette.secondary.dark,
     width: "90%",
-    margin: "0 auto"
+    margin: "10px auto",
+    alignSelf: "flex-start"
   },
   hidden:{
     opacity: 0,
@@ -75,7 +78,7 @@ class MotherMap extends Component {
     this.setState(({ locked }) => {
       if (locked) {
         unlockMarker();
-        return { search: "", places: null, markersSelected: [], locked: false };
+        return { search: "", places: null, markersSelected: [], locked: false, startCoords:{lat: Number(this.props.user.location.latlng.split(",")[0]), lng:Number(this.props.user.location.latlng.split(",")[1])} };
       } else {
         const position = lockMarker();
         this.props.setRideStart && this.props.setRideStart(position);
@@ -128,17 +131,38 @@ class MotherMap extends Component {
                 <> 
                 <i className="fas fa-arrow-circle-left" onClick={()=>this.goBack()}></i>
                 
-                {this.props.rides.map(ride=><button onClick={(e)=>this.props.selectDriver(e, ride.driver.firebase_id, ride.driver.name, ride.distance)}
-            key={ride.driver.id} >{ride.driver.name}</button>)} 
+                {this.props.rides.map(ride=>{
+                  return <DriverCard key={ride.driver.id} selectDriver={this.props.selectDriver} ride={ride}/>
+                })}
                 </>
             :
               <>{this.state.locked? <i className="fas fa-arrow-circle-left" onClick={this.toggleMarkLockHandler}></i>:null}
+                {!this.state.locked?
+                <div
+                mx="auto"
+                >
                 <Button
-                  mx="auto"
+                width="50%"
                  className={this.props.classes.firstButton}
                  onClick={this.handleClickOpen}>
-                  {!this.state.locked? `Search Pickup Location: ${this.state.startCoords.lat},  ${this.state.startCoords.lng}` : `Set Destination`}
+                  {!this.state.locked? 'Search New Pickup Location' : `Set Destination`}
                 </Button>
+                <Button
+                width="50%"
+                 className={this.props.classes.firstButton}
+                 onClick={this.toggleMarkLockHandler}
+                 >
+                  Continue default
+                </Button>
+                </div>
+                :
+                <Button
+                width="90%"
+                 className={this.props.classes.firstButton}
+                 onClick={this.handleClickOpen}>
+                  {!this.state.locked? 'Search New Pickup Location' : `Set Destination`}
+                </Button>
+                }
                 {this.state.locked? null :<Button mx="auto" onClick={this.toggleMarkLockHandler} className={this.props.classes.root} color="secondary" >Confirm Pickup</Button>}
               </>
             : 

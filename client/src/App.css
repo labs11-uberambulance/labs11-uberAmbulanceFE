@@ -8,10 +8,11 @@
 .fa-arrow-circle-left{
   font-size: 2rem;
   width: 10%;
+  margin: 10px 0;
 }
 .reqBox{
   width: 50%;
-  height: 175px;
+  height: 235px;
   border: 3px solid purple;
   z-index: 10;
   display: flex;
@@ -23,15 +24,29 @@
 }
 .reqBoxTwo{
     width: 50%;
-    height: 175px;
+    height: 235px;
     border: 3px solid purple;
     z-index: 10;
     display: flex;
-    align-items: flex-start;
+    /* align-items: flex-start; */
     justify-items: center;
+    flex-direction: none;
 }
 
 
 .MuiDialog-paperFullWidth-63{
   height: 100%;
+}
+
+.driver-card{
+  height: auto;
+  width: 25%;
+  background: grey;
+  z-index:50;
+
+}
+.driver-card img{
+  width: 100%;
+  height: 25%;
+
 }
