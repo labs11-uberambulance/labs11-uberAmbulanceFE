@@ -38,3 +38,28 @@
     display: flex;
     margin: 0 0 100px;
 }
+@media only screen and (max-width: 750px) {
+    .header-font{
+        font-size: 3rem;
+    }
+    .CTA{
+        height: 60vh;
+        border-radius: 0 0 20% 20%;
+    }
+    .absolute-cards{
+        position: none;
+        height: auto;
+        width: 100%;
+        flex-wrap: wrap;
+        margin: 30px auto;
+    }
+  }
+  @media only screen and (max-width: 400px) {
+    .header-font{
+        font-size: 2.5rem;
+    }
+    .CTA{
+        height: 50vh;
+        border-radius: 0 0 5% 5%;
+    }
+  }

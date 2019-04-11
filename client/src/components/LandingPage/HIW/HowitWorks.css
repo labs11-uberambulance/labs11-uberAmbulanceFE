@@ -17,7 +17,7 @@
     margin: 0 auto;
 }
 .my-4{
-    margin: 30px auto;
+    margin: 60px auto;
 }
 .p-4{
     padding: 20px;
@@ -59,3 +59,18 @@
     display: flex;
     background-color: grey;
 }
+
+@media only screen and (max-width: 700px) {
+    .flex-wrap{
+        flex-wrap: wrap;
+    }
+    .icon-card{
+        width: 100%;
+    }
+    .hwi-text{
+        width:100%;
+    }
+  }
+@media only screen and (max-width: 400px) {
+    
+  }
