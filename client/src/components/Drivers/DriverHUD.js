@@ -17,6 +17,7 @@ import DriverProfileMenu from "./DriverProfileMenu";
 import DriverEditProfileModal from "./DriverEditProfileModal";
 import DriverEditPricePopover from "./DriverEditPricePopover";
 import EditIcon from "@material-ui/icons/Edit";
+import EditProfileImg from "./EditProfilePic";
 
 const styles = {
   card: {
@@ -65,7 +66,7 @@ class DriverHUD extends Component {
                 variant="contained"
                 onClick={this.handleStatusClick}
                 // fullWidth
-                sizeLarge
+                // sizeLarge
               >
                 {this.props.user.driverData.active
                   ? "Set Inactive"
@@ -81,7 +82,7 @@ class DriverHUD extends Component {
                   this.props.history.push("/logout");
                 }}
                 // fullWidth
-                sizeLarge
+                // sizeLarge
               >
                 Log Out
               </Button>
@@ -109,12 +110,7 @@ class DriverHUD extends Component {
                 marginTop: "-70px"
               }}
             />
-            <IconButton
-              style={{ marginTop: "-20px", marginRight: "-130px" }}
-              onClick={() => console.log("edit profile pic")}
-            >
-              <EditIcon fontSize={"small"} />
-            </IconButton>
+            <EditProfileImg currImg={this.props.user.driverData.photo_url} />
           </Grid>
         </Grid>
         <CardContent>
