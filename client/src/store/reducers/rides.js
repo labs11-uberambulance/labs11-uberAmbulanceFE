@@ -32,6 +32,13 @@ export default (state = initialState, action) => {
           error: action.payload,
           loading: false
       }
+      case rideTypes.CLEAR_RIDES:
+      return{
+          ...state,
+          rides: {},
+          error: null,
+          loading: false
+      }
       case rideTypes.CREATE_RIDE_START:
       return{
           ...state,

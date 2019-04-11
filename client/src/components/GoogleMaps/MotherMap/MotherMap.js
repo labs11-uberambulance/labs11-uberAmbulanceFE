@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {connect} from 'react-redux'
-
+import { clearRides } from "../../../store/actions/rides";
 
 
 import {TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, withStyles } from "@material-ui/core";
@@ -14,12 +14,24 @@ import {
   destroyGoogleScript
 } from "./GoogleAPI";
 import "./MotherMap.css";
+import DriverCard from './DriverCard'
 
 const styles = ({ palette }) => ({
   root: {
     zIndex: "40",
+    color: palette.primary.contrastText,
+    backgroundColor: palette.primary.dark,
+    width: "90%",
+    margin: "10px auto",
+    
+  },
+  firstButton: {
+    zIndex: "40",
     color: palette.secondary.contrastText,
-    backgroundColor: palette.secondary.dark
+    backgroundColor: palette.secondary.dark,
+    width: "90%",
+    margin: "10px auto",
+    alignSelf: "flex-start"
   },
   hidden:{
     opacity: 0,
@@ -41,14 +53,20 @@ class MotherMap extends Component {
       search: "",
       markersSelected: [],
       locked: false,
-      startCoords: {lat: Number(this.props.user.location.latlng.split(",")[0]), lng:Number(this.props.user.location.latlng.split(",")[1])},
-      lat: Number(this.props.user.location.latlng.split(",")[0]),
-      lng: Number(this.props.user.location.latlng.split(",")[1]),
+      startCoords: {lat: 0.346996, lng:32.578201},
+      lat: 0.346996,
+      lng: 32.578201,
       open: true,
-      toggleModal: false
+      toggleModal: false,
     };
   }
-
+  // Default values: Middle of Uganada 0.346996, 32.578201
+  goBack= () =>{
+    this.setState({
+      search: ""
+    })
+    this.props.clearRides()
+  }
   handleClickOpen = () => {
     this.setState({ toggleModal: true });
   };
@@ -61,7 +79,7 @@ class MotherMap extends Component {
     this.setState(({ locked }) => {
       if (locked) {
         unlockMarker();
-        return { search: "", places: null, markersSelected: [], locked: false };
+        return { search: "", places: null, markersSelected: [], locked: false, startCoords:{lat: Number(this.props.user.location.latlng.split(",")[0]), lng:Number(this.props.user.location.latlng.split(",")[1])} };
       } else {
         const position = lockMarker();
         this.props.setRideStart && this.props.setRideStart(position);
@@ -104,80 +122,104 @@ class MotherMap extends Component {
       fullWidth: true
     };
     return (
-      <>
-        <div style={{ margin: "0 auto", width: "97.5%" }}>
-          <div className="google-maps-container" style={{ }}>
-            <div id="map" />
-            <div className="reqBox">
-            {this.state.locked? <i className="fas fa-arrow-circle-left" onClick={this.toggleMarkLockHandler}></i>:null}
-            
-              <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-               {!this.state.locked? `Your Location: ${this.state.startCoords.lat},  ${this.state.startCoords.lng}` : `Set Destination`}
-              </Button>
-              {this.state.locked?
-              <Button>Request Drivers</Button>
-              :
-              <Button
-              onClick={this.toggleMarkLockHandler}
-              className={this.props.classes.root}
-              color="secondary"
-            
+      <div style={{ margin: "0 auto", width: "97.5%" }}>
+        <div className="google-maps-container" style={{ }}>
+          <div id="map" />
+            <div className={this.state.locked?"reqBoxTwo" :"reqBox"}
+
             >
-              {this.state.locked && "Un"}Lock Marker
-            </Button>
+            {!this.props.selectedDriver ? this.props.rides.length>0 ?
+                <> 
+                <i className="fas fa-arrow-circle-left" onClick={()=>this.goBack()}></i>
+                
+                {this.props.rides.map(ride=>{
+                  return <DriverCard key={ride.driver.id} selectDriver={this.props.selectDriver} ride={ride}/>
+                })}
+                </>
+            :
+              <>{this.state.locked? <i className="fas fa-arrow-circle-left" onClick={this.toggleMarkLockHandler}></i>:null}
+                {!this.state.locked?
+                <div
+                mx="auto"
+                >
+                <Button
+                width="50%"
+                 className={this.props.classes.firstButton}
+                 onClick={this.handleClickOpen}>
+                  {!this.state.locked? 'Search New Pickup Location' : `Set Destination`}
+                </Button>
+                <Button
+                width="50%"
+                 className={this.props.classes.firstButton}
+                 onClick={this.toggleMarkLockHandler}
+                 >
+                  Continue default
+                </Button>
+                </div>
+                :
+                <Button
+                width="90%"
+                 className={this.props.classes.firstButton}
+                 onClick={this.handleClickOpen}>
+                  {!this.state.locked? 'Search New Pickup Location' : `Set Destination`}
+                </Button>
+                }
+                {this.state.locked? null :<Button mx="auto" onClick={this.toggleMarkLockHandler} className={this.props.classes.root} color="secondary" >Confirm Pickup</Button>}
+              </>
+            : 
+            <>
+             <i className="fas fa-arrow-circle-left" onClick={()=>this.props.removeDriver()}></i>
+            <Button onClick={()=>this.props.submitFinalRideRequest(this.state.selectedDriver)}>Final Request with {this.props.driverName}</Button>
+            </>
             }
-              
             </div>
-          </div>
-        </div>
-        <div className={this.state.toggleModal?this.props.classes.show:this.props.classes.hidden}>
-        <Dialog
-          // fullScreen={fullScreen}
-          open={this.state.open}
-          className={this.state.toggleModal?this.props.classes.show:this.props.classes.hidden}
-          fullWidth
-          onClose={this.handleClose}
-          aria-labelledby="responsive-dialog-title"
-        >
-          <h3 id="responsive-dialog-title">{!this.state.locked?'Search Pick Up Location': "Search Destinations"}</h3>
-          <TextField
+            <div className={this.state.toggleModal?this.props.classes.show:this.props.classes.hidden}>
+              <Dialog
+              // fullScreen={fullScreen}
+              open={this.state.open}
+              className={this.state.toggleModal?this.props.classes.show:this.props.classes.hidden}
+              fullWidth
+              onClose={this.handleClose}
+              aria-labelledby="responsive-dialog-title"
+              >
+              <h3 id="responsive-dialog-title">{!this.state.locked?'Search Pick Up Location': "Search Destinations"}</h3>
+              <TextField
               label="Search for your location"
               {...commonTextProps}
               onKeyPress={this.searchForLocationHandler}
               // need to always have this rendered so when google tries to connect to it we dont get an error
               // since React hasn't placed it on the DOM.
               style={this.state.locked ? { display: "none" } : {}}
-            />
-            <TextField
+              />
+              <TextField
               id="google-search"
               label="Search for your destination"
               {...commonTextProps}
               style={!this.state.locked ? { opacity: 0, width: 0 } : {}}
-            />
-            <div>
-            {this.state.places && (
-              <GooglePlacesList
-                places={Array.isArray(places) ? places : [places]}
-                setDestination={this.mapOutRoute}
               />
-            )}
-            </div>
-          <div className="modal-btns">
-            <Button onClick={this.handleClose} color="primary">
+              <div>
+              {this.state.places && (
+              <GooglePlacesList
+              places={Array.isArray(places) ? places : [places]}
+              setDestination={this.mapOutRoute}
+              getDrivers={this.props.getDrivers}
+              rideStart={this.props.rideStart}
+              handleClose={this.handleClose}
+              />
+              )}
+              </div>
+              <div className="modal-btns">
+              <Button onClick={this.handleClose} color="primary">
               Disagree
-            </Button>
-            <Button onClick={this.handleClose} color="primary" autoFocus>
+              </Button>
+              <Button onClick={this.handleClose} color="primary" autoFocus>
               Agree
-            </Button>
-          </div>
-        </Dialog>
-       
+              </Button>
+              </div>
+              </Dialog>
+            </div>
         </div>
-
-
-
-
-      </>
+      </div>
     );
   }
   //   call backs for getting places and markers clicked
@@ -193,7 +235,15 @@ class MotherMap extends Component {
   };
   componentDidMount() {
     initGoogleScript(this.passPlacesToComponent, this.markerSelectedHandler, this.state.lat, this.state.lng ); // takes lat/long as 3rd/4th args, sets start pin & zooms there
+    if(this.props.user.location.latlng){
+      this.setState({
+        startCoords: {lat: Number(this.props.user.location.latlng.split(",")[0]), lng:Number(this.props.user.location.latlng.split(",")[1])},
+        lat: Number(this.props.user.location.latlng.split(",")[0]),
+        lng: Number(this.props.user.location.latlng.split(",")[1]),
+      })
+    }
   }
+    
   componentWillUnmount() {
     destroyGoogleScript();
   }
@@ -211,12 +261,13 @@ class MotherMap extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.auth.user
+  user: state.auth.user,
+  rides: state.rides.rides
 })
 
 const mapDispatchToProps = {
-  
+  clearRides
 }
 
 
-export default connect(mapStateToProps)(withStyles(styles)(MotherMap));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(MotherMap));
