@@ -4,6 +4,7 @@ import CTA from '../../components/LandingPage/CTA/CTA'
 import HIW from '../../components/LandingPage/HIW/HowItWorks'
 
 import './LandingView.css';
+import Testimonies from '../../components/LandingPage/Testimonies/Testimonies';
 
 const LandingView = () => {
   return (
@@ -11,6 +12,7 @@ const LandingView = () => {
         <Header />
         <CTA/>
         <HIW/>
+        <Testimonies/>
     </div>
   )
 }

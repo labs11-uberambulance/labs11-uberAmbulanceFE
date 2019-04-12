@@ -43,8 +43,8 @@
 .icon-card{
     background: #F4F5F9;
     height: 150px;
-    width: 30%;
-    margin: 0 auto;
+    /* width: full; */
+    margin: 0 5px;
     font-size: 2rem;
 }
 .hwi-text{
@@ -62,7 +62,10 @@
     flex-direction: row-reverse;
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 800px) {
+    .w-85{
+        width:90%
+    }
     .flex-wrap{
         flex-wrap: wrap;
     }
