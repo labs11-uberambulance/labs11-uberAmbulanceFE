@@ -6,18 +6,12 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
-import DriverProfileMenu from "./DriverProfileMenu";
 import DriverEditProfileModal from "./DriverEditProfileModal";
 import DriverEditPricePopover from "./DriverEditPricePopover";
 import DriverEditPhonePopover from "./DriverEditPhonePopover";
-import EditIcon from "@material-ui/icons/Edit";
 import EditProfileImg from "./EditProfilePic";
 import DriverRideHistoryModal from "./DriverRideHistoryModal";
 
