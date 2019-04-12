@@ -72,7 +72,7 @@ class TemporaryDrawer extends React.Component {
           {[`Welcome ${this.props.user.name}`,'Profile'].map((text, index) => (
           text === 'Profile' ? 
             <ListItem 
-            onClick={()=>this.handleClickOpen()}
+            onClick={this.handleClickOpen}
             button 
             key={text} >
               <ListItemText primary={text} />
@@ -102,8 +102,8 @@ class TemporaryDrawer extends React.Component {
           <div
             tabIndex={0}
             role="button"
-            onClick={this.toggleDrawer('left', false)}
-            onKeyDown={this.toggleDrawer('left', false)}
+            // onClick={this.toggleDrawer('left', false)}
+            // onKeyDown={this.toggleDrawer('left', false)}
           >
             {sideList}
           </div>
