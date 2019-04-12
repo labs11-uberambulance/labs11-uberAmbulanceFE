@@ -16,11 +16,10 @@ const headerText ={
 export default function HowItWorks() {
     AOS.init()
   return (
-      
     <div>
       <h3 style={headerText}>How Does it Work?</h3>
       <div className="flex flex-wrap w-85 mx-auto my-4">
-          <div data-aos="fade-right"  data-aos-delay="90" className="w-50 hwi-text p-4">
+          <div  data-aos="fade-right"  data-aos-delay="90" className="w-50 hwi-text p-4">
               <h4>Register</h4>
               <p>Visit you local health center and register for an account. Preload your contact information, preferred hospital and route to make delivery day a breeze.</p>
           </div>

@@ -33,13 +33,17 @@ const styles = theme => ({
     maxWidth: 600,
     flexGrow: 1,
     margin: "0 auto",
-    backgroundColor: 'rgb(244, 245, 249)'
+    backgroundColor: 'rgb(244, 245, 249)',
+    
   },
   header: {
     height: '250px',
     padding: "10px 30px 5px",
     borderRadius: "5px",
     backgroundColor: 'rgb(244, 245, 249)',
+    [theme.breakpoints.down('sm')]: {
+        height: 'auto'
+    },
   },
   stepper:{
       backgroundColor: 'rgb(244, 245, 249)'
@@ -49,13 +53,19 @@ const styles = theme => ({
     lineHeight: 1.4,
     display: 'flex',
     margin: 0,
-    alignItems: "baseline"
+    alignItems: "baseline",
+    [theme.breakpoints.down('sm')]: {
+        fontSize: '1rem',
+    },
   },
   quotes:{
       fontSize: '3.5rem',
       fontFamily: 'cursive',
       fontWeight: "bold",
-      color: '#0277bd'
+      color: '#0277bd',
+      [theme.breakpoints.down('sm')]: {
+        fontSize: '2.2rem',
+    },
   },
   author:{
       fontStyle: 'italic',
