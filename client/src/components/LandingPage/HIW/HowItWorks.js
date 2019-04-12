@@ -8,6 +8,7 @@ import Step_5 from "./images/step_5.svg";
 import Step_6 from "./images/step_6.svg";
 import AOS from "aos";
 
+
 import "./HowitWorks.css";
 const headerText = {
   margin: "150px auto 0",
