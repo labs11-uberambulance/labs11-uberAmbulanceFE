@@ -8,3 +8,8 @@
 #map{
   position: absolute;
 }
+
+
+.reqBoxTwo, .reqBox {
+  backdrop-filter: blur(6px);
+}

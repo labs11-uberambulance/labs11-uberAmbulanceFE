@@ -1,3 +1,4 @@
+import { styles } from '../MapStyle';
 let map, searchBox, marker, markerListener, directionsService, directionsDisplay;
 
 const initMap = (placesCB, markerCB, lat, lng) => () => {
@@ -6,7 +7,7 @@ const initMap = (placesCB, markerCB, lat, lng) => () => {
     directionsDisplay = new window.google.maps.DirectionsRenderer();
     map = new window.google.maps.Map(document.getElementById('map'), {
         center: { lat, lng }, 
-        zoom: 12,
+        zoom: 12, styles,
         clickableIcons: false, mapTypeControl: false, minZoom: 5,
         restriction: { latLngBounds: { north: 4.35, south: -1.5, west: 29.55, east: 34.6 } },
         streetViewControl: false
