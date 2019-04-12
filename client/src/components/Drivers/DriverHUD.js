@@ -18,6 +18,7 @@ import DriverEditProfileModal from "./DriverEditProfileModal";
 import DriverEditPricePopover from "./DriverEditPricePopover";
 import EditIcon from "@material-ui/icons/Edit";
 import EditProfileImg from "./EditProfilePic";
+import DriverRideHistoryModal from "./DriverRideHistoryModal";
 
 const styles = {
   card: {
@@ -45,28 +46,29 @@ class DriverHUD extends Component {
     });
   };
 
-  togglePrevRides = () => {
-    this.setState(state => ({ prevRides: !state.prevRides }));
-  };
+  // togglePrevRides = () => {
+  //   this.setState(state => ({ prevRides: !state.prevRides }));
+  // };
 
   render() {
     const { classes } = this.props;
     const statusColor = this.props.user.driverData.active
       ? "darkgreen"
       : "darkred";
-    const rides = this.props.user.driverData.rides.map(ride => {
-      const status_color = ride.ride_status === "complete" ? "green" : "red";
-      return (
-        <Card key={ride.id}>
-          <Typography variant="body1">Date {ride.updated_at}</Typography>
-          <Typography variant="body1">From {ride.start}</Typography>
-          <Typography variant="body1">To {ride.destination}</Typography>
-          <Typography variant="body1">
-            <p style={{ color: status_color }}>Status: {ride.ride_status}</p>
-          </Typography>
-        </Card>
-      );
-    });
+    // const prevRides = this.props.user.driverData.rides
+    //   .filter(ride => ride.ride_status === "complete")
+    //   .map(ride => {
+    //     return (
+    //       <Card key={ride.id}>
+    //         <Typography variant="body1">Date {ride.updated_at}</Typography>
+    //         <Typography variant="body1">From {ride.start}</Typography>
+    //         <Typography variant="body1">To {ride.destination}</Typography>
+    //         <Typography variant="body1">
+    //           <p style={{ color: "green" }}>Status: {ride.ride_status}</p>
+    //         </Typography>
+    //       </Card>
+    //     );
+    //   });
     return (
       <Card className={classes.card}>
         {/* Status indication card */}
@@ -165,12 +167,13 @@ class DriverHUD extends Component {
               className={classes.button}
               user={this.props.user}
             />
-            <Button variant="outlined" onClick={this.togglePrevRides}>
+            <DriverRideHistoryModal user={this.props.user} />
+            {/* <Button variant="outlined" onClick={this.togglePrevRides}>
               Previous Rides
-            </Button>
+            </Button> */}
           </Grid>
         </CardActions>
-        {this.state.prevRides && rides}
+        {/* {this.state.prevRides && prevRides} */}
       </Card>
     );
   }
