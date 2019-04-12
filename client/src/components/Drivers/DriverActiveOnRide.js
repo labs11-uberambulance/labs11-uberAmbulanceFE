@@ -78,46 +78,58 @@ export default class DriverActiveOnRide extends Component {
     return (
       <Card style={{ padding: "50px" }}>
         <Typography variant="h5">Active Ride</Typography>
-        <Card style={{ height: "80vw" }}>
-          <Card style={{ textAlign: "left", padding: "15px" }}>
-            <Typography variant="h6">Ride Controls</Typography>
-            <Typography variant="body2">
-              Mother's Location:
-              {currentRide.destNameMother.plus_code.compound_code}
-            </Typography>
-            <Typography variant="body2">
-              Hospital Name:
-              {currentRide.destNameHospital.plus_code.compound_code}
-            </Typography>
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="flex-start"
+          spacing={32}
+        >
+          <Grid item md={4} sm={12}>
+            <Card style={{ textAlign: "left", padding: "15px" }}>
+              <Typography variant="h6">Ride Controls</Typography>
+              <Typography variant="body2">
+                Mother's Location:
+                {currentRide.destNameMother.plus_code.compound_code}
+              </Typography>
+              <Typography variant="body2">
+                Hospital Name:
+                {currentRide.destNameHospital.plus_code.compound_code}
+              </Typography>
 
-            {currentRide.ride_status === "Driver en route" ? (
-              <Button
-                onClick={() => this.onArriveHandler(currentRide.id)}
-                color="primary"
-              >
-                Arrived at Mother
-              </Button>
-            ) : (
-              <Button
-                onClick={() => this.onCompleteHandler(currentRide.id)}
-                color="primary"
-              >
-                Ride Complete
-              </Button>
-            )}
-            {currentRide.ride_status != "arrived_at_mother" && (
-              <Button onClick={() => this.onCancelHandler(currentRide.id)}>
-                Cancel Ride
-              </Button>
-            )}
-          </Card>
-          {currentRide.ride_status === "Driver en route" ? (
-            <h1>Route To Mother </h1>
-          ) : (
-            <h1> Route To Hospital</h1>
-          )}
-          <RouteMap start={start} stop={stop} />
-        </Card>
+              {currentRide.ride_status === "Driver en route" ? (
+                <Button
+                  onClick={() => this.onArriveHandler(currentRide.id)}
+                  color="primary"
+                >
+                  Arrived at Mother
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => this.onCompleteHandler(currentRide.id)}
+                  color="primary"
+                >
+                  Ride Complete
+                </Button>
+              )}
+              {currentRide.ride_status != "arrived_at_mother" && (
+                <Button onClick={() => this.onCancelHandler(currentRide.id)}>
+                  Cancel Ride
+                </Button>
+              )}
+            </Card>
+          </Grid>
+          <Grid item md={8} sm={12}>
+            <Card>
+              {currentRide.ride_status === "Driver en route" ? (
+                <h1>Route To Mother </h1>
+              ) : (
+                <h1> Route To Hospital</h1>
+              )}
+              <RouteMap start={start} stop={stop} />
+            </Card>
+          </Grid>
+        </Grid>
       </Card>
     );
   }
