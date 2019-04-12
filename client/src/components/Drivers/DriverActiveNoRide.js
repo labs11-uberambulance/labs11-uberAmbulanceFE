@@ -12,12 +12,13 @@ export default class DriverActiveNoRide extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{ padding: "50px" }}>
         <Grid
           container
           direction="row"
           justify="space-around"
           alignItems="center"
+          spacing={24}
         >
           <Grid item xs={12} sm={6}>
             <DriverHUD

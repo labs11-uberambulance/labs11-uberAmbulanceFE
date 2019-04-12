@@ -3,7 +3,7 @@ import axios from "../../axios-instance";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import DriverProfileMenu from "./DriverProfileMenu";
+import Typography from "@material-ui/core/Typography";
 import RouteMap from "../../components/GoogleMaps/RouteMap/RouteMap";
 
 export default class DriverActiveOnRide extends Component {
@@ -76,51 +76,61 @@ export default class DriverActiveOnRide extends Component {
       stop = "0,0";
     }
     return (
-      <div>
-        <Grid
-          container
-          direction="row"
-          justify="space-around"
-          alignItems="center"
-        >
-          <DriverProfileMenu
-            user={this.props.user}
-            profileImg={this.props.user.driverData.photo_url}
-          />
-          <Card style={{ width: "300px" }}>
-            Mother's Location:{" "}
-            {currentRide.destNameMother.plus_code.compound_code}
-            Hospital Name:{" "}
-            {currentRide.destNameHospital.plus_code.compound_code}
-            {currentRide.ride_status === "Driver en route" ? (
-              <Button
-                onClick={() => this.onArriveHandler(currentRide.id)}
-                color="primary"
-              >
-                Arrived at Mother
-              </Button>
-            ) : (
-              <Button
-                onClick={() => this.onCompleteHandler(currentRide.id)}
-                color="primary"
-              >
-                Ride Complete
-              </Button>
-            )}
-            {currentRide.ride_status != "arrived_at_mother" && (
-              <Button onClick={() => this.onCancelHandler(currentRide.id)}>
-                Cancel Ride
-              </Button>
-            )}
-          </Card>
-        </Grid>
-        {currentRide.ride_status === "Driver en route" ? (
-          <h1>Route To Mother </h1>
-        ) : (
-          <h1> Route To Hospital</h1>
-        )}
-        <RouteMap start={start} stop={stop} />
-      </div>
+      <Card style={{ padding: "50px" }}>
+        <Typography variant="h5">Active Ride</Typography>
+        <Card>
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="flex-end"
+            spacing={32}
+          >
+            <Grid item md={8} sm={12}>
+              {currentRide.ride_status === "Driver en route" ? (
+                <h1>Route To Mother </h1>
+              ) : (
+                <h1> Route To Hospital</h1>
+              )}
+            </Grid>
+            <Grid item md={4} sm={12} xs={12}>
+              <Card style={{ textAlign: "left", padding: "15px" }}>
+                <Typography variant="h6">Ride Controls</Typography>
+                <Typography variant="body2">
+                  Mother's Location:
+                  {currentRide.destNameMother.plus_code.compound_code}
+                </Typography>
+                <Typography variant="body2">
+                  Hospital Name:
+                  {currentRide.destNameHospital.plus_code.compound_code}
+                </Typography>
+
+                {currentRide.ride_status === "Driver en route" ? (
+                  <Button
+                    onClick={() => this.onArriveHandler(currentRide.id)}
+                    color="primary"
+                  >
+                    Arrived at Mother
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => this.onCompleteHandler(currentRide.id)}
+                    color="primary"
+                  >
+                    Ride Complete
+                  </Button>
+                )}
+                {currentRide.ride_status != "arrived_at_mother" && (
+                  <Button onClick={() => this.onCancelHandler(currentRide.id)}>
+                    Cancel Ride
+                  </Button>
+                )}
+              </Card>
+            </Grid>
+            <RouteMap start={start} stop={stop} />
+          </Grid>
+        </Card>
+      </Card>
     );
   }
 }

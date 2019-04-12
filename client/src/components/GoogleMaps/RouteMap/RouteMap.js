@@ -5,7 +5,11 @@ import {
   calcAndDisplayRoute
 } from "./GoogleAPI";
 
-import "./RouteMap.css";
+import Card from "@material-ui/core/Card";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+
+// import "./RouteMap.css";
 
 class RouteMap extends Component {
   state = {};
@@ -18,9 +22,29 @@ class RouteMap extends Component {
       { lat: +stopArr[0], lng: +stopArr[1] }
     );
     return (
-      <div style={{ display: "flex", height: "500px" }}>
-        <div id="map" />
-      </div>
+      <Grid container direction="column" justify="center" alignItems="center">
+        <Card
+          style={{
+            height: "60vh",
+            width: "90%",
+            position: "relative",
+            margin: "20px 0"
+          }}
+        >
+          <div
+            id="map"
+            style={{
+              height: "100%",
+              width: "100%",
+              borderRadius: "0",
+              boxShadow: "none"
+            }}
+          />
+        </Card>
+      </Grid>
+      // <div style={{ display: "flex", height: "500px" }}>
+      //   <div id="map" />
+      // </div>
     );
   }
   componentDidMount() {

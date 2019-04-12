@@ -1,43 +1,26 @@
 import React from "react";
-
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import CardMedia from "@material-ui/core/CardMedia";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Typography from "@material-ui/core/Typography";
 import withMobileDialog from "@material-ui/core/withMobileDialog";
+
+import RideCard from "./RideCard";
 
 class ResponsiveDialog extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      open: false,
-      editing: false,
-      userData: {
-        name: this.props.user.name
-      },
-      driverData: {
-        rides: this.props.user.driverData.rides
-      }
+      open: false
     };
   }
-  updateFormDriver = e => {
-    this.setState({
-      driverData: {
-        ...this.state.driverData,
-        [e.target.name]: e.target.value
-      }
-    });
-  };
-  startEditing = () => {
-    this.setState({ editing: true });
-  };
-  stopEditing = () => {
-    this.setState({ editing: false });
-  };
   handleClickOpen = () => {
     this.setState({ open: true });
   };
@@ -45,37 +28,23 @@ class ResponsiveDialog extends React.Component {
   handleClose = () => {
     this.setState({ open: false, editing: false });
   };
-  handleSubmit = () => {
-    const data = {
-      driver: {
-        ...this.state.driverData
-      }
-    };
-    this.props.initUsrUpdate(this.props.user, data);
-  };
+
   render() {
     const { fullScreen } = this.props;
-    const rides = this.props.user.driverData.rides.map(ride => {
-      const status_color = ride.ride_status === "complete" ? "green" : "red";
-      return (
-        <div key={ride.id}>
-          <DialogContentText>Date {ride.updated_at}</DialogContentText>
-          <DialogContentText>From {ride.start}</DialogContentText>
-          <DialogContentText>To {ride.destination}</DialogContentText>
-          <DialogContentText>
-            <p style={{ color: status_color }}>Status: {ride.ride_status}</p>
-          </DialogContentText>
-        </div>
-      );
-    });
+    const prevRides = this.props.user.driverData.rides
+      .filter(ride => ride.ride_status === "complete")
+      .map(ride => {
+        return <RideCard key={ride.id} ride={ride} />;
+      });
     return (
       <div>
         <Button
           variant="outlined"
           color="primary"
           onClick={this.handleClickOpen}
+          fullWidth
         >
-          Ride History
+          Previous Rides
         </Button>
         <Dialog
           fullScreen={fullScreen}
@@ -83,10 +52,22 @@ class ResponsiveDialog extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="responsive-dialog-title"
         >
+          {/* <CardMedia
+            component="img"
+            alt="DriverImg"
+            height="70"
+            width="70"
+            image={this.props.user.driverData.photo_url}
+            title="Driver"
+            style={{
+              width: "70px",
+              borderRadius: "10px"
+            }}
+          /> */}
           <DialogTitle id="responsive-dialog-title">{`${
             this.props.user.name
           }'s Ride History`}</DialogTitle>
-          <DialogContent>{rides}</DialogContent>
+          <DialogContent>{prevRides}</DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary" autoFocus>
               Exit
