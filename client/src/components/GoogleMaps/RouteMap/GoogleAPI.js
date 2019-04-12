@@ -1,3 +1,4 @@
+import { styles } from "../MapStyle";
 let map, directionsService, directionsDisplay;
 
 const initMap = (latStart, lngStart, latStop, lngStop) => () => {
@@ -8,6 +9,7 @@ const initMap = (latStart, lngStart, latStop, lngStop) => () => {
   map = new window.google.maps.Map(document.getElementById("map"), {
     center: { lat: latStart, lng: lngStart },
     zoom: 10,
+    styles,
     clickableIcons: false,
     mapTypeControl: false,
     minZoom: 5,
