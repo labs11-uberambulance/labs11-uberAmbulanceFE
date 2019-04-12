@@ -21,7 +21,6 @@ class ResponsiveDialog extends React.Component {
     this.dueDateInp = React.createRef();
 
     this.state = {
-      open: false,
       editing: false,
       userData: {
         name: this.props.user.name,
@@ -55,13 +54,13 @@ class ResponsiveDialog extends React.Component {
   stopEditing=() =>{
     this.setState({editing:false})
   }
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
+  // handleClickOpen = () => {
+  //   this.setState({ open: true });
+  // };
 
-  handleClose = () => {
-    this.setState({ open: false, editing: false });
-  };
+  // handleClose = () => {
+  //   this.setState({ open: false, editing: false });
+  // };
   handleSubmit = () =>{
     const data = {
       user:{
@@ -78,15 +77,17 @@ class ResponsiveDialog extends React.Component {
   render() {
     const { fullScreen } = this.props;
     const { classes } = this.props;
+    console.log(this.props)
     return (
+  
       <div>
-        <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
+        <Button variant="outlined" color="primary" onClick={this.props.handleClickOpen}>
          View Your Profile
         </Button>
         <Dialog
           fullScreen={fullScreen}
-          open={this.state.open}
-          onClose={this.handleClose}
+          open={this.props.open}
+          onClose={this.props.handleClose}
           aria-labelledby="responsive-dialog-title"
         >
           <DialogTitle id="responsive-dialog-title">{`${this.props.user.name}'s Profile`}</DialogTitle>
@@ -166,7 +167,7 @@ class ResponsiveDialog extends React.Component {
               Edit 
             </Button>
             }
-            <Button onClick={this.handleClose} color="primary" autoFocus>
+            <Button onClick={this.props.handleClose} color="primary" autoFocus>
               Exit
             </Button>
           </DialogActions>

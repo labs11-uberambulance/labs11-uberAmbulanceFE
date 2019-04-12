@@ -257,14 +257,14 @@ class MotherMap extends Component {
               />
               )}
               </div>
-              <div className="modal-btns">
+              {/* <div className="modal-btns">
               <Button onClick={this.handleClose} color="primary">
               Disagree
               </Button>
               <Button onClick={this.handleClose} color="primary" autoFocus>
               Agree
               </Button>
-              </div>
+              </div> */}
               </Dialog>
             </div>
         </>

@@ -14,7 +14,7 @@ import MotherModal from './MotherModal'
 
 
 
-const styles = {
+const styles = ({palette})=> ({
   list: {
     width: 250,
   },
@@ -26,11 +26,17 @@ const styles = {
     position: "absolute",
     top: "0",
     left: "0",
-    border: "1px solid blue",
-    background: "blue",
-    color: "white",
+    margin: "10px",
+    borderRadius: "100%",
+    height: "75px",
+    width: "75px",
+    backgroundColor: palette.secondary.dark,
+    color: palette.primary.contrastText,
+    '&:hover': {
+      backgroundColor: 'purple'
+   }
   }
-};
+});
 
 class TemporaryDrawer extends React.Component {
   constructor(props){
@@ -40,9 +46,16 @@ class TemporaryDrawer extends React.Component {
       left: false,
       bottom: false,
       right: false,
+      open: false
     };
   }
-  
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false});
+  };
 
   toggleDrawer = (side, open) => () => {
     this.setState({
@@ -56,8 +69,18 @@ class TemporaryDrawer extends React.Component {
     const sideList = (
       <div className={classes.list}>
         <List>
-          {[`Welcome ${this.props.user.name}`,'Profile', 'Request Ride'].map((text, index) => (
-            <ListItem onClick={e=>console.log(e.target)} button key={text}>
+          {[`Welcome ${this.props.user.name}`,'Profile'].map((text, index) => (
+          text === 'Profile' ? 
+            <ListItem 
+            onClick={()=>this.handleClickOpen()}
+            button 
+            key={text} >
+              <ListItemText primary={text} />
+            </ListItem>
+          :
+            <ListItem 
+            button 
+            key={text} >
               <ListItemText primary={text} />
             </ListItem>
           ))}
@@ -84,7 +107,11 @@ class TemporaryDrawer extends React.Component {
           >
             {sideList}
           </div>
-          <MotherModal user={this.props.user}/>
+          <MotherModal 
+          handleClickOpen={this.handleClickOpen}
+          handleClose={this.handleClose}
+          open={this.state.open}
+          user={this.props.user}/>
         </Drawer>
       </div>
     );

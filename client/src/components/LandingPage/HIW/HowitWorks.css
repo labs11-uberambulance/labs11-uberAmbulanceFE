@@ -1,5 +1,6 @@
 .w-85{
-    width: 85%
+    width: 60%;
+    align-items:center;
 }
 .w-15{
     width: 55px;
@@ -29,12 +30,18 @@
 .flex{
     display:flex;
 }
-.bg-red{
-    background:red;
+.bg-primary{
+    background:#0277bd;
     border-radius: 25px 0 0 25px;
+    color:white
+}
+.bg-secondary{
+    background:#00897b;
+    border-radius: 25px 0 0 25px;
+    color: white;
 }
 .icon-card{
-    background: grey;
+    background: #F4F5F9;
     height: 150px;
     width: 30%;
     margin: 0 auto;
@@ -53,11 +60,6 @@
 }
 .flex-row-rev{
     flex-direction: row-reverse;
-}
-.step-icon-container{
-    width: 80%;
-    display: flex;
-    background-color: grey;
 }
 
 @media only screen and (max-width: 700px) {

@@ -8,20 +8,21 @@ import Step_5 from './images/step_5.svg'
 import Step_6 from './images/step_6.svg'
 
 import './HowitWorks.css'
-const sectionMargin ={
-    margin: "200px auto 0",
+const headerText ={
+    margin: "150px auto 0",
+    fontSize: "2rem"
 }
 export default function HowItWorks() {
   return (
     <div>
-      <h3 style={sectionMargin}>How Does it Work?</h3>
+      <h3 style={headerText}>How Does it Work?</h3>
       <div className="flex flex-wrap w-85 mx-auto my-4">
           <div className="w-50 hwi-text p-4">
               <h4>Register</h4>
               <p>Visit you local health center and register for an account. Preload your contact information, preferred hospital and route to make delivery day a breeze.</p>
           </div>
          <div className="w-50 flex  br-4 icon-card">
-              <div className="w-15 flex center-content bg-red">
+              <div className="w-15 flex center-content bg-primary">
                   1
               </div>
               <img className="mx-auto step-icon" src={Step_1} alt=""/>
@@ -33,7 +34,7 @@ export default function HowItWorks() {
               <p>While we wait for your new ball of joy to enter this world take sometime to relax knowing Birthride has got you covered. </p>
           </div>
           <div className="w-50 flex  br-4 icon-card">
-              <div className="w-15 flex center-content bg-red">
+              <div className="w-15 flex center-content bg-secondary">
                   2
               </div>
               <img className="mx-auto step-icon" src={Step_2} alt=""/>
@@ -45,7 +46,7 @@ export default function HowItWorks() {
               <p>It's Coming! It's Coming! What do we do?? Don't fret! Hop on Birthride's mobile application or web app to request a ride. </p>
           </div>
           <div className="w-50 flex br-4 icon-card">
-              <div className="w-15 flex center-content bg-red">
+              <div className="w-15 flex center-content bg-primary">
                   3 
               </div>
               <img className="mx-auto step-icon" src={Step_3} alt=""/>
@@ -57,7 +58,7 @@ export default function HowItWorks() {
               <p>After selecting a driver, they will be notified of your need. If they're unavailable our app will find the next closest driver to help you! Stay close to your telephone as you'll be receiving text notifications throughout the process.</p>
           </div>
           <div className="w-50 flex br-4 icon-card">
-              <div className="w-15 flex center-content bg-red">
+              <div className="w-15 flex center-content bg-secondary">
                   4
               </div>
               <img className="mx-auto step-icon" src={Step_4} alt=""/>
@@ -69,7 +70,7 @@ export default function HowItWorks() {
               <p>Our drivers will transport you directly to your predetermined hospital or health center. This will be done at a pre-agreed price that you'll be able to see and confirm throughout your journey..</p>
           </div>
           <div className="w-50 flex br-4 icon-card">
-              <div className="w-15 flex center-content bg-red">
+              <div className="w-15 flex center-content bg-primary">
                   5
               </div>
               <img className="mx-auto step-icon" src={Step_6} alt=""/>
@@ -81,7 +82,7 @@ export default function HowItWorks() {
               <p>Once you're dropped of all you need to do is focus on one of the most fulfilling moments of your life!</p>
           </div>
           <div className="w-50 flex br-4 icon-card">
-              <div className="w-15 flex center-content bg-red">
+              <div className="w-15 flex center-content bg-secondary">
                   6
               </div>
               <img className="mx-auto step-icon" src={Step_5} alt=""/>
