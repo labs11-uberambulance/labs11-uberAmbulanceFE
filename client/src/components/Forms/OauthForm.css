@@ -1,11 +1,23 @@
 .authentication-background {
-    background: rgb(121, 121, 121);
+    background-image: radial-gradient(ellipse 550px 300px, rgba(67, 96, 100, .7), rgba(2, 14, 31, .7));
     width: 100vw;
     height: 100vh;
     display: flex;
+    z-index: 10;
     justify-content: center;
     align-items: center;
 }
+.authentication-background::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; 
+    height: 100%;
+    filter: blur(10px);
+    z-index: -1;
+    background-color: rgba(14, 14, 14, 0.4);
+    /* animation: filter 8s steps(10) infinite; */
+} 
 
 .auth-form {
     background-color: white;
@@ -13,7 +25,7 @@
     width: 400px;
     padding: 5rem;
     border-radius: 8px;
-    animation: auth-form;
+    /* animation: auth-form; */
     animation-duration: .3s;
 }
 .manual-auth {
@@ -38,7 +50,7 @@ button.login-button {
     margin-top: 10px;
 }
 
-@keyframes auth-form {
+/* @keyframes auth-form {
     from {
         transform: translateY(-500px);
     }
@@ -54,3 +66,16 @@ button.login-button {
         padding: 5rem 1.5rem;
     }
 }
+
+@keyframes filter {
+    0%, 100% { transform:translate(0, 0) }
+  10% { transform:translate(-5%, -10%) }
+  20% { transform:translate(-15%, 5%) }
+  30% { transform:translate(7%, -25%) }
+  40% { transform:translate(-5%, 25%) }
+  50% { transform:translate(-15%, 10%) }
+  60% { transform:translate(15%, 0%) }
+  70% { transform:translate(0%, 15%) }
+  80% { transform:translate(3%, 35%) }
+  90% { transform:translate(-10%, 10%) }
+} */

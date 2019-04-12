@@ -1,3 +1,6 @@
+body{
+  padding: 0
+}
 .google-maps-container{
   height: 100vh;
   position: relative;
@@ -7,7 +10,13 @@
 }
 #map{
   position: absolute;
+  overflow: visible;
 }
-.hover-cursor{
+
+
+.reqBoxTwo, .reqBox {
+  backdrop-filter: blur(6px);
+}
+.hover-cursåor{
   cursor: pointer;
 }
