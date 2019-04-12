@@ -169,7 +169,8 @@ class MotherMap extends Component {
             : 
             <>
              <i className="fas fa-arrow-circle-left" onClick={()=>this.props.removeDriver()}></i>
-            <Button onClick={()=>this.props.submitFinalRideRequest(this.state.selectedDriver)}>Final Request with {this.props.driverName}</Button>
+             {console.log(this.props.selectedDriver)}
+            <Button onClick={()=>this.props.submitFinalRideRequest(this.props.selectedDriver)}>Final Request with {this.props.driverName}</Button>
             </>
             }
             </div>
@@ -234,14 +235,17 @@ class MotherMap extends Component {
     });
   };
   componentDidMount() {
-    initGoogleScript(this.passPlacesToComponent, this.markerSelectedHandler, this.state.lat, this.state.lng ); // takes lat/long as 3rd/4th args, sets start pin & zooms there
     if(this.props.user.location.latlng){
       this.setState({
         startCoords: {lat: Number(this.props.user.location.latlng.split(",")[0]), lng:Number(this.props.user.location.latlng.split(",")[1])},
         lat: Number(this.props.user.location.latlng.split(",")[0]),
         lng: Number(this.props.user.location.latlng.split(",")[1]),
       })
+      initGoogleScript(this.passPlacesToComponent, this.markerSelectedHandler, Number(this.props.user.location.latlng.split(",")[0]), Number(this.props.user.location.latlng.split(",")[1]) ); // takes lat/long as 3rd/4th args, 
     }
+    else{
+      initGoogleScript(this.passPlacesToComponent, this.markerSelectedHandler, this.state.lat, this.state.lng ); // takes lat/long as 3rd/4th args, sets start pin & zooms there
+    } 
   }
     
   componentWillUnmount() {
