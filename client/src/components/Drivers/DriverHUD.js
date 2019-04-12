@@ -149,9 +149,7 @@ class DriverHUD extends Component {
                     {this.props.user.phone}
                   </span>
                 </ListItemIcon>
-                <ListItemText>
-                  Phone number Mothers can contact you on
-                </ListItemText>
+                <ListItemText>Contact Phone</ListItemText>
               </ListItem>
             </List>
           </Card>
@@ -163,14 +161,15 @@ class DriverHUD extends Component {
             justify="space-between"
             alignItems="center"
           >
-            <DriverEditProfileModal
-              className={classes.button}
-              user={this.props.user}
-            />
-            <DriverRideHistoryModal user={this.props.user} />
-            {/* <Button variant="outlined" onClick={this.togglePrevRides}>
-              Previous Rides
-            </Button> */}
+            <Grid item xs={12} sm={6}>
+              <DriverEditProfileModal
+                className={classes.button}
+                user={this.props.user}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <DriverRideHistoryModal user={this.props.user} />
+            </Grid>
           </Grid>
         </CardActions>
         {/* {this.state.prevRides && prevRides} */}

@@ -56,7 +56,7 @@ class OriginMap extends Component {
         <Grid container direction="column" justify="center" alignItems="center">
           <Card
             style={{
-              height: "100vh",
+              height: "60vh",
               width: "90%",
               position: "relative",
               margin: "20px 0"

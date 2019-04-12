@@ -3,11 +3,12 @@ import { connect } from "react-redux";
 import { initUsrUpdate } from "../../store/actions/auth";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import Popover from "@material-ui/core/Popover";
+import EditIcon from "@material-ui/icons/Edit";
+import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemIcon";
-import EditIcon from "@material-ui/icons/Edit";
+import Popover from "@material-ui/core/Popover";
 import TextField from "@material-ui/core/TextField";
 
 class SimplePopover extends React.Component {
@@ -62,13 +63,26 @@ class SimplePopover extends React.Component {
           variant="contained"
           onClick={this.handleClick}
         >
-          <ListItemIcon>
-            <span style={{ color: "green" }}>
-              USh{this.props.user.driverData.price}
-            </span>
-          </ListItemIcon>
-          <ListItemText>Your current maximum ride charge</ListItemText>
-          <EditIcon fontSize={"small"} />
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="space-between"
+          >
+            <Grid item xs={4}>
+              <ListItemIcon>
+                <span style={{ color: "green" }}>
+                  USh{this.props.user.driverData.price}
+                </span>
+              </ListItemIcon>
+            </Grid>
+            <Grid item xs={4}>
+              <ListItemText>Max Ride Charge</ListItemText>
+            </Grid>
+            <Grid item xs={4} style={{ textAlign: "right" }}>
+              <EditIcon fontSize={"small"} />
+            </Grid>
+          </Grid>
         </ListItem>
         <Popover
           id="simple-popper"

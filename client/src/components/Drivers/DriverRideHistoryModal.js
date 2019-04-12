@@ -42,6 +42,7 @@ class ResponsiveDialog extends React.Component {
           variant="outlined"
           color="primary"
           onClick={this.handleClickOpen}
+          fullWidth
         >
           Previous Rides
         </Button>

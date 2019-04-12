@@ -37,13 +37,13 @@ export default class DriverInactive extends Component {
           justify="space-around"
           alignItems="center"
         >
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <DriverHUD
               user={this.props.user}
               usrUpdate={this.props.usrUpdate}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <Card>
               <Typography variant="h6">Your Current Location</Typography>
               <DriverUpdateLocation
