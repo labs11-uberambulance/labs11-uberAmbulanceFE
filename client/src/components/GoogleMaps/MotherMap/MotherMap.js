@@ -15,6 +15,7 @@ import {
 } from "./GoogleAPI";
 import "./MotherMap.css";
 import DriverCard from './DriverCard'
+import Drawer from '../../Mothers/Drawer'
 
 const styles = ({ palette }) => ({
   root: {
@@ -139,10 +140,9 @@ class MotherMap extends Component {
       fullWidth: true
     };
     return (
-      <div style={{ margin: "0 auto", width: "97.5%" }}>
-      
         <div className="google-maps-container" style={{ }}>
-          <div id="map" />
+        <Drawer/>
+        <div id="map" />
         {this.props.finished?
         <section className={this.props.classes.finalMessage}>
           <h3 
@@ -270,8 +270,6 @@ class MotherMap extends Component {
         </>
         }
        </div>
-      
-     </div>
     );
   }
   //   call backs for getting places and markers clicked

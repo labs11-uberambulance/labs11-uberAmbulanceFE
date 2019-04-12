@@ -21,6 +21,15 @@ const styles = {
   fullList: {
     width: 'auto',
   },
+  proBtn:{
+    zIndex: "100",
+    position: "absolute",
+    top: "0",
+    left: "0",
+    border: "1px solid blue",
+    background: "blue",
+    color: "white",
+  }
 };
 
 class TemporaryDrawer extends React.Component {
@@ -65,7 +74,7 @@ class TemporaryDrawer extends React.Component {
     );
     return (
       <div>
-        <Button onClick={this.toggleDrawer('left', true)}>Profile</Button>
+        <Button className={classes.proBtn}onClick={this.toggleDrawer('left', true)}>Profile</Button>
         <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
           <div
             tabIndex={0}
