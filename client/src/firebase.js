@@ -2,8 +2,9 @@ import firebase from 'firebase/app'
 import "firebase/auth"
 import "firebase/storage"
 import "firebase/messaging";
+import axios from './axios-instance';
 
-const sendTokenToServer = (token) => fetch('/api/users/notifications/refresh-token', { method: 'POST', body: {token} });
+const sendTokenToServer = (token) => axios.post('/api/users/notifications/refresh-token', {token});
 
 const config = {
     apiKey: process.env.REACT_APP_apiKey,
