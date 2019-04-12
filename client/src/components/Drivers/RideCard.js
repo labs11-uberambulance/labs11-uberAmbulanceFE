@@ -40,11 +40,15 @@ export default function RideCard(props) {
         <>
           <Button
             onClick={() => props.onAcceptHandler(ride.id)}
-            color="primary"
+            // color="primary"
+            style={{ color: "rgb(0,133,115)" }}
           >
             Accept Request
           </Button>
-          <Button onClick={() => props.onRejectHandler(ride)}>
+          <Button
+            style={{ color: "darkred" }}
+            onClick={() => props.onRejectHandler(ride)}
+          >
             Reject Request
           </Button>
         </>

@@ -12,7 +12,7 @@ const initMap = (latStart, lngStart, latStop, lngStop) => () => {
     styles,
     clickableIcons: false,
     mapTypeControl: false,
-    minZoom: 5,
+    minZoom: 7,
     restriction: {
       latLngBounds: { north: 4.35, south: -1.5, west: 29.55, east: 34.6 }
     },

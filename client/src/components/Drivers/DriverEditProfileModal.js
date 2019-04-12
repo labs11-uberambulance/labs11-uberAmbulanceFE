@@ -78,7 +78,8 @@ class ResponsiveDialog extends React.Component {
       <div>
         <Button
           variant="outlined"
-          color="primary"
+          // color="primary"
+          style={{ color: "rgb(0,133,115)", borderColor: "rgb(0,133,115)" }}
           onClick={this.handleClickOpen}
           fullWidth
         >

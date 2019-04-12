@@ -44,11 +44,15 @@ class OriginMap extends Component {
               onKeyPress={this.searchForLocationHandler}
               label="Search"
               placeholder="Search"
-              style={{ width: "80%" }}
+              style={{ width: "80%", borderColor: "rgb(0,133,115)" }}
             />
           </Grid>
           <Grid item xs={4}>
-            <Button color="primary" onClick={this.originDeterminedHandler}>
+            <Button
+              // color="primary"
+              style={{ color: "rgb(0,133,115)" }}
+              onClick={this.originDeterminedHandler}
+            >
               Set Location
             </Button>
           </Grid>
