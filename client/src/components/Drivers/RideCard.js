@@ -2,6 +2,7 @@ import React from "react";
 import moment from "moment";
 import motorcycle from "../../assests/images/motorcycle.svg";
 
+import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -35,6 +36,19 @@ export default function RideCard(props) {
           </Typography>
         </CardContent>
       </Grid>
+      {ride.ride_status != "complete" && (
+        <>
+          <Button
+            onClick={() => props.onAcceptHandler(ride.id)}
+            color="primary"
+          >
+            Accept Request
+          </Button>
+          <Button onClick={() => props.onRejectHandler(ride)}>
+            Reject Request
+          </Button>
+        </>
+      )}
     </Card>
   );
 }
