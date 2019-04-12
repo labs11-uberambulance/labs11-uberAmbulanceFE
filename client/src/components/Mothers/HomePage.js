@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import MomProfileMenu from "./MomProfileMenu";
 import MotherMap from "../GoogleMaps/MotherMap/MotherMap";
 import { Button } from "@material-ui/core";
 import { getDrivers } from "../../store/actions/rides";
@@ -57,9 +56,6 @@ class HomePage extends Component {
   render() {
     return (
       <>
-      {this.state.selectedDriver.length>1 ? <button onClick={e=>this.submitFinalRideRequest(this.state.selectedDriver)}>Final Request</button> :null }
-      <div>
-        <MomProfileMenu/>
         <MotherMap 
         setRideStart={this.setRideStart}
         setRideEnd={this.setRideEnd}
@@ -75,9 +71,7 @@ class HomePage extends Component {
         finished={this.state.finished}
         history={this.props.history}
       /> 
-    
-      </div> 
-      </>
+    </> 
     );
   }
 }

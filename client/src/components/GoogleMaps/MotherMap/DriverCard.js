@@ -2,7 +2,6 @@ import React from 'react'
 
 
 export default function DriverCard(props) {
-    console.log("CARD",props.ride.distance )
   return (
     <div className="driver-card hover-cursor hvr-float-shadow " onClick={()=>props.selectDriver(props.ride.driver.firebase_id, props.ride.driver.name, props.ride.distance)}>
       <p onClick={()=>props.selectDriver(props.ride.driver.firebase_id, props.ride.driver.name, props.ride.distance)}>{props.ride.driver.name}</p>

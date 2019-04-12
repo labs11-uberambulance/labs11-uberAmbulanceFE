@@ -10,11 +10,12 @@ import MomIcon from './icons/icons8-pregnant-filled-50.png'
 import DriverIcon from './icons/icons8-ambulance-50.png'
 
 
-const styles = {
+const styles = ({palette})=>({
   card: {
     minWidth: 275,
     width: "15%",
-    margin: "0 10px",
+    margin: "10px",
+    boxShadow: "0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08)"
   },
   bullet: {
     display: 'inline-block',
@@ -30,13 +31,16 @@ const styles = {
   button:{
     width: "80%",
     margin: "0 auto",
-    background: "red",
+    background: palette.secondary.dark,
+    color: palette.primary.contrastText,
+    '&:hover': {
+      backgroundColor: 'green'
+   }
   }
-};
+});
 
 function SimpleCard(props) {
   const { classes } = props;
-  const bull = <span className={classes.bullet}>•</span>;
 
   return (
     <Card className={classes.card}>
@@ -48,9 +52,8 @@ function SimpleCard(props) {
         <img src={props.mother ? MomIcon : DriverIcon}/>
         </Typography>
         <Typography component="p">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
+        {props.mother ? "Register today to make sure you're prepared come delivery day!" : "Tired of missing out on rides? Never miss out again with Birthride"}
+          
         </Typography>
       </CardContent>
       <CardActions>
