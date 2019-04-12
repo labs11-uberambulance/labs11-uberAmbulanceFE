@@ -46,7 +46,7 @@ class HomePage extends Component {
       console.log(test)
       this.setState({rideEnd: test.join(), placeInfo: place})
   }
-  selectDriver = (e, id, name, distance) =>{
+  selectDriver = (id, name, distance) =>{
     this.setState({selectedDriver: id, driverName:name, distance: distance.text});
   }
   removeDriver = ()=>{

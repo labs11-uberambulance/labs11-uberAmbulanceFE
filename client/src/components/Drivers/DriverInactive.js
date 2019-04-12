@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
-import DriverProfileMenu from "./DriverProfileMenu";
 import DriverHUD from "./DriverHUD";
 import DriverUpdateLocation from "./DriverUpdateLocation";
 
@@ -31,22 +30,28 @@ export default class DriverInactive extends Component {
       <div>
         <Grid
           container
+          spacing={16}
           direction="row"
           justify="space-around"
           alignItems="center"
         >
-          <DriverProfileMenu
-            user={this.props.user}
-            profileImg={this.props.user.driverData.photo_url}
-          />
-          <DriverHUD user={this.props.user} usrUpdate={this.props.usrUpdate} />
+          <Grid item xs={12} sm={6}>
+            <DriverHUD
+              user={this.props.user}
+              usrUpdate={this.props.usrUpdate}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            My Current Location:
+            <DriverUpdateLocation
+              latInit={driverLat}
+              lngInit={driverLng}
+              storeLatLng={driverLatLng =>
+                this.handleUpdateDriverLoc(driverLatLng)
+              }
+            />
+          </Grid>
         </Grid>
-        My Current Location:
-        <DriverUpdateLocation
-          latInit={driverLat}
-          lngInit={driverLng}
-          storeLatLng={driverLatLng => this.handleUpdateDriverLoc(driverLatLng)}
-        />
       </div>
     );
   }
