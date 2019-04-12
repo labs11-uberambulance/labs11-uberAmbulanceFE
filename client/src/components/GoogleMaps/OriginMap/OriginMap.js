@@ -5,8 +5,11 @@ import {
   searchGoogle,
   fetchMarkerPosition
 } from "./GoogleAPI";
-import "./OriginMap.css";
-import { TextField, Button } from "@material-ui/core";
+// import "./OriginMap.css";
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
 
 class OriginMap extends Component {
   constructor(props) {
@@ -28,18 +31,48 @@ class OriginMap extends Component {
     // console.log(this.props.latInit, this.props.lngInit);
     return (
       <>
-        <div>
-          <div style={{ height: "500px" }}>
+        <Grid
+          container
+          direction="row"
+          justify="space-between"
+          alignItems="center"
+          spacing={32}
+        >
+          <Grid item xs={8}>
             <TextField
               inputRef={this.userInp}
               onKeyPress={this.searchForLocationHandler}
+              label="Search"
+              placeholder="Search"
+              style={{ width: "80%" }}
             />
-            <div id="map" />
-          </div>
-        </div>
-        <Button color="primary" onClick={this.originDeterminedHandler}>
-          Set Location
-        </Button>
+          </Grid>
+          <Grid item xs={4}>
+            <Button color="primary" onClick={this.originDeterminedHandler}>
+              Set Location
+            </Button>
+          </Grid>
+        </Grid>
+        <Grid container direction="column" justify="center" alignItems="center">
+          <Card
+            style={{
+              height: "100vh",
+              width: "90%",
+              position: "relative",
+              margin: "20px 0"
+            }}
+          >
+            <div
+              id="map"
+              style={{
+                height: "100%",
+                width: "100%",
+                borderRadius: "0",
+                boxShadow: "none"
+              }}
+            />
+          </Card>
+        </Grid>
       </>
     );
   }

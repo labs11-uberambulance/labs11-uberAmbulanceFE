@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import DriverHUD from "./DriverHUD";
 import DriverUpdateLocation from "./DriverUpdateLocation";
 
@@ -27,7 +29,7 @@ export default class DriverInactive extends Component {
     const driverLng = parseFloat(driverLocArr[1]);
 
     return (
-      <div>
+      <div style={{ padding: "50px" }}>
         <Grid
           container
           spacing={16}
@@ -42,14 +44,16 @@ export default class DriverInactive extends Component {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            My Current Location:
-            <DriverUpdateLocation
-              latInit={driverLat}
-              lngInit={driverLng}
-              storeLatLng={driverLatLng =>
-                this.handleUpdateDriverLoc(driverLatLng)
-              }
-            />
+            <Card>
+              <Typography variant="h6">Your Current Location</Typography>
+              <DriverUpdateLocation
+                latInit={driverLat}
+                lngInit={driverLng}
+                storeLatLng={driverLatLng =>
+                  this.handleUpdateDriverLoc(driverLatLng)
+                }
+              />
+            </Card>
           </Grid>
         </Grid>
       </div>
