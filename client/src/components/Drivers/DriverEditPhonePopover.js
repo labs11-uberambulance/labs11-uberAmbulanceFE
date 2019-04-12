@@ -14,8 +14,8 @@ import TextField from "@material-ui/core/TextField";
 class SimplePopover extends React.Component {
   state = {
     anchorEl: null,
-    driverData: {
-      price: this.props.user.driverData.price
+    user: {
+      phone: this.props.user.phone
     }
   };
 
@@ -31,10 +31,10 @@ class SimplePopover extends React.Component {
     });
   };
 
-  updateFormDriver = e => {
+  updateFormUser = e => {
     this.setState({
-      driverData: {
-        ...this.state.driverData,
+      user: {
+        ...this.state.user,
         [e.target.name]: e.target.value
       }
     });
@@ -42,8 +42,8 @@ class SimplePopover extends React.Component {
 
   handleSubmit = () => {
     const data = {
-      driver: {
-        ...this.state.driverData
+      user: {
+        ...this.state.user
       }
     };
     this.props.initUsrUpdate(this.props.user, data);
@@ -71,13 +71,11 @@ class SimplePopover extends React.Component {
           >
             <Grid item xs={4}>
               <ListItemIcon>
-                <span style={{ color: "green" }}>
-                  USh{this.props.user.driverData.price}
-                </span>
+                <span style={{ color: "green" }}>{this.props.user.phone}</span>
               </ListItemIcon>
             </Grid>
             <Grid item xs={4}>
-              <ListItemText>Max Ride Charge</ListItemText>
+              <ListItemText>Contact Phone</ListItemText>
             </Grid>
             <Grid item xs={4} style={{ textAlign: "right" }}>
               <EditIcon fontSize={"small"} />
@@ -102,12 +100,12 @@ class SimplePopover extends React.Component {
           <TextField
             autoFocus
             margin="dense"
-            name="price"
-            label="Price"
-            value={this.state.driverData.price}
+            name="phone"
+            label="phone"
+            value={this.state.user.phone}
             type="text"
             fullWidth
-            onChange={e => this.updateFormDriver(e)}
+            onChange={e => this.updateFormUser(e)}
           />
           <Button onClick={() => this.handleSubmit()} color="primary">
             Save

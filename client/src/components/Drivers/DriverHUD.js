@@ -16,6 +16,7 @@ import { withStyles } from "@material-ui/core/styles";
 import DriverProfileMenu from "./DriverProfileMenu";
 import DriverEditProfileModal from "./DriverEditProfileModal";
 import DriverEditPricePopover from "./DriverEditPricePopover";
+import DriverEditPhonePopover from "./DriverEditPhonePopover";
 import EditIcon from "@material-ui/icons/Edit";
 import EditProfileImg from "./EditProfilePic";
 import DriverRideHistoryModal from "./DriverRideHistoryModal";
@@ -143,14 +144,15 @@ class DriverHUD extends Component {
           <Card>
             <List>
               <DriverEditPricePopover />
-              <ListItem button>
+              <DriverEditPhonePopover />
+              {/* <ListItem button>
                 <ListItemIcon>
                   <span style={{ color: "green" }}>
                     {this.props.user.phone}
                   </span>
                 </ListItemIcon>
                 <ListItemText>Contact Phone</ListItemText>
-              </ListItem>
+              </ListItem> */}
             </List>
           </Card>
         </CardContent>
