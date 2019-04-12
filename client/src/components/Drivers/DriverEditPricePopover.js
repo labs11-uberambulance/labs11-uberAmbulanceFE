@@ -4,12 +4,11 @@ import { initUsrUpdate } from "../../store/actions/auth";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Popover from "@material-ui/core/Popover";
-import {
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  TextField
-} from "@material-ui/core";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemIcon";
+import EditIcon from "@material-ui/icons/Edit";
+import TextField from "@material-ui/core/TextField";
 
 class SimplePopover extends React.Component {
   state = {
@@ -69,6 +68,7 @@ class SimplePopover extends React.Component {
             </span>
           </ListItemIcon>
           <ListItemText>Your current maximum ride charge</ListItemText>
+          <EditIcon fontSize={"small"} />
         </ListItem>
         <Popover
           id="simple-popper"
