@@ -25,7 +25,7 @@ const styles = theme =>({
   btnsBox: {
     display: 'flex',
     width: "95%",
-    margin: '0 auto',
+    margin: '0 auto 50px',
     justifyContent: 'center',
     [theme.breakpoints.down('sm')]: {
           flexWrap:'wrap'
