@@ -6,17 +6,12 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
-import DriverProfileMenu from "./DriverProfileMenu";
 import DriverEditProfileModal from "./DriverEditProfileModal";
 import DriverEditPricePopover from "./DriverEditPricePopover";
-import EditIcon from "@material-ui/icons/Edit";
+import DriverEditPhonePopover from "./DriverEditPhonePopover";
 import EditProfileImg from "./EditProfilePic";
 import DriverRideHistoryModal from "./DriverRideHistoryModal";
 
@@ -24,11 +19,11 @@ const styles = {
   card: {
     minWidth: 275
   },
-  button: {
-    // width: "100%",
-    // size: "large",
-    // height: "100px",
-    // marginBottom: "100px"
+  buttonActive: {
+    color: "purple"
+  },
+  buttonInactive: {
+    color: "rgb(0,133,115)"
   }
 };
 
@@ -55,20 +50,9 @@ class DriverHUD extends Component {
     const statusColor = this.props.user.driverData.active
       ? "darkgreen"
       : "darkred";
-    // const prevRides = this.props.user.driverData.rides
-    //   .filter(ride => ride.ride_status === "complete")
-    //   .map(ride => {
-    //     return (
-    //       <Card key={ride.id}>
-    //         <Typography variant="body1">Date {ride.updated_at}</Typography>
-    //         <Typography variant="body1">From {ride.start}</Typography>
-    //         <Typography variant="body1">To {ride.destination}</Typography>
-    //         <Typography variant="body1">
-    //           <p style={{ color: "green" }}>Status: {ride.ride_status}</p>
-    //         </Typography>
-    //       </Card>
-    //     );
-    //   });
+    const activeButtonColor = this.props.user.driverData.active
+      ? "#0277bd"
+      : "rgb(0,133,115)";
     return (
       <Card className={classes.card}>
         {/* Status indication card */}
@@ -82,10 +66,15 @@ class DriverHUD extends Component {
           >
             <Grid item>
               <Button
-                className={classes.button}
-                color={
-                  this.props.user.driverData.active ? "secondary" : "primary"
-                }
+                style={{ backgroundColor: activeButtonColor, color: "white" }}
+                // className={
+                //   this.props.user.driverData.active
+                //     ? "buttonActive"
+                //     : "buttonInactive"
+                // }
+                // color={
+                //   this.props.user.driverData.active ? "secondary" : "primary"
+                // }
                 variant="contained"
                 onClick={this.handleStatusClick}
                 // fullWidth
@@ -98,8 +87,9 @@ class DriverHUD extends Component {
             </Grid>
             <Grid item>
               <Button
-                className={classes.button}
-                color="primary"
+                // className={classes.button}
+                // color="primary"
+                style={{ backgroundColor: "#0277bd", color: "white" }}
                 variant="contained"
                 onClick={() => {
                   this.props.history.push("/logout");
@@ -143,14 +133,15 @@ class DriverHUD extends Component {
           <Card>
             <List>
               <DriverEditPricePopover />
-              <ListItem button>
+              <DriverEditPhonePopover />
+              {/* <ListItem button>
                 <ListItemIcon>
                   <span style={{ color: "green" }}>
                     {this.props.user.phone}
                   </span>
                 </ListItemIcon>
                 <ListItemText>Contact Phone</ListItemText>
-              </ListItem>
+              </ListItem> */}
             </List>
           </Card>
         </CardContent>

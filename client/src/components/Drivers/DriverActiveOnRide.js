@@ -76,8 +76,7 @@ export default class DriverActiveOnRide extends Component {
       stop = "0,0";
     }
     return (
-      <Card style={{ padding: "50px" }}>
-        <Typography variant="h5">Active Ride</Typography>
+      <div style={{ padding: "50px" }}>
         <Card>
           <Grid
             container
@@ -108,20 +107,25 @@ export default class DriverActiveOnRide extends Component {
                 {currentRide.ride_status === "Driver en route" ? (
                   <Button
                     onClick={() => this.onArriveHandler(currentRide.id)}
-                    color="primary"
+                    // color="primary"
+                    style={{ color: "rgb(0,133,115)" }}
                   >
                     Arrived at Mother
                   </Button>
                 ) : (
                   <Button
                     onClick={() => this.onCompleteHandler(currentRide.id)}
-                    color="primary"
+                    // color="primary"
+                    style={{ color: "rgb(0,133,115)" }}
                   >
                     Ride Complete
                   </Button>
                 )}
                 {currentRide.ride_status != "arrived_at_mother" && (
-                  <Button onClick={() => this.onCancelHandler(currentRide.id)}>
+                  <Button
+                    style={{ color: "darkred" }}
+                    onClick={() => this.onCancelHandler(currentRide.id)}
+                  >
                     Cancel Ride
                   </Button>
                 )}
@@ -130,7 +134,7 @@ export default class DriverActiveOnRide extends Component {
             <RouteMap start={start} stop={stop} />
           </Grid>
         </Card>
-      </Card>
+      </div>
     );
   }
 }

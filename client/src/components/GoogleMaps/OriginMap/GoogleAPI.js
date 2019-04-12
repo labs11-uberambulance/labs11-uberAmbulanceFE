@@ -1,9 +1,11 @@
+import { styles } from "../MapStyle";
 let map, marker;
 const initMap = (lat, lng) => {
   // console.log("initMap: ", lat, lng);
   map = new window.google.maps.Map(document.getElementById("map"), {
     center: { lat, lng },
     zoom: 8,
+    styles,
     clickableIcons: false,
     mapTypeControl: false,
     minZoom: 7,
