@@ -3,6 +3,7 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { auth } from "./firebase";
 import actions from "./store/actions";
+import { messaging } from './firebase';
 import RegisterView from "./views/AuthenticationView/RegisterView";
 import OnboardingView from "./views/OnboardingView/OnboardingView";
 import DriversView from "./views/DriversView/DriversView";
@@ -43,7 +44,7 @@ class App extends Component {
     return (
       <div className="App">
         {routes}
-        <OnNotification />
+        {messaging && <OnNotification />}
       </div>
     );
   }

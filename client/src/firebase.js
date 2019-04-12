@@ -18,12 +18,18 @@ firebase.initializeApp(config);
 
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
 export const auth = firebase.auth();
-export const messaging = firebase.messaging();
-messaging.onTokenRefresh(() => {
-    messaging.getToken().then((refreshToken) => {
-        return sendTokenToServer(refreshToken)
-    }).catch((err) => {
-        console.log(err);
+let messaging = null;
+if (firebase.messaging.isSupported()) {
+    messaging = firebase.messaging();
+    messaging.onTokenRefresh(() => {
+        messaging.getToken().then((refreshToken) => {
+            return sendTokenToServer(refreshToken)
+        }).catch((err) => {
+            console.log(err);
+        })
     })
-})
+}
+export { messaging }
+
+
 export default firebase;

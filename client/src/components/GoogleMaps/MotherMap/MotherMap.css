@@ -12,6 +12,11 @@ body{
   position: absolute;
   overflow: visible;
 }
-.hover-cursor{
+
+
+.reqBoxTwo, .reqBox {
+  backdrop-filter: blur(6px);
+}
+.hover-cursåor{
   cursor: pointer;
 }
