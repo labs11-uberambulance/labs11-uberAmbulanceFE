@@ -12,12 +12,8 @@ import Typography from "@material-ui/core/Typography";
 export default function RideCard(props) {
   const { ride } = props;
   const status_color = ride.ride_status === "complete" ? "green" : "red";
-  const rideDestMother = ride.destNameMother
-    ? ride.destNameMother.plus_code.compound_code
-    : "Unknown Location";
-  const rideDestHospital = ride.destNameHospital
-    ? ride.destNameHospital.plus_code.compound_code
-    : "Unknown Location";
+  const rideDestMother = ride.start_name ? ride.start_name : "Unknown Location";
+  const rideDestHospital = ride.dest_name ? ride.dest_name : "Unknown Location";
   return (
     <Card>
       <Grid container direction="row" justify="center" alignItems="center">

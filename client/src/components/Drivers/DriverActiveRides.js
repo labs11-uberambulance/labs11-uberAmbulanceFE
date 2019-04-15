@@ -67,24 +67,7 @@ class DriverActiveRides extends Component {
       ride => ride.ride_status != "complete"
     );
     const rideRequests = activeRides.map(ride => {
-      // console.log("ride: ", ride);
-      // const rideDestMother = ride.destNameMother
-      //   ? ride.destNameMother.plus_code.compound_code
-      //   : "Unknown Location";
-      // const rideDestHospital = ride.destNameHospital
-      //   ? ride.destNameHospital.plus_code.compound_code
-      //   : "Unknown Location";
       return (
-        //   <div key={ride.id}>
-        //     Date: {moment(ride.updated_at).format("LLLL")}
-        //     <br />
-        //     From: {rideDestMother}
-        //     <br />
-        //     To: {rideDestHospital}
-        //     <br />
-        //     Price: {ride.price}
-        //     <br />
-        //     <p style={{ color: "red" }}>Status: {ride.ride_status}</p>
         <>
           <RideCard
             ride={ride}
