@@ -61,6 +61,8 @@ class OauthForm extends Component {
     });
   };
   initOauthWithPhone = e => {
+    e.preventDefault();
+    console.log("initOauthWithPhone");
     const appVerifier = window.recaptchaVerifier;
     const firebaseNumber = normalizePhone(`+1${this.state.phoneNumber}`);
     if (!firebaseNumber) {
@@ -139,6 +141,7 @@ class OauthForm extends Component {
             with Google
           </Button>
           <br />
+          {/* Using Phone: */}
           {!this.state.usingPhone && (
             <Button
               onClick={this.choosePhone}
@@ -150,7 +153,6 @@ class OauthForm extends Component {
               {this.props.signup ? "Sign up " : "Log in "} with Phone
             </Button>
           )}
-          {/* Using Phone: */}
           <TextField
             required
             value={this.state.phoneNumber}
@@ -167,19 +169,19 @@ class OauthForm extends Component {
               id: "phone"
             }}
             name="phoneNumber"
-            onBlur={() => {
-              this.setState(prevState => ({
-                usingPhone: !prevState.usingPhone,
-                phoneNumber: ""
-              }));
-            }}
+            // onBlur={() => {
+            //   this.setState(prevState => ({
+            //     usingPhone: !prevState.usingPhone,
+            //     phoneNumber: ""
+            //   }));
+            // }}
             onKeyPress={e => {
-              e.key === "Enter" && this.initOauthWithPhone();
+              e.key === "Enter" && this.initOauthWithPhone(e);
             }}
             onChange={this.inputChangeHandler}
           />
           {this.state.usingPhone && (
-            <Button color="secondary" onClick={this.initOauthWithPhone}>
+            <Button color="secondary" onClick={e => this.initOauthWithPhone(e)}>
               {this.props.signup ? "Sign up " : "Log in "} with Phone
             </Button>
           )}
