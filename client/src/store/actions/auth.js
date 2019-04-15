@@ -13,7 +13,7 @@ export const initOauth = user => dispatch => {
     .then(result => {
       // GET to /api/user will check for user, create if not found.
       // returns found/created user data
-      console.log("result: ", result);
+      console.log("result: ", result, "user: ", user);
       if (result.data.user.user_type === "drivers") {
         // fetch rides data for drivers
         axios
@@ -154,7 +154,8 @@ export const initOnbrd = (user, formValues) => dispatch => {
           console.log(`success updating user record: ${res.body}`);
           const payload = {
             userData: {
-              ...user
+              ...user,
+              ...userData.user
             },
             driverData: {
               ...typeData.driverData
