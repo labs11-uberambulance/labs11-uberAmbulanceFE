@@ -66,6 +66,9 @@ class OnBoardingForm extends Component {
   };
 
   render() {
+    if (this.props.user.user_type === "mothers") {
+      this.props.redirOnSuccess("/mothers");
+    }
     return (
       <>
         <form onSubmit={this.submitForm} className="mother-form--container">
