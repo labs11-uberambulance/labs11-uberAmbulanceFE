@@ -11,6 +11,7 @@ class HomePage extends Component {
     super(props);
     this.state = {
       rideStart: "",
+      rideStartName: "",
       rideEnd: "",
       placeInfo: null,
       selectedDriver: "",
@@ -22,56 +23,61 @@ class HomePage extends Component {
     };
   }
   submitFinalRideRequest = firebase_id => {
-    this.setState({finished:true})
+    this.setState({ finished: true });
     console.log(this.state.placeInfo);
     const end = this.state.rideEnd;
     const start = this.state.rideStart;
+    const startName = this.state.rideStartName;
     const hospital = this.state.placeInfo.name;
     const { name, phone } = this.props.user;
     const distance = this.state.distance;
-    const info = { end, start, hospital, name, phone, distance };
+    const info = { end, start, startName, hospital, name, phone, distance };
     console.log(info);
     axios.post(`/api/rides/request/driver/${firebase_id}`, { ...info });
     this.setState({ completed: true });
   };
-  setRideStart = origin =>{
-      var latlng = []
-      latlng.push(Object.values(origin))
-      console.log(latlng)
-      this.setState({rideStart: latlng.join()})
-  }
-  setRideEnd = (dest, place) =>{
-       var test = []
-      test.push(Object.values(dest))
-      console.log(test)
-      this.setState({rideEnd: test.join(), placeInfo: place})
-  }
-  selectDriver = (id, name, distance) =>{
-    this.setState({selectedDriver: id, driverName:name, distance: distance.text});
-  }
-  removeDriver = ()=>{
-    this.setState({selectedDriver: '', driverName:"", distance: ""})
-  }
+  setRideStart = (origin, rideStartName) => {
+    var latlng = [];
+    latlng.push(Object.values(origin));
+    console.log(latlng);
+    this.setState({ rideStart: latlng.join(), rideStartName });
+  };
+  setRideEnd = (dest, place) => {
+    var test = [];
+    test.push(Object.values(dest));
+    console.log(test);
+    this.setState({ rideEnd: test.join(), placeInfo: place });
+  };
+  selectDriver = (id, name, distance) => {
+    this.setState({
+      selectedDriver: id,
+      driverName: name,
+      distance: distance.text
+    });
+  };
+  removeDriver = () => {
+    this.setState({ selectedDriver: "", driverName: "", distance: "" });
+  };
 
   render() {
     return (
       <>
-        <MotherMap 
-        setRideStart={this.setRideStart}
-        setRideEnd={this.setRideEnd}
-        selectDriver={this.selectDriver}
-        getDrivers={this.props.getDrivers}
-        submitFinalRideRequest={this.submitFinalRideRequest}
-        rideStart={this.state.rideStart}
-        selectDriver={this.selectDriver}
-        selectedDriver={this.state.selectedDriver}
-        submitFinalRideRequest={this.submitFinalRideRequest}
-        removeDriver = {this.removeDriver}
-        driverName={this.state.driverName}
-        finished={this.state.finished}
-        history={this.props.history}
-      /> 
-    </> 
+        <MotherMap
+          setRideStart={this.setRideStart}
+          setRideEnd={this.setRideEnd}
+          selectDriver={this.selectDriver}
+          getDrivers={this.props.getDrivers}
+          submitFinalRideRequest={this.submitFinalRideRequest}
+          rideStart={this.state.rideStart}
+          selectDriver={this.selectDriver}
+          selectedDriver={this.state.selectedDriver}
+          submitFinalRideRequest={this.submitFinalRideRequest}
+          removeDriver={this.removeDriver}
+          driverName={this.state.driverName}
+          finished={this.state.finished}
+          history={this.props.history}
+        />
+      </>
     );
   }
 }

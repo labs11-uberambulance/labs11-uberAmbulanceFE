@@ -96,12 +96,10 @@ export default class DriverActiveOnRide extends Component {
               <Card style={{ textAlign: "left", padding: "15px" }}>
                 <Typography variant="h6">Ride Controls</Typography>
                 <Typography variant="body2">
-                  Mother's Location:
-                  {currentRide.destNameMother.plus_code.compound_code}
+                  {`Mother's Location: ${currentRide.start_name}`}
                 </Typography>
                 <Typography variant="body2">
-                  Hospital Name:
-                  {currentRide.destNameHospital.plus_code.compound_code}
+                  {`Hospital Name: ${currentRide.dest_name}`}
                 </Typography>
 
                 {currentRide.ride_status === "Driver en route" ? (

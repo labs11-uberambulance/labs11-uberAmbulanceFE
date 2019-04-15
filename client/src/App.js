@@ -3,13 +3,13 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { auth } from "./firebase";
 import actions from "./store/actions";
-import { messaging } from './firebase';
+import { messaging } from "./firebase";
 import RegisterView from "./views/AuthenticationView/RegisterView";
 import OnboardingView from "./views/OnboardingView/OnboardingView";
 import DriversView from "./views/DriversView/DriversView";
 import MothersView from "./views/MothersView/MothersView";
 import RequestRideView from "./views/RequestRideView/RequestRideView";
-import LandingView from './views/LandingView/LandingView';
+import LandingView from "./views/LandingView/LandingView";
 import Logout from "./views/AuthenticationView/Logout";
 import OnNotification from "./components/OnNotification/OnNotification";
 import "./App.css";
@@ -23,10 +23,10 @@ class App extends Component {
         <Redirect to="/" />
       </Switch>
     );
-    console.log(this.props.user)
+    console.log(this.props.user);
     if (this.props.user.ftoken) {
       const userType = this.props.user.user_type;
-      console.log(this.props.user.user_type)
+      console.log(this.props.user.user_type);
       routes = (
         <Switch>
           <Route path="/onboarding" component={OnboardingView} />
@@ -35,8 +35,8 @@ class App extends Component {
           <Route path="/mothers" component={MothersView} />
           <Route path="/newride" component={RequestRideView} />
           <Route path="/logout" component={Logout} />
-          { userType === "drivers" && <Redirect to="/drivers" />}
-          { userType === "mothers" && <Redirect to="/mothers" />}
+          {userType === "drivers" && <Redirect to="/drivers" />}
+          {userType === "mothers" && <Redirect to="/mothers" />}
         </Switch>
       );
     }
@@ -44,7 +44,12 @@ class App extends Component {
     return (
       <div className="App">
         {routes}
-        {messaging && <OnNotification />}
+        {messaging && (
+          <OnNotification
+            user={this.props.user}
+            usrUpdate={this.props.onAutoSignIn}
+          />
+        )}
       </div>
     );
   }
