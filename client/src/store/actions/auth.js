@@ -155,10 +155,12 @@ export const initOnbrd = (user, formValues) => dispatch => {
           const payload = {
             userData: {
               ...user,
-              ...userData.user
+              ...userData.user,
+              location: JSON.parse(location)
             },
             driverData: {
-              ...typeData.driverData
+              ...typeData.driverData,
+              rides: []
             },
             motherData: {
               ...typeData.motherData
