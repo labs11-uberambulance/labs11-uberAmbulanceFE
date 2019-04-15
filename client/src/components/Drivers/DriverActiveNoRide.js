@@ -17,7 +17,7 @@ export default class DriverActiveNoRide extends Component {
           container
           direction="row"
           justify="space-around"
-          alignItems="center"
+          alignItems="flex-start"
           spacing={24}
         >
           <Grid item xs={12} sm={6}>
