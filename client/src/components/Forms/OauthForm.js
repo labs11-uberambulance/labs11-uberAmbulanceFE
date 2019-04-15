@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Input from "@material-ui/core/Input";
 import Modal from "@material-ui/core/Modal";
 import TextField from "@material-ui/core/TextField";
+import mIcon from "../../assests/images/btn_baseline-mail_outline-24px.svg";
 import gIcon from "../../assests/images/btn_google_light_normal_ios.svg";
 import pIcon from "../../assests/images/btn_phone_light.svg";
 import { modalCode, normalizePhone } from "./Styling";
@@ -126,7 +127,13 @@ class OauthForm extends Component {
             </div>
           )}
           {!this.state.usingEmail && (
-            <Button onClick={this.chooseEmail} type="button" color="secondary">
+            <Button
+              onClick={this.chooseEmail}
+              type="button"
+              color="secondary"
+              className="email-button"
+            >
+              <img src={mIcon} alt="M" style={{ marginRight: "5px" }} />
               {this.props.signup ? "Sign up " : "Log in "}
               with Email
             </Button>
@@ -134,6 +141,7 @@ class OauthForm extends Component {
           <Button
             onClick={this.initOauthWithGoogle}
             type="button"
+            color="secondary"
             className="google-button"
           >
             <img src={gIcon} alt="G" style={{ marginRight: "5px" }} />{" "}
