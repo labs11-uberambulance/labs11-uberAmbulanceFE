@@ -21,13 +21,18 @@ class OnNotification extends Component {
 
   onRejectHandler = () => {
     // send rejection to backend to update ride object (ride_id will be in 'data')
-    axios.post(`/api/rides/driver/rejects/${this.state.data.ride_id}`, { ...this.state }).then(result => {
-      console.log(result);
-      this.setState({ notification: null, data: null });
-    }).catch(err => {
-      console.log(err);
-      this.setState({ notification: null, data: null });
-    });
+    axios
+      .post(`/api/rides/driver/rejects/${this.state.data.ride_id}`, {
+        ...this.state
+      })
+      .then(result => {
+        console.log(result);
+        this.setState({ notification: null, data: null });
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({ notification: null, data: null });
+      });
     this.setState({ notification: null, data: null });
   };
   onAcceptHandler = () => {
@@ -42,6 +47,8 @@ class OnNotification extends Component {
         console.log(err);
         this.setState({ notification: null, data: null });
       });
+    // update driver data, retrieves new ride info
+    this.props.usrUpdate(this.props.user);
   };
 
   render() {
@@ -49,6 +56,8 @@ class OnNotification extends Component {
       return null;
     }
     const { title, body } = this.state.notification;
+    // update driver data, retrieves new ride info
+    this.props.usrUpdate(this.props.user);
     return (
       <aside className="notification-container">
         <Paper className={this.props.classes.root}>
