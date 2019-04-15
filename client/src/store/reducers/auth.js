@@ -24,7 +24,6 @@ export default (state = initialState, action) => {
           }
         };
       } else if (usrType === "mothers") {
-        console.log("usrType = mothers");
         return {
           ...state,
           user: {
