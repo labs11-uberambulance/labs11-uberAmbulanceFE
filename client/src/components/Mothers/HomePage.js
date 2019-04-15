@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import MotherMap from "../GoogleMaps/MotherMap/MotherMap";
-import { Button } from "@material-ui/core";
 import { getDrivers } from "../../store/actions/rides";
 import axios from "../../axios-instance";
 
@@ -69,9 +68,7 @@ class HomePage extends Component {
           getDrivers={this.props.getDrivers}
           submitFinalRideRequest={this.submitFinalRideRequest}
           rideStart={this.state.rideStart}
-          selectDriver={this.selectDriver}
           selectedDriver={this.state.selectedDriver}
-          submitFinalRideRequest={this.submitFinalRideRequest}
           removeDriver={this.removeDriver}
           driverName={this.state.driverName}
           finished={this.state.finished}

@@ -64,7 +64,7 @@ class DriverActiveRides extends Component {
   render() {
     const { classes } = this.props;
     const activeRides = this.props.user.driverData.rides.filter(
-      ride => ride.ride_status != "complete"
+      ride => ride.ride_status !== "complete"
     );
     const rideRequests = activeRides.map(ride => {
       return (

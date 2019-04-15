@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
 import DriverInactive from "./DriverInactive";
 import DriverActiveNoRide from "./DriverActiveNoRide";
 import DriverActiveOnRide from "./DriverActiveOnRide";
@@ -14,8 +13,8 @@ export default class HomePage extends Component {
     let relevantView;
     const activeRides = this.props.user.driverData.rides.filter(
       ride =>
-        ride.ride_status != "waiting_on_driver" &&
-        ride.ride_status != "complete"
+        ride.ride_status !== "waiting_on_driver" &&
+        ride.ride_status !== "complete"
     );
     const driverActive = this.props.user.driverData.active;
 

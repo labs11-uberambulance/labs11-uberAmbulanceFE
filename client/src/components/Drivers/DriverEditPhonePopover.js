@@ -6,8 +6,6 @@ import Button from "@material-ui/core/Button";
 import EditIcon from "@material-ui/icons/Edit";
 import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemIcon";
 import Popover from "@material-ui/core/Popover";
 import TextField from "@material-ui/core/TextField";
 
@@ -63,19 +61,12 @@ class SimplePopover extends React.Component {
           variant="contained"
           onClick={this.handleClick}
         >
-          <Grid
-            container
-            direction="row"
-            justify="center"
-            alignItems="space-between"
-          >
+          <Grid container direction="row" justify="center" alignItems="center">
             <Grid item xs={4}>
-              <ListItemIcon>
-                <span style={{ color: "green" }}>{this.props.user.phone}</span>
-              </ListItemIcon>
+              <span style={{ color: "green" }}>{this.props.user.phone}</span>
             </Grid>
             <Grid item xs={4}>
-              <ListItemText>Contact Phone</ListItemText>
+              <Typography variant="body1">Contact Phone</Typography>
             </Grid>
             <Grid item xs={4} style={{ textAlign: "right" }}>
               <EditIcon fontSize={"small"} />

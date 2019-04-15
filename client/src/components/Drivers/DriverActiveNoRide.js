@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
-import DriverProfileMenu from "./DriverProfileMenu";
 import DriverHUD from "./DriverHUD";
 import DriverActiveRides from "./DriverActiveRides";
 

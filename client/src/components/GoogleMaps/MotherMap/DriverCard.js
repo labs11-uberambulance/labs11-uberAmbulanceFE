@@ -1,13 +1,61 @@
-import React from 'react'
-
+import React from "react";
 
 export default function DriverCard(props) {
   return (
-    <div className="driver-card hover-cursor hvr-float-shadow " onClick={()=>props.selectDriver(props.ride.driver.firebase_id, props.ride.driver.name, props.ride.distance)}>
-      <p onClick={()=>props.selectDriver(props.ride.driver.firebase_id, props.ride.driver.name, props.ride.distance)}>{props.ride.driver.name}</p>
-      <img onClick={()=>props.selectDriver(props.ride.driver.firebase_id, props.ride.driver.name, props.ride.distance)} src={props.ride.driver.photo_url} alt={`${props.ride.driver.name}'s Profile Picture`}/>
-      <p onClick={()=>props.selectDriver(props.ride.driver.firebase_id, props.ride.driver.name, props.ride.distance)}>ETA: {props.ride.duration.text}</p>
-      <p onClick={()=>props.selectDriver(props.ride.driver.firebase_id, props.ride.driver.name, props.ride.distance)}>Price: {props.ride.driver.price}</p>
+    <div
+      className="driver-card hover-cursor hvr-float-shadow "
+      onClick={() =>
+        props.selectDriver(
+          props.ride.driver.firebase_id,
+          props.ride.driver.name,
+          props.ride.distance
+        )
+      }
+    >
+      <p
+        onClick={() =>
+          props.selectDriver(
+            props.ride.driver.firebase_id,
+            props.ride.driver.name,
+            props.ride.distance
+          )
+        }
+      >
+        {props.ride.driver.name}
+      </p>
+      <img
+        onClick={() =>
+          props.selectDriver(
+            props.ride.driver.firebase_id,
+            props.ride.driver.name,
+            props.ride.distance
+          )
+        }
+        src={props.ride.driver.photo_url}
+        alt={`${props.ride.driver.name}'s Profile Pic`}
+      />
+      <p
+        onClick={() =>
+          props.selectDriver(
+            props.ride.driver.firebase_id,
+            props.ride.driver.name,
+            props.ride.distance
+          )
+        }
+      >
+        ETA: {props.ride.duration.text}
+      </p>
+      <p
+        onClick={() =>
+          props.selectDriver(
+            props.ride.driver.firebase_id,
+            props.ride.driver.name,
+            props.ride.distance
+          )
+        }
+      >
+        Price: {props.ride.driver.price}
+      </p>
     </div>
-  )
+  );
 }

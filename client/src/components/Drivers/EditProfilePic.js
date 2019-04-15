@@ -8,7 +8,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
 import EditIcon from "@material-ui/icons/Edit";
 
 class SimpleDialog extends React.Component {
