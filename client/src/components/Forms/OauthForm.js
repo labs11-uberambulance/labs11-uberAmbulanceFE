@@ -169,12 +169,6 @@ class OauthForm extends Component {
               id: "phone"
             }}
             name="phoneNumber"
-            // onBlur={() => {
-            //   this.setState(prevState => ({
-            //     usingPhone: !prevState.usingPhone,
-            //     phoneNumber: ""
-            //   }));
-            // }}
             onKeyPress={e => {
               e.key === "Enter" && this.initOauthWithPhone(e);
             }}
@@ -220,6 +214,9 @@ class OauthForm extends Component {
                 }}
               >
                 Cancel
+              </Button>
+              <Button type="submit" color="secondary">
+                Submit
               </Button>
             </form>
           </Modal>
