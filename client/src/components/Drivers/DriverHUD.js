@@ -93,19 +93,31 @@ class DriverHUD extends Component {
           alignItems="center"
         >
           <Grid item>
-            <CardMedia
-              component="img"
-              alt="DriverImg"
-              height="140"
-              width="140"
-              image={this.props.user.driverData.photo_url}
-              title="Driver"
+            <div
               style={{
+                background: `url(${
+                  this.props.user.driverData.photo_url
+                }) 50% 50% no-repeat`,
+                backgroundSize: "cover",
+                height: "140px",
                 width: "140px",
                 borderRadius: "40px",
                 marginTop: "-70px"
               }}
             />
+            {/* <CardMedia
+              component="img"
+              alt="DriverImg"
+              image={this.props.user.driverData.photo_url}
+              title="Driver"
+              style={{
+                height: "140px",
+                width: "140px",
+                borderRadius: "40px",
+                marginTop: "-70px",
+                overflow: "hidden"
+              }}
+            /> */}
             <EditProfileImg currImg={this.props.user.driverData.photo_url} />
           </Grid>
           {this.props.usrLoading && (
