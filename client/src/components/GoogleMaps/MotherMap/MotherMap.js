@@ -52,11 +52,12 @@ const styles = ({ palette }) => ({
   },
   hidden: {
     opacity: 0,
-    zIndex: -10
+    zIndex: -10,
   },
   show: {
     opacity: 1,
-    zIndex: 20
+    zIndex: 20,
+
   },
   modalHeight: {},
   finalMessage: {
@@ -68,6 +69,29 @@ const styles = ({ palette }) => ({
     borderRadius: "15px",
     padding: "10px 10px 32px",
     boxShadow: "0 4px 8px 0 rgba(0,0,0,0.12), 0 2px 4px 0 rgba(0,0,0,0.08)"
+  },
+  homeBTN:{
+     width: "100%",
+    padding: "10px", 
+    background: "#2196f3", 
+    margin: "5px auto", 
+    '&:hover':{
+      background:'pink'
+    }
+  },
+  submitBTN:{
+    width:'49%', 
+    backgroundColor:'rgb(0, 133, 115)',
+    '&:hover':{
+      background:'pink'
+    }
+  },
+  cancelBTN:{
+    width:'49%', 
+    backgroundColor:'red',
+    '&:hover':{
+      background:'pink'
+    }
   }
 });
 class MotherMap extends Component {
@@ -98,9 +122,20 @@ class MotherMap extends Component {
     this.setState({ toggleModal: false });
   };
 
-  toggleMarkLockHandler = () => {
-    this.setState(({ locked }) => {
-      if (locked) {
+  toggleMarkLockHandler = (e) => {
+    console.log(e.target)
+    if(e.target.name === 'homeD'){
+      const position = this.state.startCoords
+      console.log(position)
+      geocodeLatlng(position, locName => {
+        console.log(locName);
+        this.props.setRideStart && this.props.setRideStart(position, locName);
+      });
+      return this.setState({ search: "", locked: true, startCoords: position, toggleModal: true });
+    }
+    else{
+    this.setState(({ locked })=> {
+    if (locked) {
         unlockMarker();
         return {
           search: "",
@@ -110,18 +145,20 @@ class MotherMap extends Component {
           startCoords: {
             lat: Number(this.props.user.location.latlng.split(",")[0]),
             lng: Number(this.props.user.location.latlng.split(",")[1])
-          }
-        };
+          },
+        }
       } else {
         const position = lockMarker();
+        console.log('@#$', position)
         geocodeLatlng(position, locName => {
           console.log(locName);
           this.props.setRideStart && this.props.setRideStart(position, locName);
         });
         console.log(position);
-        return { search: "", locked: true, startCoords: position };
+        return { search: "", locked: true, startCoords: position, toggleModal: true };
       }
     });
+  }
   };
 
   searchForLocationHandler = e => {
@@ -156,6 +193,9 @@ class MotherMap extends Component {
       onChange: e => this.setState({ search: e.target.value }),
       fullWidth: true
     };
+    const pad20={
+      padding: '20px'
+    }
     return (
       <div className="google-maps-container" style={{}}>
         <Drawer />
@@ -228,22 +268,25 @@ class MotherMap extends Component {
                           {!this.state.locked ? "Search New Pickup Location" : `Set Destination`}
                         </Button>
                       </div>
-                    ) : (
-                      <Button
-                        variant="contained"
-                        width="90%"
-                        className={
-                          !this.state.locked
-                            ? this.props.classes.firstButton
-                            : this.props.classes.root
-                        }
-                        onClick={this.handleClickOpen}
-                      >
-                        {!this.state.locked
-                          ? "Search New Pickup Location"
-                          : `Set Destination`}
-                      </Button>
-                    )}
+                    ) : 
+                    null
+                    // (
+                    //   <Button
+                    //     variant="contained"
+                    //     width="90%"
+                    //     className={
+                    //       !this.state.locked
+                    //         ? this.props.classes.firstButton
+                    //         : this.props.classes.root
+                    //     }
+                    //     onClick={this.handleClickOpen}
+                    //   >
+                    //     {!this.state.locked
+                    //       ? "Search New Pickup Location"
+                    //       : `Set Destination`}
+                    //   </Button>
+                    // )
+                    }
                     {this.state.locked ? null : (
                       <Button
                         variant="contained"
@@ -279,6 +322,7 @@ class MotherMap extends Component {
               )}
             </div>
             <div
+
               className={
                 this.state.toggleModal
                   ? this.props.classes.show
@@ -297,6 +341,7 @@ class MotherMap extends Component {
                 onClose={this.handleClose}
                 aria-labelledby="responsive-dialog-title"
               >
+              <div  style={pad20}>
                 <h3 id="responsive-dialog-title">
                   {!this.state.locked
                     ? "Search Pick Up Location"
@@ -314,8 +359,25 @@ class MotherMap extends Component {
                   id="google-search"
                   label="Search for your destination"
                   {...commonTextProps}
-                  style={!this.state.locked ? { opacity: 0, width: 0 } : {}}
+                  style={!this.state.locked ? { opacity: 0, width: 0, display:"none" } : {}}
                 />
+                { this.state.locked ? 
+                <>
+                  <Button className={this.props.classes.homeBTN} >Hospital Default</Button>
+                  <div style={{display:'flex', justifyContent: "space-between", width: "100%"}}>
+                    <Button className={this.props.classes.submitBTN}>Submit</Button>
+                    <Button className={this.props.classes.cancelBTN }>Cancel</Button>
+                  </div>
+                </>
+                  :
+                  <>
+                  <button className={this.props.classes.homeBTN} name="homeD"onClick={e=>{this.toggleMarkLockHandler(e)}}>Home Default</button>
+                  <div style={{display:'flex', justifyContent: "space-between", width: "100%"}}>
+                    <Button className={this.props.classes.submitBTN}>Submit</Button>
+                    <Button className={this.props.classes.cancelBTN }>Cancel</Button>
+                  </div>
+                </>
+                }
                 {/* <div className="modal-btns">
               <Button onClick={this.handleClose} color="primary">
               Disagree
@@ -324,8 +386,10 @@ class MotherMap extends Component {
               Agree
               </Button>
               </div> */}
-              </Dialog>
-            </div>
+              </div>
+            </Dialog>
+          </div>
+            
             {this.state.places && (<div className="places-list">
                   
                     <GooglePlacesList

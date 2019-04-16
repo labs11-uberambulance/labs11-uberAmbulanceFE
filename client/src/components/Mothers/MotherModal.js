@@ -77,7 +77,6 @@ class ResponsiveDialog extends React.Component {
   render() {
     const { fullScreen } = this.props;
     const { classes } = this.props;
-    console.log(this.props)
     return (
   
       <div>

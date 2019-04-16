@@ -18,7 +18,7 @@ body{
 .reqBoxTwo, .reqBox {
   backdrop-filter: blur(6px);
 }
-.hover-cursåor{
+.hover-cursor{
   cursor: pointer;
 }
 

@@ -40,7 +40,7 @@ export const initSearchBox = (placesCB, markerCB) => {
 };
 const createAndDisplayMarker = (lat, lng) => {
   marker = new window.google.maps.Marker({
-    map, position: { lat, lng }, draggable: true,
+    map, position: { lat, lng }, draggable: false,
     animation: window.google.maps.Animation.DROP,
     title: "Your Location"
   });
@@ -48,18 +48,7 @@ const createAndDisplayMarker = (lat, lng) => {
   map.setCenter({ lat, lng });
   markerListener = map.addListener("bounds_changed", () => {
     marker.setPosition(map.getCenter());
-    var newLat = marker.getPosition().lat()
-    console.log('movinb', newLat)
-    console.log('mobing')
   });
-  // markerListener = marker.addListener("moved", ()=>{
-  //   var newLat = marker.getPosition().lat()
-  //   console.log('movinb', newLat)
-  // })
-  // var newLat = marker.getPosition().lat()
-  // console.log(newLat)
-  // marker.setPosition( {lat, lng});
-  // map.setCenter({lat,lng})
 };
 export const initGoogleScript = (placesCB, markerCB, lat, lng) => {
   if (!window.google) {
