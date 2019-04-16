@@ -97,8 +97,7 @@ class DriverHUD extends Component {
               style={{
                 background: `url(${
                   this.props.user.driverData.photo_url
-                }) 50% 50% no-repeat`,
-                backgroundSize: "cover",
+                }) 50% 50% / cover no-repeat`,
                 height: "140px",
                 width: "140px",
                 borderRadius: "40px",

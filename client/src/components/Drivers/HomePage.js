@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import DriverHeader from "./DriverHeader";
 import DriverInactive from "./DriverInactive";
 import DriverActiveNoRide from "./DriverActiveNoRide";
 import DriverActiveOnRide from "./DriverActiveOnRide";
@@ -46,6 +47,11 @@ export default class HomePage extends Component {
         />
       );
     }
-    return <>{relevantView}</>;
+    return (
+      <>
+        <DriverHeader />
+        {relevantView}
+      </>
+    );
   }
 }
