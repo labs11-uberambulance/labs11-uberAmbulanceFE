@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { initUsrUpdate } from "../../store/actions/auth";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
 import EditIcon from "@material-ui/icons/Edit";
 import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
@@ -61,14 +62,20 @@ class SimplePopover extends React.Component {
           variant="contained"
           onClick={this.handleClick}
         >
-          <Grid container direction="row" justify="center" alignItems="center">
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            alignItems="center"
+            spacing={8}
+          >
             <Grid item xs={4}>
               <span style={{ color: "green" }}>{this.props.user.phone}</span>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={6}>
               <Typography variant="body1">Contact Phone</Typography>
             </Grid>
-            <Grid item xs={4} style={{ textAlign: "right" }}>
+            <Grid item xs style={{ textAlign: "right" }}>
               <EditIcon fontSize={"small"} />
             </Grid>
           </Grid>
@@ -86,21 +93,26 @@ class SimplePopover extends React.Component {
             vertical: "top",
             horizontal: "center"
           }}
-          style={{ padding: "10px" }}
         >
-          <TextField
-            autoFocus
-            margin="dense"
-            name="phone"
-            label="phone"
-            value={this.state.user.phone}
-            type="text"
-            fullWidth
-            onChange={e => this.updateFormUser(e)}
-          />
-          <Button onClick={() => this.handleSubmit()} color="primary">
-            Save
-          </Button>
+          <Card style={{ padding: "0 10px" }}>
+            <TextField
+              autoFocus
+              margin="dense"
+              name="phone"
+              label="Phone"
+              value={this.state.user.phone}
+              type="text"
+              fullWidth
+              onChange={e => this.updateFormUser(e)}
+            />
+            <Button
+              onClick={() => this.handleSubmit()}
+              color="primary"
+              fullWidth
+            >
+              Save
+            </Button>
+          </Card>
         </Popover>
       </div>
     );
