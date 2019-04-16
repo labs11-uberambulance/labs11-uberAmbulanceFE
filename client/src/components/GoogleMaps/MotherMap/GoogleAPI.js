@@ -48,12 +48,9 @@ const createAndDisplayMarker = (lat, lng) => {
   map.setCenter({ lat, lng });
   markerListener = map.addListener("bounds_changed", () => {
     marker.setPosition(map.getCenter());
-<<<<<<< HEAD
     var newLat = marker.getPosition().lat()
     console.log('movinb', newLat)
     console.log('mobing')
-=======
->>>>>>> b3153105f7201f1232c328f2cffc3f64bf76286a
   });
   // markerListener = marker.addListener("moved", ()=>{
   //   var newLat = marker.getPosition().lat()

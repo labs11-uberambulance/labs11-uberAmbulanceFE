@@ -227,15 +227,6 @@ class MotherMap extends Component {
                         >
                           {!this.state.locked ? "Search New Pickup Location" : `Set Destination`}
                         </Button>
-<<<<<<< HEAD
-=======
-                        <Button variant="contained" width="50%"
-                          className={this.props.classes.root}
-                          onClick={this.toggleMarkLockHandler}
-                        >
-                          Continue default
-                        </Button>
->>>>>>> b3153105f7201f1232c328f2cffc3f64bf76286a
                       </div>
                     ) : (
                       <Button
