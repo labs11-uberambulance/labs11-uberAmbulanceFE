@@ -12,13 +12,15 @@ function DriversView(props) {
         user={props.user}
         usrUpdate={props.usrUpdate}
         refreshUserData={props.refreshUserData}
+        usrLoading={props.usrLoading}
       />
     </>
   );
 }
 
 const mapStateToProps = state => ({
-  user: state.auth.user
+  user: state.auth.user,
+  usrLoading: state.auth.loading
 });
 
 const mapDispatchToProps = dispatch => {

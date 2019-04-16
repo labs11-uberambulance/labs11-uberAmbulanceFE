@@ -8,7 +8,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
 import EditIcon from "@material-ui/icons/Edit";
 
 class SimpleDialog extends React.Component {
@@ -44,17 +43,29 @@ class SimpleDialog extends React.Component {
         {...other}
         onClose={this.handleClose}
         aria-labelledby="simple-dialog-title"
+        style={{ padding: "20px" }}
       >
         <DialogTitle id="simple-dialog-title">Select a new image.</DialogTitle>
         <div>
           {this.state.file ? (
             <Grid
               container
-              direction="row"
+              direction="column"
               justify="space-around"
               alignItems="center"
             >
-              <CardMedia
+              <div
+                style={{
+                  background: `url(${URL.createObjectURL(
+                    this.state.file
+                  )}) 50% 50% / cover no-repeat`,
+                  // backgroundSize: "cover",
+                  height: "140px",
+                  width: "140px",
+                  borderRadius: "40px"
+                }}
+              />
+              {/* <CardMedia
                 component="img"
                 alt="DriverImg"
                 height="140"
@@ -65,7 +76,7 @@ class SimpleDialog extends React.Component {
                   width: "140px",
                   borderRadius: "40px"
                 }}
-              />
+              /> */}
               {`${this.state.file.name.slice(0, 10)}...`}
             </Grid>
           ) : (
@@ -75,7 +86,18 @@ class SimpleDialog extends React.Component {
               justify="space-around"
               alignItems="center"
             >
-              <CardMedia
+              <div
+                style={{
+                  background: `url(${
+                    this.props.currImg
+                  }) 50% 50% / cover no-repeat`,
+                  backgroundSize: "cover",
+                  height: "140px",
+                  width: "140px",
+                  borderRadius: "40px"
+                }}
+              />
+              {/* <CardMedia
                 component="img"
                 alt="DriverImg"
                 height="140"
@@ -86,11 +108,12 @@ class SimpleDialog extends React.Component {
                   width: "140px",
                   borderRadius: "40px"
                 }}
-              />
+              /> */}
             </Grid>
           )}
           <Button
             type="button"
+            color="primary"
             onClick={() => this.photoInp.current.click()}
             fullWidth
           >
@@ -102,6 +125,7 @@ class SimpleDialog extends React.Component {
                 type="button"
                 color="secondary"
                 onClick={this.handleSubmit}
+                fullWidth
               >
                 Submit
               </Button>
@@ -109,6 +133,7 @@ class SimpleDialog extends React.Component {
                 type="button"
                 color="secondary"
                 onClick={this.handleClose}
+                fullWidth
               >
                 Cancel
               </Button>

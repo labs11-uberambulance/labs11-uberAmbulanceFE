@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
+import DriverHeader from "./DriverHeader";
 import DriverInactive from "./DriverInactive";
 import DriverActiveNoRide from "./DriverActiveNoRide";
 import DriverActiveOnRide from "./DriverActiveOnRide";
@@ -14,8 +14,8 @@ export default class HomePage extends Component {
     let relevantView;
     const activeRides = this.props.user.driverData.rides.filter(
       ride =>
-        ride.ride_status != "waiting_on_driver" &&
-        ride.ride_status != "complete"
+        ride.ride_status !== "waiting_on_driver" &&
+        ride.ride_status !== "complete"
     );
     const driverActive = this.props.user.driverData.active;
 
@@ -25,6 +25,7 @@ export default class HomePage extends Component {
           user={this.props.user}
           usrUpdate={this.props.usrUpdate}
           refreshUserData={this.props.refreshUserData}
+          usrLoading={this.props.usrLoading}
         />
       );
     } else if (activeRides.length > 0) {
@@ -33,6 +34,7 @@ export default class HomePage extends Component {
           user={this.props.user}
           currentRide={activeRides[0]}
           refreshUserData={this.props.refreshUserData}
+          usrLoading={this.props.usrLoading}
         />
       );
     } else if (driverActive) {
@@ -41,9 +43,15 @@ export default class HomePage extends Component {
           user={this.props.user}
           usrUpdate={this.props.usrUpdate}
           refreshUserData={this.props.refreshUserData}
+          usrLoading={this.props.usrLoading}
         />
       );
     }
-    return <>{relevantView}</>;
+    return (
+      <>
+        <DriverHeader />
+        {relevantView}
+      </>
+    );
   }
 }

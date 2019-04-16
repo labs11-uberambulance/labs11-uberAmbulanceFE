@@ -18,7 +18,7 @@ export default function RideCard(props) {
     <Card>
       <Grid container direction="row" justify="center" alignItems="center">
         <CardMedia style={{ width: "70px" }}>
-          <img src={motorcycle} />
+          <img src={motorcycle} alt="motorcycle" />
         </CardMedia>
         <CardContent>
           <Typography variant="body1">
@@ -32,7 +32,7 @@ export default function RideCard(props) {
           </Typography>
         </CardContent>
       </Grid>
-      {ride.ride_status != "complete" && (
+      {ride.ride_status !== "complete" && (
         <>
           <Button
             onClick={() => props.onAcceptHandler(ride.id)}

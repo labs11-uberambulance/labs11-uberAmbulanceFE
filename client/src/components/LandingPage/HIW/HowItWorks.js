@@ -1,5 +1,4 @@
 import React from "react";
-import Paper from "@material-ui/core/Paper";
 import Step_1 from "./images/step_1.svg";
 import Step_2 from "./images/step_2.svg";
 import Step_3 from "./images/step_3.svg";
@@ -7,7 +6,6 @@ import Step_4 from "./images/step_4.svg";
 import Step_5 from "./images/step_5.svg";
 import Step_6 from "./images/step_6.svg";
 import AOS from "aos";
-
 
 import "./HowitWorks.css";
 const headerText = {
