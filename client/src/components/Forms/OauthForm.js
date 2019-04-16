@@ -87,20 +87,22 @@ class OauthForm extends Component {
 
   onSubmitCodeForConfirmation = e => {
     e.preventDefault();
-    this.setState({ errorMessage: "" });
+    this.setState({ errorMessage: "", authMethodConfirm: true });
     try {
       this.state.confirmationFunc.confirm(this.state.inputCode).catch(err => {
         console.log("THERE");
         this.setState({
           errorMessage:
-            "Incorrect code. Please check the code sent to your phone and try again."
+            "Incorrect code. Please check the code sent to your phone and try again.",
+          authMethodConfirm: false
         });
       });
     } catch (err) {
       console.log("HERE");
       if (err.code === "auth/missing-verification-code") {
         this.setState({
-          errorMessage: "Please enter the code sent to your phone via SMS."
+          errorMessage: "Please enter the code sent to your phone via SMS.",
+          authMethodConfirm: false
         });
       } else {
         console.log("HERE", err);
@@ -245,23 +247,29 @@ class OauthForm extends Component {
                 <div style={{ color: "red" }}>{this.state.errorMessage}</div>
               )}
               <br />
-              <Button
-                type="button"
-                color="secondary"
-                onClick={() => {
-                  this.setState({
-                    confirmationFunc: null,
-                    verifyCode: false,
-                    inputCode: "",
-                    errorMessage: ""
-                  });
-                }}
-              >
-                Cancel
-              </Button>
-              <Button type="submit" color="secondary">
-                Submit
-              </Button>
+              {this.state.authMethodConfirm ? (
+                <LinearProgress />
+              ) : (
+                <>
+                  <Button
+                    type="button"
+                    color="secondary"
+                    onClick={() => {
+                      this.setState({
+                        confirmationFunc: null,
+                        verifyCode: false,
+                        inputCode: "",
+                        errorMessage: ""
+                      });
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button type="submit" color="secondary">
+                    Submit
+                  </Button>
+                </>
+              )}
             </form>
           </Modal>
         )}
