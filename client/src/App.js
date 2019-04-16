@@ -31,15 +31,13 @@ class App extends Component {
         <Switch>
           <Route
             path="/onboarding"
-            render={() => (
-              <OnboardingView redirOnSuccess={this.props.history.push} />
-            )}
+            render={() => <OnboardingView redir={this.props.history.push} />}
           />
+          <Route path="/logout" component={Logout} />
           {!userType && <Redirect exact to="/onboarding" />}
           <Route path="/drivers" component={DriversView} />
           <Route path="/mothers" component={MothersView} />
           <Route path="/newride" component={RequestRideView} />
-          <Route path="/logout" component={Logout} />
           {userType === "drivers" && <Redirect to="/drivers" />}
           {userType === "mothers" && <Redirect to="/mothers" />}
         </Switch>
