@@ -72,7 +72,7 @@ class DriverHUD extends Component {
                   : "Set Active"}
               </Button>
             </Grid>
-            <Grid item>
+            {/* <Grid item>
               <Button
                 style={{ backgroundColor: "#0277bd", color: "white" }}
                 variant="contained"
@@ -82,7 +82,7 @@ class DriverHUD extends Component {
               >
                 Log Out
               </Button>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Card>
         {/* profile img alignment grid */}
@@ -95,7 +95,7 @@ class DriverHUD extends Component {
           <Grid
             item
             style={{
-              marginTop: "-70px"
+              marginTop: "-60px"
             }}
           >
             {/* <CardMedia
@@ -149,7 +149,7 @@ class DriverHUD extends Component {
             </List>
           </Card>
         </CardContent>
-        <CardActions>
+        {/* <CardActions>
           <Grid
             container
             direction="row"
@@ -163,7 +163,7 @@ class DriverHUD extends Component {
               <DriverRideHistoryModal user={this.props.user} />
             </Grid>
           </Grid>
-        </CardActions>
+        </CardActions> */}
       </Card>
     );
   }
