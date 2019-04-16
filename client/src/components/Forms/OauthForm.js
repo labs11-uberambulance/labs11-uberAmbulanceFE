@@ -64,7 +64,7 @@ class OauthForm extends Component {
   };
   initOauthWithPhone = e => {
     e.preventDefault();
-    this.setState({ authMethodConfirm: true });
+    this.setState({ authMethodConfirm: true, errorMessage: "" });
     console.log("initOauthWithPhone");
     const appVerifier = window.recaptchaVerifier;
     const firebaseNumber = normalizePhone(`+1${this.state.phoneNumber}`);
@@ -214,7 +214,7 @@ class OauthForm extends Component {
                   <div style={{ color: "red" }}>{this.state.errorMessage}</div>
                 )}
                 <Button
-                  color="secondary"
+                  color="primary"
                   onClick={e => this.initOauthWithPhone(e)}
                 >
                   {this.props.signup ? "Sign up " : "Log in "} with Phone
