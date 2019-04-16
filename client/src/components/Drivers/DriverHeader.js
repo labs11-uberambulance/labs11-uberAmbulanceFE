@@ -12,15 +12,6 @@ const header = props => {
       <nav>
         <ul>
           <li>
-            <NavLink to="/">Drivers</NavLink>
-          </li>
-          <li>
-            <NavLink to="/">Riders</NavLink>
-          </li>
-          <li>
-            <NavLink to="/register">Sign up</NavLink>
-          </li>
-          <li>
             <button
               onClick={() => {
                 props.history.push("/logout");
