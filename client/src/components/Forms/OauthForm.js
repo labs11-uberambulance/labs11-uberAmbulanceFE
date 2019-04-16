@@ -70,8 +70,7 @@ class OauthForm extends Component {
     const firebaseNumber = normalizePhone(`+1${this.state.phoneNumber}`);
     if (!firebaseNumber) {
       this.setState({
-        phoneNumber: "",
-        errorMessage: "invalid phone number pattern",
+        errorMessage: "Invalid Phone Number",
         authMethodConfirm: false
       });
     }
@@ -88,9 +87,25 @@ class OauthForm extends Component {
 
   onSubmitCodeForConfirmation = e => {
     e.preventDefault();
-    this.state.confirmationFunc
-      .confirm(this.state.inputCode)
-      .catch(err => console.error(err));
+    this.setState({ errorMessage: "" });
+    try {
+      this.state.confirmationFunc.confirm(this.state.inputCode).catch(err => {
+        console.log("THERE");
+        this.setState({
+          errorMessage:
+            "Incorrect code. Please check the code sent to your phone and try again."
+        });
+      });
+    } catch (err) {
+      console.log("HERE");
+      if (err.code === "auth/missing-verification-code") {
+        this.setState({
+          errorMessage: "Please enter the code sent to your phone via SMS."
+        });
+      } else {
+        console.log("HERE", err);
+      }
+    }
   };
   render() {
     const path = this.props.signup ? "/login" : "/register";
@@ -192,12 +207,17 @@ class OauthForm extends Component {
                 <LinearProgress />
               </div>
             ) : (
-              <Button
-                color="secondary"
-                onClick={e => this.initOauthWithPhone(e)}
-              >
-                {this.props.signup ? "Sign up " : "Log in "} with Phone
-              </Button>
+              <>
+                {this.state.errorMessage && (
+                  <div style={{ color: "red" }}>{this.state.errorMessage}</div>
+                )}
+                <Button
+                  color="secondary"
+                  onClick={e => this.initOauthWithPhone(e)}
+                >
+                  {this.props.signup ? "Sign up " : "Log in "} with Phone
+                </Button>
+              </>
             ))}
           <br />
           <br />
@@ -221,6 +241,9 @@ class OauthForm extends Component {
                 onChange={this.inputChangeHandler}
               />
               <br />
+              {this.state.errorMessage && (
+                <div style={{ color: "red" }}>{this.state.errorMessage}</div>
+              )}
               <br />
               <Button
                 type="button"
@@ -229,7 +252,8 @@ class OauthForm extends Component {
                   this.setState({
                     confirmationFunc: null,
                     verifyCode: false,
-                    inputCode: ""
+                    inputCode: "",
+                    errorMessage: ""
                   });
                 }}
               >
