@@ -8,7 +8,6 @@ let map,
   geocoder;
 
 const initMap = (placesCB, markerCB, lat, lng) => () => {
-  console.log(lat, lng);
   directionsService = new window.google.maps.DirectionsService();
   directionsDisplay = new window.google.maps.DirectionsRenderer();
   geocoder = new window.google.maps.Geocoder();
@@ -65,8 +64,17 @@ const createAndDisplayMarker = (lat, lng) => {
   marker.setPosition({ lat, lng });
   map.setCenter({ lat, lng });
   markerListener = map.addListener("bounds_changed", () => {
-    // marker.setPosition(map.getCenter());
+    marker.setPosition(map.getCenter());
+    var newLat = marker.getPosition().lat()
+    console.log('movinb', newLat)
+    console.log('mobing')
   });
+  // markerListener = marker.addListener("moved", ()=>{
+  //   var newLat = marker.getPosition().lat()
+  //   console.log('movinb', newLat)
+  // })
+  // var newLat = marker.getPosition().lat()
+  // console.log(newLat)
   // marker.setPosition( {lat, lng});
   // map.setCenter({lat,lng})
 };

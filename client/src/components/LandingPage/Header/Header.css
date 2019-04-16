@@ -1,6 +1,6 @@
 .landing-header {
     display: flex;
-    width: 100vw;
+    width: 100%;
 }
 .landing-header > nav {
     width: 100%;

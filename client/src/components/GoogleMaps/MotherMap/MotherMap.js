@@ -234,14 +234,6 @@ class MotherMap extends Component {
                             ? "Search New Pickup Location"
                             : `Set Destination`}
                         </Button>
-                        <Button
-                          variant="contained"
-                          width="50%"
-                          className={this.props.classes.root}
-                          onClick={this.toggleMarkLockHandler}
-                        >
-                          Continue default
-                        </Button>
                       </div>
                     ) : (
                       <Button
