@@ -94,6 +94,9 @@ export default class OnBoardingForm extends Component {
   };
 
   render() {
+    if (this.props.user.user_type === "drivers") {
+      this.props.redirOnSuccess("/drivers");
+    }
     const requiredBtn = { backgroundColor: "#9e9e9e", color: "white" }
     const setBtn = { backgroundColor: "#03a9f4", color: "white" }
     const { file, location, notificationsOn } = this.state;

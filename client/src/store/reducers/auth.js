@@ -24,6 +24,7 @@ export default (state = initialState, action) => {
           }
         };
       } else if (usrType === "mothers") {
+        console.log("usrType = mothers");
         return {
           ...state,
           user: {
@@ -50,9 +51,14 @@ export default (state = initialState, action) => {
 
     case authTypes.ONBRD_SUCCESS:
       console.log("onboard success reducer");
+      const { userData, driverData, motherData } = action.payload;
       return {
         ...state,
-        ...action.payload
+        user: {
+          ...userData,
+          driverData,
+          motherData
+        }
       };
 
     case authTypes.ONBRD_FAIL:

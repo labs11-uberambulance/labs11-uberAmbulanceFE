@@ -26,6 +26,7 @@ class OnboardingView extends Component {
         <MotherForm
           user={this.props.user}
           onSubmitForm={this.props.onSubmitForm}
+          redirOnSuccess={this.props.redirOnSuccess}
         />
       );
     }
@@ -34,6 +35,7 @@ class OnboardingView extends Component {
         <DriverForm
           user={this.props.user}
           onSubmitForm={this.props.onSubmitForm}
+          redirOnSuccess={this.props.redirOnSuccess}
         />
       );
     }
@@ -42,6 +44,7 @@ class OnboardingView extends Component {
         <CareGiversForm
           user={this.props.user}
           onSubmitForm={this.props.onSubmitForm}
+          redirOnSuccess={this.props.redirOnSuccess}
         />
       );
     }

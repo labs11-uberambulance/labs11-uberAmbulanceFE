@@ -61,7 +61,7 @@ class OnNotification extends Component {
     return (
       <aside className="notification-container">
         <Paper className={this.props.classes.root}>
-          <Typography variant="h5" component="h3">
+          <Typography variant="Subheading" component="h4">
             {title}
           </Typography>
           <Typography component="p">{body}</Typography>
@@ -80,7 +80,7 @@ class OnNotification extends Component {
       this.setState({ notification, data });
       const timer = setTimeout(() => {
         this.setState({ notification: null, data: null });
-      }, 6000);
+      }, 10000);
       this.setState({ timer });
     });
   }

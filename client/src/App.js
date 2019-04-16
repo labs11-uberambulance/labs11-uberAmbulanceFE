@@ -29,7 +29,12 @@ class App extends Component {
       console.log(this.props.user.user_type);
       routes = (
         <Switch>
-          <Route path="/onboarding" component={OnboardingView} />
+          <Route
+            path="/onboarding"
+            render={() => (
+              <OnboardingView redirOnSuccess={this.props.history.push} />
+            )}
+          />
           {!userType && <Redirect exact to="/onboarding" />}
           <Route path="/drivers" component={DriversView} />
           <Route path="/mothers" component={MothersView} />

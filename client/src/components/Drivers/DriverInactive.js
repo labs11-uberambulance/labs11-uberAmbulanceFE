@@ -35,7 +35,7 @@ export default class DriverInactive extends Component {
           spacing={16}
           direction="row"
           justify="space-around"
-          alignItems="center"
+          alignItems="flex-start"
         >
           <Grid item xs={12} sm={12} md={6}>
             <DriverHUD
