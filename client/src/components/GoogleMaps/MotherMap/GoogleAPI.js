@@ -47,7 +47,7 @@ const createAndDisplayMarker = (lat, lng) => {
   marker.setPosition({ lat, lng });
   map.setCenter({ lat, lng });
   markerListener = map.addListener("bounds_changed", () => {
-    // marker.setPosition(map.getCenter());
+    marker.setPosition(map.getCenter());
   });
   // marker.setPosition( {lat, lng});
   // map.setCenter({lat,lng})
