@@ -46,14 +46,27 @@ class DriverHUD extends Component {
     const { classes } = this.props;
     const statusColor = this.props.user.driverData.active
       ? "darkgreen"
-      : "darkred";
+      : "darkred"; //{ backgroundColor: statusColor, height: "100px" }
+    const statusStyle = this.props.user.driverData.active
+      ? {
+          background: "rgb(12,94,13)",
+          background:
+            "linear-gradient(0deg, rgba(12,94,13,1) 0%, rgba(44,172,42,1) 100%)",
+          height: "100px"
+        }
+      : {
+          background: "rgb(94,12,12)",
+          background:
+            "linear-gradient(0deg, rgba(94,12,12,1) 0%, rgba(172,42,42,1) 100%)",
+          height: "100px"
+        };
     const activeButtonColor = this.props.user.driverData.active
       ? "#0277bd"
       : "rgb(0,133,115)";
     return (
       <Card className={classes.card}>
         {/* Status indication card */}
-        <Card style={{ backgroundColor: statusColor, height: "100px" }}>
+        <Card style={statusStyle}>
           {/* Buttons grid */}
           <Grid
             container
