@@ -13,6 +13,7 @@ import pIcon from "../../assests/images/btn_phone_light.svg";
 import { modalCode, normalizePhone } from "./Styling";
 import { TextMaskCustom } from "./Styling";
 import "./OauthForm.css";
+import LinearProgress from "../Progress/Linear";
 
 class OauthForm extends Component {
   initOauthWithGoogle = () => {
@@ -63,13 +64,15 @@ class OauthForm extends Component {
   };
   initOauthWithPhone = e => {
     e.preventDefault();
+    this.setState({ authMethodConfirm: true });
     console.log("initOauthWithPhone");
     const appVerifier = window.recaptchaVerifier;
     const firebaseNumber = normalizePhone(`+1${this.state.phoneNumber}`);
     if (!firebaseNumber) {
       this.setState({
         phoneNumber: "",
-        errorMessage: "invalid phone number pattern"
+        errorMessage: "invalid phone number pattern",
+        authMethodConfirm: false
       });
     }
     auth
@@ -77,7 +80,8 @@ class OauthForm extends Component {
       .then(confirmationResult => {
         this.setState({
           confirmationFunc: confirmationResult,
-          verifyCode: true
+          verifyCode: true,
+          authMethodConfirm: false
         });
       });
   };
@@ -182,11 +186,19 @@ class OauthForm extends Component {
             }}
             onChange={this.inputChangeHandler}
           />
-          {this.state.usingPhone && (
-            <Button color="secondary" onClick={e => this.initOauthWithPhone(e)}>
-              {this.props.signup ? "Sign up " : "Log in "} with Phone
-            </Button>
-          )}
+          {this.state.usingPhone &&
+            (this.state.authMethodConfirm ? (
+              <div style={{ marginTop: "15px" }}>
+                <LinearProgress />
+              </div>
+            ) : (
+              <Button
+                color="secondary"
+                onClick={e => this.initOauthWithPhone(e)}
+              >
+                {this.props.signup ? "Sign up " : "Log in "} with Phone
+              </Button>
+            ))}
           <br />
           <br />
           <Button
@@ -243,7 +255,8 @@ class OauthForm extends Component {
       inputCode: "",
       errorMessage: null,
       usingGmail: false,
-      usingEmail: false
+      usingEmail: false,
+      authMethodConfirm: false
     };
     this.phoneInp = React.createRef();
     this.emailInp = React.createRef();
