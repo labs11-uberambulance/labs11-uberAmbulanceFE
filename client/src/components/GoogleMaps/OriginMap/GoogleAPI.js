@@ -41,7 +41,7 @@ const createAndDisplayMarker = (lat, lng) => {
     title: "Your Location"
   });
   map.addListener("bounds_changed", () => {
-    // marker.setPosition(map.getCenter());   // this could be used to set the pin at center of map
+    marker.setPosition(map.getCenter()); // this could be used to set the pin at center of map
   });
 };
 
