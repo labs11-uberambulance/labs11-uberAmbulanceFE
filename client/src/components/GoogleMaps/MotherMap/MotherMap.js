@@ -87,9 +87,7 @@ class MotherMap extends Component {
   }
   // Default values: Middle of Uganada 0.346996, 32.578201
   goBack = () => {
-    this.setState({
-      search: ""
-    });
+    this.setState({ search: "" });
     this.props.clearRides();
   };
   handleClickOpen = () => {
@@ -219,10 +217,7 @@ class MotherMap extends Component {
                     ) : null}
                     {!this.state.locked ? (
                       <div mx="auto">
-                        <Button
-                          variant="contained"
-                          width="50%"
-                          color="primary"
+                        <Button variant="contained" width="50%" color="primary"
                           className={
                             !this.state.locked
                               ? this.props.classes.firstButton
@@ -230,13 +225,9 @@ class MotherMap extends Component {
                           }
                           onClick={this.handleClickOpen}
                         >
-                          {!this.state.locked
-                            ? "Search New Pickup Location"
-                            : `Set Destination`}
+                          {!this.state.locked ? "Search New Pickup Location" : `Set Destination`}
                         </Button>
-                        <Button
-                          variant="contained"
-                          width="50%"
+                        <Button variant="contained" width="50%"
                           className={this.props.classes.root}
                           onClick={this.toggleMarkLockHandler}
                         >
@@ -331,17 +322,6 @@ class MotherMap extends Component {
                   {...commonTextProps}
                   style={!this.state.locked ? { opacity: 0, width: 0 } : {}}
                 />
-                <div>
-                  {this.state.places && (
-                    <GooglePlacesList
-                      places={Array.isArray(places) ? places : [places]}
-                      setDestination={this.mapOutRoute}
-                      getDrivers={this.props.getDrivers}
-                      rideStart={this.props.rideStart}
-                      handleClose={this.handleClose}
-                    />
-                  )}
-                </div>
                 {/* <div className="modal-btns">
               <Button onClick={this.handleClose} color="primary">
               Disagree
@@ -352,22 +332,21 @@ class MotherMap extends Component {
               </div> */}
               </Dialog>
             </div>
+            {this.state.places && (<div className="places-list">
+                  
+                    <GooglePlacesList
+                      places={Array.isArray(places) ? places : [places]}
+                      setDestination={this.mapOutRoute}
+                      getDrivers={this.props.getDrivers}
+                      rideStart={this.props.rideStart}
+                      handleClose={this.handleClose}
+                    />
+              </div>)}
           </>
         )}
       </div>
     );
   }
-  //   call backs for getting places and markers clicked
-  passPlacesToComponent = places => {
-    this.setState({ places, markersSelected: [] });
-  };
-  markerSelectedHandler = name => {
-    this.setState(({ markersSelected }) => {
-      const markers = [...markersSelected];
-      markers.push(name);
-      return { markersSelected: markers };
-    });
-  };
   componentDidMount() {
     if (this.props.user.location.latlng) {
       this.setState({
@@ -399,7 +378,7 @@ class MotherMap extends Component {
   }
   //   call backs for getting places and markers clicked
   passPlacesToComponent = places => {
-    this.setState({ places, markersSelected: [] });
+    this.setState({ places, markersSelected: [], toggleModal: false });
   };
   markerSelectedHandler = name => {
     this.setState(({ markersSelected }) => {
