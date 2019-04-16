@@ -15,7 +15,7 @@ const header = props => {
         direction="row"
         justify="space-between"
         alignItems="flex-start"
-        spacing={24}
+        // spacing={24}
         className="driver-header"
       >
         <Grid item xs={12} sm={4}>

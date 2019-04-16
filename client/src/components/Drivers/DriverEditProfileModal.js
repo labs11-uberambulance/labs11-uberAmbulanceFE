@@ -12,6 +12,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/Grid";
 import withMobileDialog from "@material-ui/core/withMobileDialog";
 import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 import EditProfileImg from "./EditProfilePic";
 
 class ResponsiveDialog extends React.Component {
@@ -128,7 +129,9 @@ class ResponsiveDialog extends React.Component {
                         />
                       }
                     />
-                    Click image to edit.
+                    <Typography variant="subtitle2">
+                      Click image to edit.
+                    </Typography>
                   </Grid>
                 </Grid>
                 <Grid item xs={8}>

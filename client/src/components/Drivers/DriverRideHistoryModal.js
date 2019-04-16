@@ -37,11 +37,14 @@ class ResponsiveDialog extends React.Component {
         <Button
           // variant="outlined"
           // // color="primary"
-          style={{ color: "white", backgroundColor: "#0277bd" }}
+          style={{
+            color: "white",
+            backgroundColor: "#0277bd"
+          }}
           onClick={this.handleClickOpen}
           fullWidth
         >
-          Rides
+          Ride History
         </Button>
         <Dialog
           fullScreen={fullScreen}
