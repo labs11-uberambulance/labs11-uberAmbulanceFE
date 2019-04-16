@@ -14,6 +14,7 @@ import DriverEditPricePopover from "./DriverEditPricePopover";
 import DriverEditPhonePopover from "./DriverEditPhonePopover";
 import EditProfileImg from "./EditProfilePic";
 import DriverRideHistoryModal from "./DriverRideHistoryModal";
+import ProgressCircular from "../Progress/Circular";
 
 const styles = {
   card: {
@@ -41,10 +42,6 @@ class DriverHUD extends Component {
     });
   };
 
-  // togglePrevRides = () => {
-  //   this.setState(state => ({ prevRides: !state.prevRides }));
-  // };
-
   render() {
     const { classes } = this.props;
     const statusColor = this.props.user.driverData.active
@@ -67,18 +64,8 @@ class DriverHUD extends Component {
             <Grid item>
               <Button
                 style={{ backgroundColor: activeButtonColor, color: "white" }}
-                // className={
-                //   this.props.user.driverData.active
-                //     ? "buttonActive"
-                //     : "buttonInactive"
-                // }
-                // color={
-                //   this.props.user.driverData.active ? "secondary" : "primary"
-                // }
                 variant="contained"
                 onClick={this.handleStatusClick}
-                // fullWidth
-                // sizeLarge
               >
                 {this.props.user.driverData.active
                   ? "Set Inactive"
@@ -87,15 +74,11 @@ class DriverHUD extends Component {
             </Grid>
             <Grid item>
               <Button
-                // className={classes.button}
-                // color="primary"
                 style={{ backgroundColor: "#0277bd", color: "white" }}
                 variant="contained"
                 onClick={() => {
                   this.props.history.push("/logout");
                 }}
-                // fullWidth
-                // sizeLarge
               >
                 Log Out
               </Button>
@@ -125,23 +108,24 @@ class DriverHUD extends Component {
             />
             <EditProfileImg currImg={this.props.user.driverData.photo_url} />
           </Grid>
+          {this.props.usrLoading && (
+            <div style={{ position: "absolute", marginTop: "45px" }}>
+              <ProgressCircular size={20} />
+            </div>
+          )}
         </Grid>
         <CardContent>
-          <Typography variant="h6" gutterBottom>
+          <Typography
+            // style={{ marginTop: "-20px", paddingTop: "20px" }}
+            variant="h6"
+            gutterBottom
+          >
             Welcome, {this.props.user.name}
           </Typography>
           <Card>
             <List>
               <DriverEditPricePopover />
               <DriverEditPhonePopover />
-              {/* <ListItem button>
-                <ListItemIcon>
-                  <span style={{ color: "green" }}>
-                    {this.props.user.phone}
-                  </span>
-                </ListItemIcon>
-                <ListItemText>Contact Phone</ListItemText>
-              </ListItem> */}
             </List>
           </Card>
         </CardContent>
@@ -163,7 +147,6 @@ class DriverHUD extends Component {
             </Grid>
           </Grid>
         </CardActions>
-        {/* {this.state.prevRides && prevRides} */}
       </Card>
     );
   }

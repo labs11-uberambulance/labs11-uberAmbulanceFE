@@ -41,6 +41,7 @@ export default class DriverInactive extends Component {
             <DriverHUD
               user={this.props.user}
               usrUpdate={this.props.usrUpdate}
+              usrLoading={this.props.usrLoading}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={6}>

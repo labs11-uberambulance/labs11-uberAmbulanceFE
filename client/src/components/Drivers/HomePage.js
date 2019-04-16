@@ -24,6 +24,7 @@ export default class HomePage extends Component {
           user={this.props.user}
           usrUpdate={this.props.usrUpdate}
           refreshUserData={this.props.refreshUserData}
+          usrLoading={this.props.usrLoading}
         />
       );
     } else if (activeRides.length > 0) {
@@ -32,6 +33,7 @@ export default class HomePage extends Component {
           user={this.props.user}
           currentRide={activeRides[0]}
           refreshUserData={this.props.refreshUserData}
+          usrLoading={this.props.usrLoading}
         />
       );
     } else if (driverActive) {
@@ -40,6 +42,7 @@ export default class HomePage extends Component {
           user={this.props.user}
           usrUpdate={this.props.usrUpdate}
           refreshUserData={this.props.refreshUserData}
+          usrLoading={this.props.usrLoading}
         />
       );
     }
