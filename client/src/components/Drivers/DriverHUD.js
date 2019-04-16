@@ -92,18 +92,12 @@ class DriverHUD extends Component {
           justify="space-around"
           alignItems="center"
         >
-          <Grid item>
-            <div
-              style={{
-                background: `url(${
-                  this.props.user.driverData.photo_url
-                }) 50% 50% / cover no-repeat`,
-                height: "140px",
-                width: "140px",
-                borderRadius: "40px",
-                marginTop: "-70px"
-              }}
-            />
+          <Grid
+            item
+            style={{
+              marginTop: "-70px"
+            }}
+          >
             {/* <CardMedia
               component="img"
               alt="DriverImg"
@@ -117,7 +111,22 @@ class DriverHUD extends Component {
                 overflow: "hidden"
               }}
             /> */}
-            <EditProfileImg currImg={this.props.user.driverData.photo_url} />
+            <EditProfileImg
+              currImg={this.props.user.driverData.photo_url}
+              btnStyle={{ borderRadius: "40px" }}
+              display={
+                <div
+                  style={{
+                    background: `url(${
+                      this.props.user.driverData.photo_url
+                    }) 50% 50% / cover no-repeat`,
+                    height: "140px",
+                    width: "140px",
+                    borderRadius: "40px"
+                  }}
+                />
+              }
+            />
           </Grid>
           {this.props.usrLoading && (
             <div style={{ position: "absolute", marginTop: "45px" }}>
@@ -148,10 +157,7 @@ class DriverHUD extends Component {
             alignItems="center"
           >
             <Grid item xs={12} sm={6}>
-              <DriverEditProfileModal
-                className={classes.button}
-                user={this.props.user}
-              />
+              <DriverEditProfileModal className={classes.button} />
             </Grid>
             <Grid item xs={12} sm={6}>
               <DriverRideHistoryModal user={this.props.user} />
