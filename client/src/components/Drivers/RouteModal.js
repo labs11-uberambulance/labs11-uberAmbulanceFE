@@ -49,7 +49,8 @@ class SimpleModal extends React.Component {
         >
           <div
             style={{
-              transform: `translate(0, 15%)`
+              transform: `translate(0, 15%)`,
+              outline: "none"
             }}
           >
             <RouteMap start={this.props.start} stop={this.props.stop} />
