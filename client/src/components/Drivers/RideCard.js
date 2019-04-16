@@ -21,16 +21,29 @@ export default function RideCard(props) {
         <CardMedia style={{ width: "70px" }}>
           <img src={motorcycle} alt="motorcycle" />
         </CardMedia>
-        <CardContent>
+        <CardContent style={{ textAlign: "left" }}>
           <Typography variant="body1">
-            Date: {moment(ride.updated_at).format("LLLL")}
+            <span style={{ fontWeight: "bold" }}>Date: </span>
+            {moment(ride.updated_at).format("LLLL")}
           </Typography>
-          <Typography variant="body1">From: {rideDestMother}</Typography>
-          <Typography variant="body1">To: {rideDestHospital}</Typography>
-          <Typography variant="body1">Price: {ride.price}</Typography>
+          <Typography variant="body1">
+            <span style={{ fontWeight: "bold" }}>From: </span>
+            {rideDestMother}
+          </Typography>
+          <Typography variant="body1">
+            <span style={{ fontWeight: "bold" }}>To: </span>
+            {rideDestHospital}
+          </Typography>
+          <Typography variant="body1">
+            <span style={{ fontWeight: "bold" }}>Price: </span>
+            {ride.price}
+          </Typography>
           <RouteModal start={ride.start} stop={ride.destination} />
           <Typography variant="body1">
-            <p style={{ color: status_color }}>Status: {ride.ride_status}</p>
+            <p style={{ color: status_color }}>
+              <span style={{ fontWeight: "bold" }}>Status: </span>
+              {ride.ride_status}
+            </p>
           </Typography>
         </CardContent>
       </Grid>

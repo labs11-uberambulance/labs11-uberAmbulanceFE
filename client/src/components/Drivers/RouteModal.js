@@ -38,7 +38,7 @@ class SimpleModal extends React.Component {
 
     return (
       <div>
-        <Button color="primary" onClick={this.handleOpen}>
+        <Button color="primary" onClick={this.handleOpen} fullWidth>
           Map
         </Button>
         <Modal
