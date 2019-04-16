@@ -1,28 +1,14 @@
 import { styles } from "../MapStyle";
-let map,
-  searchBox,
-  marker,
-  markerListener,
-  directionsService,
-  directionsDisplay,
-  geocoder;
+let map, searchBox, marker, markerListener, directionsService, directionsDisplay, geocoder;
 
 const initMap = (placesCB, markerCB, lat, lng) => () => {
-  console.log(lat, lng);
   directionsService = new window.google.maps.DirectionsService();
   directionsDisplay = new window.google.maps.DirectionsRenderer();
   geocoder = new window.google.maps.Geocoder();
   map = new window.google.maps.Map(document.getElementById("map"), {
-    center: { lat, lng },
-    zoom: 12,
-    styles,
-    clickableIcons: false,
-    mapTypeControl: false,
-    minZoom: 5,
-    restriction: {
-      latLngBounds: { north: 4.35, south: -1.5, west: 29.55, east: 34.6 }
-    },
-    streetViewControl: false
+    center: { lat, lng }, zoom: 12, styles, clickableIcons: false,
+    mapTypeControl: false, minZoom: 5, streetViewControl: false,
+    restriction: { latLngBounds: { north: 4.35, south: -1.5, west: 29.55, east: 34.6 } },
   });
   directionsDisplay.setMap(map);
   createAndDisplayMarker(lat, lng);
@@ -37,16 +23,15 @@ export const initSearchBox = (placesCB, markerCB) => {
   let markers = [];
   searchBox.addListener("places_changed", () => {
     const places = searchBox.getPlaces();
-    console.log(places);
     if (places.length < 1) return;
     markers.forEach(marker => {
       marker.setMap(null);
     });
     map.panTo(places[0].geometry.location);
     if (places.length === 1) {
-      map.setZoom(10);
+      map.setZoom(12);
     } else {
-      map.setZoom(9);
+      map.setZoom(11);
     }
     markers = [];
     placesCB(places);
@@ -54,24 +39,20 @@ export const initSearchBox = (placesCB, markerCB) => {
   });
 };
 const createAndDisplayMarker = (lat, lng) => {
-  console.log("createDisplayMarker", lat, lng);
   marker = new window.google.maps.Marker({
-    map,
-    position: { lat, lng },
-    draggable: true,
+    map, position: { lat, lng }, draggable: true,
     animation: window.google.maps.Animation.DROP,
     title: "Your Location"
   });
   marker.setPosition({ lat, lng });
   map.setCenter({ lat, lng });
   markerListener = map.addListener("bounds_changed", () => {
-    // marker.setPosition(map.getCenter());
+    marker.setPosition(map.getCenter());
   });
   // marker.setPosition( {lat, lng});
   // map.setCenter({lat,lng})
 };
 export const initGoogleScript = (placesCB, markerCB, lat, lng) => {
-  console.log("INTI GOOG", lat, lng);
   if (!window.google) {
     window.initMap = initMap(placesCB, markerCB, lat, lng);
     const googleAPI = document.createElement("script");
@@ -120,7 +101,6 @@ export const geocodeLatlng = (latlng, cb) => {
     let locName;
     if (status === "OK") {
       if (results[0]) {
-        console.log(results[0]);
         locName = results[0].formatted_address;
         cb(locName);
       } else {
