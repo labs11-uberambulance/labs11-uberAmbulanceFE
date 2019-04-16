@@ -8,6 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import RouteModal from "./RouteModal";
 
 export default function RideCard(props) {
   const { ride } = props;
@@ -27,6 +28,7 @@ export default function RideCard(props) {
           <Typography variant="body1">From: {rideDestMother}</Typography>
           <Typography variant="body1">To: {rideDestHospital}</Typography>
           <Typography variant="body1">Price: {ride.price}</Typography>
+          <RouteModal start={ride.start} stop={ride.destination} />
           <Typography variant="body1">
             <p style={{ color: status_color }}>Status: {ride.ride_status}</p>
           </Typography>

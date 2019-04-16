@@ -71,6 +71,7 @@ class DriverActiveRides extends Component {
         <>
           <RideCard
             ride={ride}
+            key={ride.id}
             onAcceptHandler={this.onAcceptHandler}
             onRejectHandler={this.onRejectHandler}
           />
