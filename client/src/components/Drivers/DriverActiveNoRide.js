@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
-import DriverProfileMenu from "./DriverProfileMenu";
 import DriverHUD from "./DriverHUD";
 import DriverActiveRides from "./DriverActiveRides";
 
@@ -24,6 +23,7 @@ export default class DriverActiveNoRide extends Component {
             <DriverHUD
               user={this.props.user}
               usrUpdate={this.props.usrUpdate}
+              usrLoading={this.props.usrLoading}
             />
           </Grid>
           <Grid item xs={12} sm={6}>

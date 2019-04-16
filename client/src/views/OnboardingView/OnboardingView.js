@@ -19,14 +19,19 @@ class OnboardingView extends Component {
   };
   render() {
     if (!this.state.userType) {
-      return <OnboardingSelector setUserType={this.setUserTypeHandler} />;
+      return (
+        <OnboardingSelector
+          setUserType={this.setUserTypeHandler}
+          redir={this.props.redir}
+        />
+      );
     }
     if (this.state.userType === "mothers") {
       return (
         <MotherForm
           user={this.props.user}
           onSubmitForm={this.props.onSubmitForm}
-          redirOnSuccess={this.props.redirOnSuccess}
+          redirOnSuccess={this.props.redir}
         />
       );
     }
@@ -35,7 +40,7 @@ class OnboardingView extends Component {
         <DriverForm
           user={this.props.user}
           onSubmitForm={this.props.onSubmitForm}
-          redirOnSuccess={this.props.redirOnSuccess}
+          redirOnSuccess={this.props.redir}
         />
       );
     }
@@ -44,7 +49,7 @@ class OnboardingView extends Component {
         <CareGiversForm
           user={this.props.user}
           onSubmitForm={this.props.onSubmitForm}
-          redirOnSuccess={this.props.redirOnSuccess}
+          redirOnSuccess={this.props.redir}
         />
       );
     }

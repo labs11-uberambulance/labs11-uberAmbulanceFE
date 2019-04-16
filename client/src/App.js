@@ -26,20 +26,18 @@ class App extends Component {
     console.log(this.props.user);
     if (this.props.user.ftoken) {
       const userType = this.props.user.user_type;
-      console.log(this.props.user.user_type);
+      // console.log(this.props.user.user_type);
       routes = (
         <Switch>
           <Route
             path="/onboarding"
-            render={() => (
-              <OnboardingView redirOnSuccess={this.props.history.push} />
-            )}
+            render={() => <OnboardingView redir={this.props.history.push} />}
           />
+          <Route path="/logout" component={Logout} />
           {!userType && <Redirect exact to="/onboarding" />}
           <Route path="/drivers" component={DriversView} />
           <Route path="/mothers" component={MothersView} />
           <Route path="/newride" component={RequestRideView} />
-          <Route path="/logout" component={Logout} />
           {userType === "drivers" && <Redirect to="/drivers" />}
           {userType === "mothers" && <Redirect to="/mothers" />}
         </Switch>

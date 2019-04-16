@@ -13,6 +13,7 @@ import pIcon from "../../assests/images/btn_phone_light.svg";
 import { modalCode, normalizePhone } from "./Styling";
 import { TextMaskCustom } from "./Styling";
 import "./OauthForm.css";
+import LinearProgress from "../Progress/Linear";
 
 class OauthForm extends Component {
   initOauthWithGoogle = () => {
@@ -63,13 +64,14 @@ class OauthForm extends Component {
   };
   initOauthWithPhone = e => {
     e.preventDefault();
+    this.setState({ authMethodConfirm: true, errorMessage: "" });
     console.log("initOauthWithPhone");
     const appVerifier = window.recaptchaVerifier;
     const firebaseNumber = normalizePhone(`+1${this.state.phoneNumber}`);
     if (!firebaseNumber) {
       this.setState({
-        phoneNumber: "",
-        errorMessage: "invalid phone number pattern"
+        errorMessage: "Invalid Phone Number",
+        authMethodConfirm: false
       });
     }
     auth
@@ -77,16 +79,35 @@ class OauthForm extends Component {
       .then(confirmationResult => {
         this.setState({
           confirmationFunc: confirmationResult,
-          verifyCode: true
+          verifyCode: true,
+          authMethodConfirm: false
         });
       });
   };
 
   onSubmitCodeForConfirmation = e => {
     e.preventDefault();
-    this.state.confirmationFunc
-      .confirm(this.state.inputCode)
-      .catch(err => console.error(err));
+    this.setState({ errorMessage: "", authMethodConfirm: true });
+    try {
+      this.state.confirmationFunc.confirm(this.state.inputCode).catch(err => {
+        console.log("THERE");
+        this.setState({
+          errorMessage:
+            "Incorrect code. Please check the code sent to your phone and try again.",
+          authMethodConfirm: false
+        });
+      });
+    } catch (err) {
+      console.log("HERE");
+      if (err.code === "auth/missing-verification-code") {
+        this.setState({
+          errorMessage: "Please enter the code sent to your phone via SMS.",
+          authMethodConfirm: false
+        });
+      } else {
+        console.log("HERE", err);
+      }
+    }
   };
   render() {
     const path = this.props.signup ? "/login" : "/register";
@@ -182,11 +203,24 @@ class OauthForm extends Component {
             }}
             onChange={this.inputChangeHandler}
           />
-          {this.state.usingPhone && (
-            <Button color="secondary" onClick={e => this.initOauthWithPhone(e)}>
-              {this.props.signup ? "Sign up " : "Log in "} with Phone
-            </Button>
-          )}
+          {this.state.usingPhone &&
+            (this.state.authMethodConfirm ? (
+              <div style={{ marginTop: "15px" }}>
+                <LinearProgress />
+              </div>
+            ) : (
+              <>
+                {this.state.errorMessage && (
+                  <div style={{ color: "red" }}>{this.state.errorMessage}</div>
+                )}
+                <Button
+                  color="primary"
+                  onClick={e => this.initOauthWithPhone(e)}
+                >
+                  {this.props.signup ? "Sign up " : "Log in "} with Phone
+                </Button>
+              </>
+            ))}
           <br />
           <br />
           <Button
@@ -209,23 +243,33 @@ class OauthForm extends Component {
                 onChange={this.inputChangeHandler}
               />
               <br />
+              {this.state.errorMessage && (
+                <div style={{ color: "red" }}>{this.state.errorMessage}</div>
+              )}
               <br />
-              <Button
-                type="button"
-                color="secondary"
-                onClick={() => {
-                  this.setState({
-                    confirmationFunc: null,
-                    verifyCode: false,
-                    inputCode: ""
-                  });
-                }}
-              >
-                Cancel
-              </Button>
-              <Button type="submit" color="secondary">
-                Submit
-              </Button>
+              {this.state.authMethodConfirm ? (
+                <LinearProgress />
+              ) : (
+                <>
+                  <Button
+                    type="button"
+                    color="secondary"
+                    onClick={() => {
+                      this.setState({
+                        confirmationFunc: null,
+                        verifyCode: false,
+                        inputCode: "",
+                        errorMessage: ""
+                      });
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button type="submit" color="secondary">
+                    Submit
+                  </Button>
+                </>
+              )}
             </form>
           </Modal>
         )}
@@ -243,7 +287,8 @@ class OauthForm extends Component {
       inputCode: "",
       errorMessage: null,
       usingGmail: false,
-      usingEmail: false
+      usingEmail: false,
+      authMethodConfirm: false
     };
     this.phoneInp = React.createRef();
     this.emailInp = React.createRef();

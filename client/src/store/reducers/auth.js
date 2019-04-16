@@ -24,7 +24,6 @@ export default (state = initialState, action) => {
           }
         };
       } else if (usrType === "mothers") {
-        console.log("usrType = mothers");
         return {
           ...state,
           user: {
@@ -67,12 +66,16 @@ export default (state = initialState, action) => {
 
     case authTypes.USR_UPDATE_STARTING:
       console.log("usr update start reducer");
-      return state;
+      return {
+        ...state,
+        loading: true
+      };
 
     case authTypes.USR_UPDATE_SUCCESS:
       console.log("user update success reducer");
       return {
         ...state,
+        loading: false,
         ...action.payload
       };
 
@@ -80,6 +83,7 @@ export default (state = initialState, action) => {
       console.log("user updated fail reducer");
       return {
         ...state,
+        loading: false,
         error: action.error
       };
 

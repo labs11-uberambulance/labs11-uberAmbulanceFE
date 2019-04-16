@@ -119,7 +119,7 @@ export default class DriverActiveOnRide extends Component {
                     Ride Complete
                   </Button>
                 )}
-                {currentRide.ride_status != "arrived_at_mother" && (
+                {currentRide.ride_status !== "arrived_at_mother" && (
                   <Button
                     style={{ color: "darkred" }}
                     onClick={() => this.onCancelHandler(currentRide.id)}
