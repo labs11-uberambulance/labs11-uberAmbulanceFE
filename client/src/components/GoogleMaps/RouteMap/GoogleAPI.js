@@ -25,15 +25,15 @@ const initMap = (latStart, lngStart, latStop, lngStop) => () => {
   );
 };
 export const initGoogleScript = (latStart, lngStart, latStop, lngStop) => {
-  if (!window.google) {
-    window.initMap = initMap(latStart, lngStart, latStop, lngStop);
-    const googleAPI = document.createElement("script");
-    googleAPI.id = "google-api";
-    googleAPI.async = true;
-    googleAPI.defer = true;
-    googleAPI.src = process.env.REACT_APP_googleApiKey;
-    document.getElementsByTagName("body")[0].appendChild(googleAPI);
-  }
+  // if (!window.google) {
+  window.initMap = initMap(latStart, lngStart, latStop, lngStop);
+  const googleAPI = document.createElement("script");
+  googleAPI.id = "google-api";
+  googleAPI.async = true;
+  googleAPI.defer = true;
+  googleAPI.src = process.env.REACT_APP_googleApiKey;
+  document.getElementsByTagName("body")[0].appendChild(googleAPI);
+  // }
   return;
 };
 
@@ -55,10 +55,10 @@ export const destroyGoogleScript = () => {
   const googleAPI = document.getElementById("google-api");
   googleAPI.parentNode.removeChild(googleAPI);
   window.google = null;
-  let scripts = Array.from(document.getElementsByTagName("script"));
-  scripts.forEach(script => {
-    if (script.src.match(/maps\.googleapis/)) {
-      script.parentNode.removeChild(script);
-    }
-  });
+  // let scripts = Array.from(document.getElementsByTagName("script"));
+  // scripts.forEach(script => {
+  //   if (script.src.match(/maps\.googleapis/)) {
+  //     script.parentNode.removeChild(script);
+  //   }
+  // });
 };

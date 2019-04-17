@@ -1,13 +1,14 @@
 import React from "react";
-import OriginMap from "../GoogleMaps/OriginMap/OriginMap";
+import OriginMapDrivers from "../GoogleMaps/OriginMapDrivers/OriginMap";
 
 function DriverUpdateLocation(props) {
   return (
     <>
-      <OriginMap
+      <OriginMapDrivers
         latInit={props.latInit}
         lngInit={props.lngInit}
         storeLatLng={props.storeLatLng}
+        mapId={"driver-update-loc"}
       />
     </>
   );
