@@ -26,7 +26,6 @@ function MothersView(props) {
   }
   return (<>
   <MotherHomePage history={props.history}/>
-    <button onClick={requestDriverHandler}>Request Driver</button>
   </>)
 }
 

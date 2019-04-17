@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { initUsrUpdate } from "../../store/actions/auth";
-
+import BikeLogo from '../../assests/images/birth_ride_logo_cycle.png'
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -54,13 +54,6 @@ class ResponsiveDialog extends React.Component {
   stopEditing = () => {
     this.setState({ editing: false });
   };
-  // handleClickOpen = () => {
-  //   this.setState({ open: true });
-  // };
-
-  // handleClose = () => {
-  //   this.setState({ open: false, editing: false });
-  // };
   handleSubmit = () => {
     const data = {
       user: {
@@ -70,23 +63,31 @@ class ResponsiveDialog extends React.Component {
         ...this.state.momData
       }
     };
-
+    this.stopEditing()
     this.props.initUsrUpdate(this.props.user, data);
   };
+  exit = () =>{
+    this.stopEditing();
+    this.props.handleClose()
+  }
   render() {
     const { fullScreen } = this.props;
     console.log(this.props);
     return (
       <div>
-        {/* <Button variant="outlined" color="primary" onClick={this.props.handleClickOpen}>
-         View Your Profile
-        </Button> */}
         <Dialog
           fullScreen={fullScreen}
           open={this.props.open}
           onClose={this.props.handleClose}
           aria-labelledby="responsive-dialog-title"
         >
+        <div style={{
+          width: "90%",
+          height: '115px',
+          background: `url(${BikeLogo}) center / cover no-repeat`,
+          margin: '10px auto',
+          borderRadius: '5px',
+        }}></div>
           <DialogTitle id="responsive-dialog-title">{`${
             this.props.user.name
           }'s Profile`}</DialogTitle>
@@ -95,16 +96,21 @@ class ResponsiveDialog extends React.Component {
               <>
                 <TextField
                   autoFocus
+                  variant="outlined"
                   margin="dense"
                   name="name"
-                  label="name"
+                  label="Name"
                   value={this.state.userData.name}
                   type="text"
                   fullWidth
                   onChange={e => this.updateForm(e)}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
                 <TextField
                   autoFocus
+                  variant="outlined"
                   margin="dense"
                   name="phone"
                   inputRef={this.phoneInp}
@@ -113,9 +119,13 @@ class ResponsiveDialog extends React.Component {
                   type="phone"
                   fullWidth
                   onChange={e => this.updateForm(e)}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
                 <TextField
                   autoFocus
+                  variant="outlined"
                   margin="dense"
                   name="email"
                   inputRef={this.emailInp}
@@ -124,11 +134,16 @@ class ResponsiveDialog extends React.Component {
                   type="email"
                   fullWidth
                   onChange={e => this.updateForm(e)}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
 
                 <TextField
+                  variant="outlined"
                   autoFocus
-                  margin="dense"
+                  margin="normal"
+                  placeholder="MM/DD/YYYY"
                   name="due_date"
                   label="Due Date"
                   inputRef={this.dueDateInp}
@@ -136,6 +151,9 @@ class ResponsiveDialog extends React.Component {
                   type="date"
                   fullWidth
                   onChange={e => this.updateFormMom(e)}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               </>
             ) : (
@@ -165,7 +183,7 @@ class ResponsiveDialog extends React.Component {
                 Edit
               </Button>
             )}
-            <Button onClick={this.props.handleClose} color="primary" autoFocus>
+            <Button onClick={this.exit} color="primary" autoFocus>
               Exit
             </Button>
           </DialogActions>
