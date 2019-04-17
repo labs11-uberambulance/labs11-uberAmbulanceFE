@@ -1,24 +1,11 @@
 import React, { Component } from "react";
 import axios from "../../axios-instance";
-import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
 import RideCard from "./RideCard";
-
-const styles = {
-  // card: {
-  // minWidth: 275,
-  // maxWidth: 400
-  // },
-  // button: {
-  //   width: "100%"
-  // },
-  // buttonError: {
-  //   color: "amber"
-  // }
-};
 
 class DriverActiveRides extends Component {
   constructor(props) {
@@ -62,35 +49,42 @@ class DriverActiveRides extends Component {
   };
 
   render() {
-    const { classes } = this.props;
     const activeRides = this.props.user.driverData.rides.filter(
       ride => ride.ride_status !== "complete"
     );
     const rideRequests = activeRides.map(ride => {
       return (
-        <>
+        <Grid item xs={12} key={ride.id}>
           <RideCard
             ride={ride}
             key={ride.id}
             onAcceptHandler={this.onAcceptHandler}
             onRejectHandler={this.onRejectHandler}
           />
-        </>
+        </Grid>
       );
     });
     return (
-      <Card className={classes.card}>
+      <Card>
         <CardContent>
-          <Typography variant="h4">
+          <Typography variant="h4" gutterBottom>
             {activeRides.length
-              ? "Active Requests:"
+              ? "Ride Requests:"
               : "No requests at this time."}
           </Typography>
-          {rideRequests}
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="stretch"
+            spacing={16}
+          >
+            {rideRequests}
+          </Grid>
         </CardContent>
       </Card>
     );
   }
 }
 
-export default withStyles(styles)(DriverActiveRides);
+export default DriverActiveRides;
