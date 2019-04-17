@@ -1,7 +1,7 @@
 import { styles } from "../MapStyle";
 let map, directionsService, directionsDisplay;
 
-const initMap = (latStart, lngStart, latStop, lngStop) => () => {
+const initMap = (latStart, lngStart, latStop, lngStop) => {
   directionsService = new window.google.maps.DirectionsService();
   directionsDisplay = new window.google.maps.DirectionsRenderer({
     preserveViewport: true
@@ -26,13 +26,17 @@ const initMap = (latStart, lngStart, latStop, lngStop) => () => {
 };
 export const initGoogleScript = (latStart, lngStart, latStop, lngStop) => {
   // if (!window.google) {
-  window.initMap = initMap(latStart, lngStart, latStop, lngStop);
-  const googleAPI = document.createElement("script");
-  googleAPI.id = "google-api";
-  googleAPI.async = true;
-  googleAPI.defer = true;
-  googleAPI.src = process.env.REACT_APP_googleApiKey;
-  document.getElementsByTagName("body")[0].appendChild(googleAPI);
+  window.initMap = () => initMap(latStart, lngStart, latStop, lngStop);
+  if (!document.getElementById("google-api")) {
+    const googleAPI = document.createElement("script");
+    googleAPI.id = `google-api`;
+    googleAPI.async = true;
+    googleAPI.defer = true;
+    googleAPI.src = process.env.REACT_APP_googleApiKey;
+    document.getElementsByTagName("body")[0].appendChild(googleAPI);
+  } else {
+    window.initMap();
+  }
   // }
   return;
 };
@@ -52,8 +56,8 @@ export const calcAndDisplayRoute = (origin, destination) => {
 
 // teardown of google maps from DOM when component is unmounted
 export const destroyGoogleScript = () => {
-  const googleAPI = document.getElementById("google-api");
-  googleAPI.parentNode.removeChild(googleAPI);
+  // const googleAPI = document.getElementById("google-api");
+  // googleAPI.parentNode.removeChild(googleAPI);
   // window.google = null;
   // let scripts = Array.from(document.getElementsByTagName("script"));
   // scripts.forEach(script => {

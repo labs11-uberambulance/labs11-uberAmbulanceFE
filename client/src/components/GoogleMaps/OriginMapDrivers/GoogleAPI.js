@@ -21,12 +21,16 @@ export const initGoogleScript = (latInit, lngInit, mapId) => {
   // console.log("initGoogScript: ", latInit, lngInit);
   // if (!window.google) {
   window.initMap = () => initMap(latInit, lngInit, mapId);
-  const googleAPI = document.createElement("script");
-  googleAPI.id = `google-api-${mapId}`;
-  googleAPI.async = true;
-  googleAPI.defer = true;
-  googleAPI.src = process.env.REACT_APP_googleApiKey;
-  document.getElementsByTagName("body")[0].appendChild(googleAPI);
+  if (!document.getElementById("google-api")) {
+    const googleAPI = document.createElement("script");
+    googleAPI.id = `google-api`;
+    googleAPI.async = true;
+    googleAPI.defer = true;
+    googleAPI.src = process.env.REACT_APP_googleApiKey;
+    document.getElementsByTagName("body")[0].appendChild(googleAPI);
+  } else {
+    window.initMap();
+  }
   // document.getElementById(`map-scripts-${mapId}`).appendChild(googleAPI);
   // }
   return;
@@ -67,8 +71,8 @@ export const fetchMarkerPosition = () => {
 
 // teardown of google maps from DOM when component is unmounted
 export const destroyGoogleScript = mapId => {
-  const googleAPI = document.getElementById(`google-api-${mapId}`);
-  googleAPI.parentNode.removeChild(googleAPI);
+  // const googleAPI = document.getElementById(`google-api`);
+  // googleAPI.parentNode.removeChild(googleAPI);
   // window.google = null;
   // const mapScripts = document.getElementById(`map-scripts-${mapId}`);
   // mapScripts.parentNode.removeChild(mapScripts);
