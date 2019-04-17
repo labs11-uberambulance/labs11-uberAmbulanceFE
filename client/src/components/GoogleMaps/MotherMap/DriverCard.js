@@ -1,6 +1,14 @@
 import React from "react";
 
 export default function DriverCard(props) {
+  const proImg={
+    background: `url(${props.ride.driver.photo_url
+    }) 50% 50% / cover no-repeat`,
+    height: '100px',
+    width: '80%',
+    borderRadius:'15px',
+    margin: '0 auto'
+  }
   return (
     <div
       className="driver-card hover-cursor hvr-float-shadow "
@@ -23,7 +31,7 @@ export default function DriverCard(props) {
       >
         {props.ride.driver.name}
       </p>
-      <img
+      <div
         onClick={() =>
           props.selectDriver(
             props.ride.driver.firebase_id,
@@ -31,7 +39,7 @@ export default function DriverCard(props) {
             props.ride.distance
           )
         }
-        src={props.ride.driver.photo_url}
+        style={proImg}
         alt={`${props.ride.driver.name}'s Profile Pic`}
       />
       <p

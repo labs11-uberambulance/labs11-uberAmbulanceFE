@@ -3,6 +3,7 @@ body{
 }
 .google-maps-container{
   height: 100vh;
+  width: 100vw;
   position: relative;
   display: flex;
   justify-content: space-around;
@@ -17,7 +18,7 @@ body{
 .reqBoxTwo, .reqBox {
   backdrop-filter: blur(6px);
 }
-.hover-cursåor{
+.hover-cursor{
   cursor: pointer;
 }
 

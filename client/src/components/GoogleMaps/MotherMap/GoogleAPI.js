@@ -40,7 +40,7 @@ export const initSearchBox = (placesCB, markerCB) => {
 };
 const createAndDisplayMarker = (lat, lng) => {
   marker = new window.google.maps.Marker({
-    map, position: { lat, lng }, draggable: true,
+    map, position: { lat, lng }, draggable: false,
     animation: window.google.maps.Animation.DROP,
     title: "Your Location"
   });
@@ -49,8 +49,6 @@ const createAndDisplayMarker = (lat, lng) => {
   markerListener = map.addListener("bounds_changed", () => {
     marker.setPosition(map.getCenter());
   });
-  // marker.setPosition( {lat, lng});
-  // map.setCenter({lat,lng})
 };
 export const initGoogleScript = (placesCB, markerCB, lat, lng) => {
   if (!window.google) {
@@ -61,6 +59,9 @@ export const initGoogleScript = (placesCB, markerCB, lat, lng) => {
     googleAPI.defer = true;
     googleAPI.src = process.env.REACT_APP_googleApiKey;
     document.getElementsByTagName("body")[0].appendChild(googleAPI);
+  }
+  else {
+    window.initMap();
   }
   return;
 };
@@ -75,7 +76,7 @@ export const searchGoogle = query => {
   const service = new window.google.maps.places.PlacesService(map);
   service.findPlaceFromQuery(request, (results, status) => {
     if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-      map.setZoom(10);
+      map.setZoom(15);
       map.panTo(results[0].geometry.location);
     }
   });
@@ -90,9 +91,17 @@ export const calcAndDisplayRoute = (origin, destination) => {
   });
 };
 
-export const lockMarker = () => {
+export const lockMarker = (latlng, name) => {
+  console.log(latlng,name)
   window.google.maps.event.removeListener(markerListener);
   marker.setDraggable(false);
+  if(name=== 'home_default'){
+    const lat = latlng.lat;
+    const lng = latlng.lng
+    marker.setPosition({lat,lng})
+    map.setCenter({lat,lng})
+    return {lat, lng}
+  }
   return { lat: marker.getPosition().lat(), lng: marker.getPosition().lng() };
 };
 
@@ -115,7 +124,7 @@ export const geocodeLatlng = (latlng, cb) => {
 };
 
 export const unlockMarker = () => {
-  marker.setDraggable(true);
+  marker.setDraggable(false);
   markerListener = map.addListener("bounds_changed", () => {
     marker.setPosition(map.getCenter());
   });
