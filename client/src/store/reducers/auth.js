@@ -9,13 +9,17 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case authTypes.OAUTH_STARTING:
-      return state;
+      return {
+        ...state,
+        loading: true
+      };
 
     case authTypes.OAUTH_SUCCESS:
       const usrType = action.payload.userData.user_type;
       if (usrType === "drivers") {
         return {
           ...state,
+          loading: false,
           user: {
             ...action.payload.userData,
             driverData: {
@@ -26,6 +30,7 @@ export default (state = initialState, action) => {
       } else if (usrType === "mothers") {
         return {
           ...state,
+          loading: false,
           user: {
             ...action.payload.userData,
             motherData: {
@@ -36,6 +41,7 @@ export default (state = initialState, action) => {
       } else {
         return {
           ...state,
+          loading: false,
           user: {
             ...action.payload.userData
           }

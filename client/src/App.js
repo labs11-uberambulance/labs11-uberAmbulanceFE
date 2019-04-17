@@ -12,6 +12,7 @@ import RequestRideView from "./views/RequestRideView/RequestRideView";
 import LandingView from "./views/LandingView/LandingView";
 import Logout from "./views/AuthenticationView/Logout";
 import OnNotification from "./components/OnNotification/OnNotification";
+import Loading from "./components/Progress/Circular";
 import "./App.css";
 
 class App extends Component {
@@ -24,7 +25,9 @@ class App extends Component {
       </Switch>
     );
     console.log(this.props.user);
-    if (this.props.user.ftoken) {
+    if (this.props.authLoading) {
+      routes = <Route path="/" component={Loading} />;
+    } else if (this.props.user.ftoken) {
       const userType = this.props.user.user_type;
       // console.log(this.props.user.user_type);
       routes = (
@@ -81,7 +84,8 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.auth.user
+    user: state.auth.user,
+    authLoading: state.auth.loading
   };
 };
 
