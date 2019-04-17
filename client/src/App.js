@@ -25,9 +25,10 @@ class App extends Component {
       </Switch>
     );
     console.log(this.props.user);
-    if (this.props.authLoading) {
-      routes = <Route path="/" component={Loading} />;
-    } else if (this.props.user.ftoken) {
+    // if (this.props.authLoading) {
+    //   routes = <Route path="/" component={Loading} />;
+    // } else
+    if (this.props.user.ftoken) {
       const userType = this.props.user.user_type;
       // console.log(this.props.user.user_type);
       routes = (
