@@ -60,6 +60,9 @@ export const initGoogleScript = (placesCB, markerCB, lat, lng) => {
     googleAPI.src = process.env.REACT_APP_googleApiKey;
     document.getElementsByTagName("body")[0].appendChild(googleAPI);
   }
+  else {
+    window.initMap();
+  }
   return;
 };
 
