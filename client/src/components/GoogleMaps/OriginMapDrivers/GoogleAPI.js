@@ -60,8 +60,10 @@ const createAndDisplayMarker = (lat, lng, markerPosChgHandler) => {
 };
 
 export const setMarker = (lat, lng) => {
-  console.log(`${lat},${lng}`);
-  marker.setPosition({ lat, lng });
+  console.log(lat, lng);
+  const loc = { lat, lng };
+  map.panTo(loc);
+  marker.setPosition(loc);
 };
 
 // MAIN GOOGLE MAPS LOGIC

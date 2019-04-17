@@ -21,6 +21,17 @@ class OriginMap extends Component {
       newLatLng: false
     };
   }
+  componentDidUpdate() {
+    // if driver updated location, wait until app state is updated (only if successful db update) then update the map
+    if (this.state.newLatLng) {
+      const mapLatLng = fetchMarkerPosition();
+      if (mapLatLng === `${this.props.latInit},${this.props.lngInit}`) {
+        const arrLatLng = mapLatLng.split(",");
+        setMarker(+arrLatLng[0], +arrLatLng[1]);
+        this.setState({ newLatLng: false });
+      }
+    }
+  }
   searchForLocationHandler = e => {
     if (e.key === "Enter") {
       searchGoogle(this.userInp.current.value);
@@ -29,7 +40,6 @@ class OriginMap extends Component {
   originDeterminedHandler = () => {
     const originLatLng = fetchMarkerPosition();
     this.props.storeLatLng(originLatLng);
-    // console.log(originLatLng);
   };
   markerPosChgHandler = () => {
     if (!this.state.newLatLng) {
@@ -37,17 +47,18 @@ class OriginMap extends Component {
       const newLatLng = fetchMarkerPosition();
       if (newLatLng !== `${this.props.latInit},${this.props.lngInit}`) {
         this.setState({ newLatLng: true });
+        console.log("HERE");
       }
     }
   };
   revertHandler = () => {
-    console.log("revert pos");
+    // console.log("revert pos");
     setMarker(this.props.latInit, this.props.lngInit);
     this.setState({ newLatLng: false });
   };
 
   render() {
-    console.log(this.props.latInit, this.props.lngInit);
+    // console.log(this.props.latInit, this.props.lngInit);
     return (
       <>
         <Grid
@@ -55,34 +66,35 @@ class OriginMap extends Component {
           direction="row"
           justify="space-between"
           alignItems="center"
-          spacing={32}
         >
-          <Grid item xs={8}>
+          <Grid item xs={6}>
             <Typography variant="h6" style={{ padding: "15px" }}>
               Your Current Location
             </Typography>
           </Grid>
-          <Grid item xs={4}>
-            {this.state.newLatLng ? (
-              <>
-                <Button
-                  // color="primary"
-                  style={{ color: "rgb(0,133,115)" }}
-                  onClick={this.revertHandler}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  // color="primary"
-                  style={{ color: "rgb(0,133,115)" }}
-                  onClick={this.originDeterminedHandler}
-                >
-                  Update
-                </Button>
-              </>
-            ) : (
-              ""
-            )}
+          <Grid item xs={6}>
+            <div style={{ paddingRight: "15px" }}>
+              {this.state.newLatLng ? (
+                <>
+                  <Button
+                    // color="primary"
+                    style={{ color: "rgb(0,133,115)" }}
+                    onClick={this.revertHandler}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    // color="primary"
+                    style={{ color: "rgb(0,133,115)" }}
+                    onClick={this.originDeterminedHandler}
+                  >
+                    Update
+                  </Button>
+                </>
+              ) : (
+                ""
+              )}
+            </div>
           </Grid>
         </Grid>
         <Grid
