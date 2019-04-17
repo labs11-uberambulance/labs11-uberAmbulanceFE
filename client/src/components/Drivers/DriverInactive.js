@@ -46,7 +46,6 @@ export default class DriverInactive extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={6}>
             <Card>
-              <Typography variant="h6">Your Current Location</Typography>
               <DriverUpdateLocation
                 latInit={driverLat}
                 lngInit={driverLng}

@@ -1,6 +1,6 @@
 import { styles } from "../MapStyle";
 let map, marker;
-const initMap = (lat, lng, mapId) => {
+const initMap = (lat, lng, mapId, markerPosChgHandler) => {
   // console.log("initMap: ", lat, lng);
   map = new window.google.maps.Map(document.getElementById(`map-${mapId}`), {
     center: { lat, lng },
@@ -14,13 +14,22 @@ const initMap = (lat, lng, mapId) => {
     },
     streetViewControl: false
   });
-  createAndDisplayMarker(lat, lng);
+  createAndDisplayMarker(lat, lng, markerPosChgHandler);
+  console.log("listener added to marker");
+  marker.addListener("position_changed", () => {
+    markerPosChgHandler();
+  });
 };
 
-export const initGoogleScript = (latInit, lngInit, mapId) => {
+export const initGoogleScript = (
+  latInit,
+  lngInit,
+  mapId,
+  markerPosChgHandler
+) => {
   // console.log("initGoogScript: ", latInit, lngInit);
   // if (!window.google) {
-  window.initMap = () => initMap(latInit, lngInit, mapId);
+  window.initMap = () => initMap(latInit, lngInit, mapId, markerPosChgHandler);
   if (!document.getElementById("google-api")) {
     const googleAPI = document.createElement("script");
     googleAPI.id = `google-api`;
@@ -36,7 +45,7 @@ export const initGoogleScript = (latInit, lngInit, mapId) => {
   return;
 };
 
-const createAndDisplayMarker = (lat, lng) => {
+const createAndDisplayMarker = (lat, lng, markerPosChgHandler) => {
   // console.log("createAndDisplayMarker: ", lat, lng);
   marker = new window.google.maps.Marker({
     map,
@@ -48,6 +57,11 @@ const createAndDisplayMarker = (lat, lng) => {
   map.addListener("bounds_changed", () => {
     marker.setPosition(map.getCenter()); // this could be used to set the pin at center of map
   });
+};
+
+export const setMarker = (lat, lng) => {
+  console.log(`${lat},${lng}`);
+  marker.setPosition({ lat, lng });
 };
 
 // MAIN GOOGLE MAPS LOGIC

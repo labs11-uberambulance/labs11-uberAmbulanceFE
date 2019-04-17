@@ -3,18 +3,23 @@ import {
   initGoogleScript,
   destroyGoogleScript,
   searchGoogle,
-  fetchMarkerPosition
+  fetchMarkerPosition,
+  setMarker
 } from "./GoogleAPI";
 // import "./OriginMap.css";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 
 class OriginMap extends Component {
   constructor(props) {
     super(props);
     this.userInp = React.createRef();
+    this.state = {
+      newLatLng: false
+    };
   }
   searchForLocationHandler = e => {
     if (e.key === "Enter") {
@@ -26,9 +31,23 @@ class OriginMap extends Component {
     this.props.storeLatLng(originLatLng);
     // console.log(originLatLng);
   };
+  markerPosChgHandler = () => {
+    if (!this.state.newLatLng) {
+      // only do this on first change
+      const newLatLng = fetchMarkerPosition();
+      if (newLatLng !== `${this.props.latInit},${this.props.lngInit}`) {
+        this.setState({ newLatLng: true });
+      }
+    }
+  };
+  revertHandler = () => {
+    console.log("revert pos");
+    setMarker(this.props.latInit, this.props.lngInit);
+    this.setState({ newLatLng: false });
+  };
 
   render() {
-    // console.log(this.props.latInit, this.props.lngInit);
+    console.log(this.props.latInit, this.props.lngInit);
     return (
       <>
         <Grid
@@ -39,6 +58,41 @@ class OriginMap extends Component {
           spacing={32}
         >
           <Grid item xs={8}>
+            <Typography variant="h6" style={{ padding: "15px" }}>
+              Your Current Location
+            </Typography>
+          </Grid>
+          <Grid item xs={4}>
+            {this.state.newLatLng ? (
+              <>
+                <Button
+                  // color="primary"
+                  style={{ color: "rgb(0,133,115)" }}
+                  onClick={this.revertHandler}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  // color="primary"
+                  style={{ color: "rgb(0,133,115)" }}
+                  onClick={this.originDeterminedHandler}
+                >
+                  Update
+                </Button>
+              </>
+            ) : (
+              ""
+            )}
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          direction="row"
+          justify="space-between"
+          alignItems="center"
+          spacing={32}
+        >
+          <Grid item xs={12}>
             <TextField
               inputRef={this.userInp}
               onKeyPress={this.searchForLocationHandler}
@@ -46,15 +100,6 @@ class OriginMap extends Component {
               placeholder="Search"
               style={{ width: "80%", borderColor: "rgb(0,133,115)" }}
             />
-          </Grid>
-          <Grid item xs={4}>
-            <Button
-              // color="primary"
-              style={{ color: "rgb(0,133,115)" }}
-              onClick={this.originDeterminedHandler}
-            >
-              Set Location
-            </Button>
           </Grid>
         </Grid>
         <Grid container direction="column" justify="center" alignItems="center">
@@ -85,7 +130,7 @@ class OriginMap extends Component {
     // pass in latInit, lngInit to set origin at custom point, otherwise default value is set.
     const lat = this.props.latInit || 1.453;
     const lng = this.props.lngInit || 32.697;
-    initGoogleScript(lat, lng, this.props.mapId);
+    initGoogleScript(lat, lng, this.props.mapId, this.markerPosChgHandler);
   }
   componentWillUnmount() {
     destroyGoogleScript(this.props.mapId);
