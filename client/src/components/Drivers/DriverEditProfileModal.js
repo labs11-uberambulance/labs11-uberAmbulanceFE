@@ -9,8 +9,11 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Grid from "@material-ui/core/Grid";
 import withMobileDialog from "@material-ui/core/withMobileDialog";
 import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import EditProfileImg from "./EditProfilePic";
 
 class ResponsiveDialog extends React.Component {
   constructor(props) {
@@ -26,8 +29,7 @@ class ResponsiveDialog extends React.Component {
       },
       driverData: {
         price: this.props.user.driverData.price,
-        bio: this.props.user.driverData.bio,
-        photo_url: this.props.user.driverData.photo_url
+        bio: this.props.user.driverData.bio
       }
     };
   }
@@ -69,21 +71,22 @@ class ResponsiveDialog extends React.Component {
         ...this.state.driverData
       }
     };
-
+    console.log(data);
     this.props.initUsrUpdate(this.props.user, data);
+    this.handleClose();
   };
   render() {
     const { fullScreen } = this.props;
     return (
       <div>
         <Button
-          variant="outlined"
-          // color="primary"
-          style={{ color: "rgb(0,133,115)", borderColor: "rgb(0,133,115)" }}
+          // variant="outlined"
+          // // color="primary"
+          style={{ color: "white", backgroundColor: "#0277bd" }}
           onClick={this.handleClickOpen}
           fullWidth
         >
-          View Your Profile
+          Profile
         </Button>
         <Dialog
           fullScreen={fullScreen}
@@ -91,91 +94,137 @@ class ResponsiveDialog extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="responsive-dialog-title"
         >
-          <DialogTitle id="responsive-dialog-title">{`${
-            this.props.user.name
-          }'s Profile`}</DialogTitle>
+          <DialogTitle id="responsive-dialog-title">
+            {`${this.props.user.name}'s Profile`}
+          </DialogTitle>
           <DialogContent>
             {this.state.editing ? (
-              <>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  name="name"
-                  label="name"
-                  value={this.state.userData.name}
-                  type="text"
-                  fullWidth
-                  onChange={e => this.updateForm(e)}
-                />
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  name="phone"
-                  label="Phone Number"
-                  value={this.state.userData.phone}
-                  type="phone"
-                  fullWidth
-                  onChange={e => this.updateForm(e)}
-                />
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  name="email"
-                  label="Email Address"
-                  value={this.state.userData.email}
-                  type="email"
-                  fullWidth
-                  onChange={e => this.updateForm(e)}
-                />
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+                spacing={16}
+              >
+                <Grid item xs={4}>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <EditProfileImg
+                      currImg={this.props.user.driverData.photo_url}
+                      btnStyle={{ borderRadius: "40px" }}
+                      display={
+                        <div
+                          style={{
+                            background: `url(${
+                              this.props.user.driverData.photo_url
+                            }) 50% 50% / cover no-repeat`,
+                            height: "140px",
+                            width: "140px",
+                            borderRadius: "40px"
+                          }}
+                        />
+                      }
+                    />
+                    <Typography variant="subtitle2">
+                      Click image to edit.
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid item xs={8}>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    name="name"
+                    label="Name"
+                    value={this.state.userData.name}
+                    type="text"
+                    fullWidth
+                    onChange={e => this.updateForm(e)}
+                  />
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    name="phone"
+                    label="Phone Number"
+                    value={this.state.userData.phone}
+                    type="phone"
+                    fullWidth
+                    onChange={e => this.updateForm(e)}
+                  />
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    name="email"
+                    label="Email Address"
+                    value={this.state.userData.email}
+                    type="email"
+                    fullWidth
+                    onChange={e => this.updateForm(e)}
+                  />
 
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  name="price"
-                  label="Price"
-                  value={this.state.driverData.price}
-                  type="text"
-                  fullWidth
-                  onChange={e => this.updateFormDriver(e)}
-                />
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  name="bio"
-                  label="Bio"
-                  value={this.state.driverData.bio}
-                  type="text"
-                  multiline
-                  rows="4"
-                  fullWidth
-                  onChange={e => this.updateFormDriver(e)}
-                />
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  name="photo_url"
-                  label="Profile Photo"
-                  value={this.state.driverData.photo_url}
-                  type="text"
-                  fullWidth
-                  onChange={e => this.updateFormDriver(e)}
-                />
-              </>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    name="price"
+                    label="Price"
+                    value={this.state.driverData.price}
+                    type="text"
+                    fullWidth
+                    onChange={e => this.updateFormDriver(e)}
+                  />
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    name="bio"
+                    label="Bio"
+                    value={this.state.driverData.bio}
+                    type="text"
+                    multiline
+                    rows="4"
+                    fullWidth
+                    onChange={e => this.updateFormDriver(e)}
+                  />
+                </Grid>
+              </Grid>
             ) : (
-              <>
-                <DialogContentText>
-                  Name: {this.props.user.name}
-                </DialogContentText>
-                <DialogContentText>
-                  Phone: {this.props.user.phone}
-                </DialogContentText>
-                <DialogContentText>
-                  Email: {this.props.user.email}
-                </DialogContentText>
-                <DialogContentText>
-                  Price: {this.props.user.driverData.price}
-                </DialogContentText>
-              </>
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+                spacing={16}
+              >
+                <Grid item xs={4}>
+                  <div
+                    style={{
+                      background: `url(${
+                        this.props.user.driverData.photo_url
+                      }) 50% 50% / cover no-repeat`,
+                      minHeight: "90px",
+                      minWidth: "90px",
+                      borderRadius: "30px"
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={8}>
+                  <DialogContentText fullWidth>
+                    Name: {this.props.user.name}
+                  </DialogContentText>
+                  <DialogContentText fullWidth>
+                    Phone: {this.props.user.phone}
+                  </DialogContentText>
+                  <DialogContentText fullWidth>
+                    Email: {this.props.user.email}
+                  </DialogContentText>
+                  <DialogContentText fullWidth>
+                    Price: {this.props.user.driverData.price}
+                  </DialogContentText>
+                </Grid>
+              </Grid>
             )}
           </DialogContent>
           <DialogActions>
@@ -188,9 +237,15 @@ class ResponsiveDialog extends React.Component {
                 Edit
               </Button>
             )}
-            <Button onClick={this.handleClose} color="primary" autoFocus>
-              Exit
-            </Button>
+            {this.state.editing ? (
+              <Button onClick={this.stopEditing} color="primary" autoFocus>
+                Cancel
+              </Button>
+            ) : (
+              <Button onClick={this.handleClose} color="primary" autoFocus>
+                Exit
+              </Button>
+            )}
           </DialogActions>
         </Dialog>
       </div>
@@ -202,7 +257,9 @@ ResponsiveDialog.propTypes = {
   fullScreen: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  user: state.auth.user
+});
 
 const mapDispatchToProps = {
   initUsrUpdate
