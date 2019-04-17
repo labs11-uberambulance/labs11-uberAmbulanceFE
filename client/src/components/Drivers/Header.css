@@ -1,30 +1,40 @@
-.landing-header {
+.driver-header {
+  padding: 20px;
+  text-align: left;
+}
+
+@media only screen and (max-width: 600px) {
+  .driver-header {
+    text-align: center;
+  }
+}
+
+/* .driver-header {
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
-.landing-header > a > img {
+.driver-header > a > img {
   height: 4.5rem;
   margin: 0.8rem 0 0 0.8rem;
 }
-.landing-header > nav {
+.driver-header > nav {
   width: 100%;
   display: flex;
   justify-content: flex-end;
 }
-.landing-header > nav ul {
+.driver-header > nav ul {
   display: flex;
   width: fit-content;
   align-items: baseline;
   margin-right: 2rem;
 }
-.landing-header ul > li > a {
+.driver-header ul > li {
   padding: 4px 5px;
   margin: 0 calc(3vw - 10px);
-  color: black;
 }
 
-.landing-header ul > li > button {
+.driver-header ul > li > button {
   height: 1.9rem;
   width: 5.3rem;
   color: white;
@@ -36,4 +46,4 @@
   );
   border-radius: 5px;
   cursor: pointer;
-}
+} */

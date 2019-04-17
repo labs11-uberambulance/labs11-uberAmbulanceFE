@@ -46,14 +46,27 @@ class DriverHUD extends Component {
     const { classes } = this.props;
     const statusColor = this.props.user.driverData.active
       ? "darkgreen"
-      : "darkred";
+      : "darkred"; //{ backgroundColor: statusColor, height: "100px" }
+    const statusStyle = this.props.user.driverData.active
+      ? {
+          background: "rgb(12,94,13)",
+          background:
+            "linear-gradient(0deg, rgba(12,94,13,1) 0%, rgba(44,172,42,1) 100%)",
+          height: "100px"
+        }
+      : {
+          background: "rgb(94,12,12)",
+          background:
+            "linear-gradient(0deg, rgba(94,12,12,1) 0%, rgba(172,42,42,1) 100%)",
+          height: "100px"
+        };
     const activeButtonColor = this.props.user.driverData.active
       ? "#0277bd"
       : "rgb(0,133,115)";
     return (
       <Card className={classes.card}>
         {/* Status indication card */}
-        <Card style={{ backgroundColor: statusColor, height: "100px" }}>
+        <Card style={statusStyle}>
           {/* Buttons grid */}
           <Grid
             container
@@ -72,7 +85,7 @@ class DriverHUD extends Component {
                   : "Set Active"}
               </Button>
             </Grid>
-            <Grid item>
+            {/* <Grid item>
               <Button
                 style={{ backgroundColor: "#0277bd", color: "white" }}
                 variant="contained"
@@ -82,7 +95,7 @@ class DriverHUD extends Component {
               >
                 Log Out
               </Button>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Card>
         {/* profile img alignment grid */}
@@ -92,18 +105,12 @@ class DriverHUD extends Component {
           justify="space-around"
           alignItems="center"
         >
-          <Grid item>
-            <div
-              style={{
-                background: `url(${
-                  this.props.user.driverData.photo_url
-                }) 50% 50% / cover no-repeat`,
-                height: "140px",
-                width: "140px",
-                borderRadius: "40px",
-                marginTop: "-70px"
-              }}
-            />
+          <Grid
+            item
+            style={{
+              marginTop: "-60px"
+            }}
+          >
             {/* <CardMedia
               component="img"
               alt="DriverImg"
@@ -117,10 +124,25 @@ class DriverHUD extends Component {
                 overflow: "hidden"
               }}
             /> */}
-            <EditProfileImg currImg={this.props.user.driverData.photo_url} />
+            <EditProfileImg
+              currImg={this.props.user.driverData.photo_url}
+              btnStyle={{ borderRadius: "40px" }}
+              display={
+                <div
+                  style={{
+                    background: `url(${
+                      this.props.user.driverData.photo_url
+                    }) 50% 50% / cover no-repeat`,
+                    height: "140px",
+                    width: "140px",
+                    borderRadius: "40px"
+                  }}
+                />
+              }
+            />
           </Grid>
           {this.props.usrLoading && (
-            <div style={{ position: "absolute", marginTop: "45px" }}>
+            <div style={{ position: "absolute", marginTop: "53px" }}>
               <ProgressCircular size={20} />
             </div>
           )}
@@ -140,7 +162,7 @@ class DriverHUD extends Component {
             </List>
           </Card>
         </CardContent>
-        <CardActions>
+        {/* <CardActions>
           <Grid
             container
             direction="row"
@@ -148,16 +170,13 @@ class DriverHUD extends Component {
             alignItems="center"
           >
             <Grid item xs={12} sm={6}>
-              <DriverEditProfileModal
-                className={classes.button}
-                user={this.props.user}
-              />
+              <DriverEditProfileModal className={classes.button} />
             </Grid>
             <Grid item xs={12} sm={6}>
               <DriverRideHistoryModal user={this.props.user} />
             </Grid>
           </Grid>
-        </CardActions>
+        </CardActions> */}
       </Card>
     );
   }

@@ -49,7 +49,7 @@ export default class HomePage extends Component {
     }
     return (
       <>
-        <DriverHeader />
+        <DriverHeader user={this.props.user} />
         {relevantView}
       </>
     );

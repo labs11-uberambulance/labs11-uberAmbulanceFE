@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import firebase from "../../firebase";
 import { initUsrUpdate } from "../../store/actions/auth";
 import Button from "@material-ui/core/Button";
+import ButtonBase from "@material-ui/core/ButtonBase";
 import CardMedia from "@material-ui/core/CardMedia";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
@@ -127,7 +128,7 @@ class SimpleDialog extends React.Component {
                 onClick={this.handleSubmit}
                 fullWidth
               >
-                Submit
+                Save
               </Button>
               <Button
                 type="button"
@@ -189,20 +190,21 @@ class EditProfileImg extends React.Component {
 
   render() {
     return (
-      <div>
-        <IconButton
-          style={{ marginTop: "-20px", marginRight: "-130px" }}
+      <>
+        <ButtonBase
+          style={this.props.btnStyle}
+          focusRipple
           onClick={this.handleClickOpen}
         >
-          <EditIcon fontSize={"small"} />
-        </IconButton>
+          {this.props.display}
+        </ButtonBase>
         <SimpleDialog
           open={this.state.open}
           onClose={this.handleClose}
           currImg={this.props.user.driverData.photo_url}
           onSubmit={this.handleSubmit}
         />
-      </div>
+      </>
     );
   }
 }
