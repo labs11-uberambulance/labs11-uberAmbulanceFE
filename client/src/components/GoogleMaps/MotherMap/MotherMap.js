@@ -122,6 +122,10 @@ class MotherMap extends Component {
       open: true,
       toggleModal: false,
       toggleList: true,
+      initX: null,
+      initY: null,
+      top: 0,
+      left: 0
     };
   }
   // Default values: Middle of Uganada 0.346996, 32.578201
@@ -220,10 +224,25 @@ class MotherMap extends Component {
         destination: { latlng: `${location.lat},${location.lng}` }
       });
   };
+  dragStartHandler = (e) => {
+    this.setState({ initX: e.clientX, initY: e.clientY })
+  }
+  dragEndHandler = (e) => {
+    const maxY = e.currentTarget.parentNode.offsetHeight
+    const maxX = e.currentTarget.parentNode.offsetWidth;
+    const nextY = e.clientY - this.state.initY + e.currentTarget.offsetTop;
+    const nextX = e.clientX - this.state.initX + e.currentTarget.offsetLeft;
+    console.log('nextX: ', nextX, 'nextY: ', nextY)
+    if ( nextX < maxX && nextX > 0 && nextY < maxY && nextY > 0 ) {
+      this.setState({ left: nextX, top: nextY })
+    }
+  }
   render() {
+    let height = "60vh";
     let { places, markersSelected } = { ...this.state };
     if (markersSelected.length > 0) {
       places = places.filter(place => markersSelected.includes(place.name));
+      height = places.length < 4 ? `${15 * places.length}vh` : "60vh";
     }
     const commonTextProps = {
       value: this.state.value,
@@ -434,7 +453,12 @@ class MotherMap extends Component {
               </div>
             </Dialog>
           </div>
-            {this.state.places && (<div className={!this.state.toggleList? this.props.classes.dNone:"places-list"}>
+            {this.state.places && (<div className={!this.state.toggleList? this.props.classes.dNone:"places-list"}
+            style={{height, top: `${this.state.top}px`, left: `${this.state.left}px` }}
+            onDragStart={this.dragStartHandler}
+            onDragEnd={this.dragEndHandler}
+            draggable
+            >
                     <GooglePlacesList
                       hideList = {this.hideList}
                       showList = {this.showList}
@@ -444,6 +468,12 @@ class MotherMap extends Component {
                       rideStart={this.props.rideStart}
                       handleClose={this.handleClose}
                     />
+                    {<Button
+                      type="button"
+                      color="secondary"
+                      className="places-list--button"
+                      onClick={() => {this.setState({ markersSelected: [] })}}
+                    >Show All</Button>}
               </div>)}
           </>
         )}
