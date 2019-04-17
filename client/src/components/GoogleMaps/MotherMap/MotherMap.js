@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { clearRides } from "../../../store/actions/rides";
 
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import Button from "@material-ui/core/Button";
-import { withStyles } from "@material-ui/core";
+import {
+  TextField,
+  Dialog,
+  Button,
+  withStyles
+} from "@material-ui/core";
 import GooglePlacesList from "../../GooglePlacesList/GooglePlacesList";
 import {
   initGoogleScript,
@@ -111,15 +113,14 @@ class MotherMap extends Component {
   handleClickOpen = () => {
     this.setState({ toggleModal: true });
   };
-
   handleClose = () => {
     this.setState({ toggleModal: false });
   };
-
   toggleMarkLockHandler = (e) => {
     console.log(e.target)
     if(e.target.name === 'homeD'){
-      const position = this.state.startCoords
+      const name = "home_default";
+      const position = lockMarker(this.state.startCoords, name)
       console.log(position)
       geocodeLatlng(position, locName => {
         console.log(locName);
@@ -154,13 +155,25 @@ class MotherMap extends Component {
     });
   }
   };
-
   searchForLocationHandler = e => {
+    console.log(e.target)
     if (e.key === "Enter") {
       searchGoogle(this.state.search);
+      this.handleClose();
+    }
+    if(e.target.name === 'submit'){
+      searchGoogle(this.state.search)
+      this.handleClose()
     }
   };
-
+  cancelHandler = e =>{
+    this.setState({
+      search:"",
+      locked: false,
+      toggleModal: false,
+      startCoords: {lat: this.state.lat, lng:this.state.lng}
+    })
+  }
   mapOutRoute = place => {
     const location = {
       // endpoint
@@ -316,12 +329,11 @@ class MotherMap extends Component {
               )}
             </div>
             <div
-
-              className={
-                this.state.toggleModal
-                  ? this.props.classes.show
-                  : this.props.classes.hidden
-              }
+            className={
+              this.state.toggleModal
+                ? this.props.classes.show
+                : this.props.classes.hidden
+            }
             >
               <Dialog
                 // fullScreen={fullScreen}
@@ -359,16 +371,25 @@ class MotherMap extends Component {
                 <>
                   <Button className={this.props.classes.homeBTN} >Hospital Default</Button>
                   <div style={{display:'flex', justifyContent: "space-between", width: "100%"}}>
-                    <Button className={this.props.classes.submitBTN}>Submit</Button>
-                    <Button className={this.props.classes.cancelBTN }>Cancel</Button>
+                    <button className={this.props.classes.submitBTN} name="submit" onClick={e=>this.searchForLocationHandler(e)}>Submit</button>
+                    <button onClick={e=>this.cancelHandler(e)} className={this.props.classes.cancelBTN }>Cancel</button>
                   </div>
                 </>
                   :
                   <>
                   <button className={this.props.classes.homeBTN} name="homeD"onClick={e=>{this.toggleMarkLockHandler(e)}}>Home Default</button>
                   <div style={{display:'flex', justifyContent: "space-between", width: "100%"}}>
-                    <Button className={this.props.classes.submitBTN}>Submit</Button>
-                    <Button className={this.props.classes.cancelBTN }>Cancel</Button>
+                    <button 
+                      className={this.props.classes.submitBTN}
+                      name="submit" 
+                      onClick={e=>this.searchForLocationHandler(e)}>
+                      Submit
+                    </button>
+                    <button
+                      onClick={e=>this.cancelHandler(e)} 
+                      className={this.props.classes.cancelBTN }>
+                      Cancel
+                    </button>
                   </div>
                 </>
                 }
@@ -424,7 +445,6 @@ class MotherMap extends Component {
       ); // takes lat/long as 3rd/4th args, sets start pin & zooms there
     }
   }
-
   componentWillUnmount() {
     destroyGoogleScript();
   }

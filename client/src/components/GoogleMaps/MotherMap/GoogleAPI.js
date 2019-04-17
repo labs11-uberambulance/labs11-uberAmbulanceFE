@@ -88,9 +88,13 @@ export const calcAndDisplayRoute = (origin, destination) => {
   });
 };
 
-export const lockMarker = () => {
+export const lockMarker = (latlng, name) => {
+  console.log(latlng,name)
   window.google.maps.event.removeListener(markerListener);
   marker.setDraggable(false);
+  if(name=== 'home_default'){
+    return {lat: latlng.lat, lng: latlng.lng}
+  }
   return { lat: marker.getPosition().lat(), lng: marker.getPosition().lng() };
 };
 
@@ -113,7 +117,7 @@ export const geocodeLatlng = (latlng, cb) => {
 };
 
 export const unlockMarker = () => {
-  marker.setDraggable(true);
+  marker.setDraggable(false);
   markerListener = map.addListener("bounds_changed", () => {
     marker.setPosition(map.getCenter());
   });
