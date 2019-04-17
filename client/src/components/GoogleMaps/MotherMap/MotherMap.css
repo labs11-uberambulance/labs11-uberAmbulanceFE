@@ -24,12 +24,33 @@ body{
 
 .places-list {
   background-color: white;
-  height: 60vh;
   width: 400px;
-  z-index: 10;
+  z-index: 1000;
   border-radius: 10px;
-  position: relative;
-  bottom: 8rem;
+  position: absolute;
   box-shadow: 10px 10px 5px 0px rgba(178, 178, 178, 0.5);
-  padding: 0.5rem;
+  padding: 0.5rem 0.5rem 3.5rem 0.5rem;
+  animation: places;
+  animation-fill-mode: both;
+  animation-duration: 300ms;
+  animation-delay: 500ms;
+  opacity: 0;
+  transform: translateY(-20vw);
+}
+button.places-list--button {
+  margin-top: 10px;
+  width: 90%;
+  font-size: 1rem;
+}
+
+@keyframes places {
+  from {
+    height: 0;
+    opacity: 0;
+    transform: translateY(-20vw);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

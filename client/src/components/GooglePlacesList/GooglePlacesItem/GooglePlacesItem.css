@@ -2,6 +2,7 @@
     display: flex;
     flex-flow: column;
     width: 100%;
+    text-align: center;
 }
 button.select-place--button {
     background-color: #2196f3;
