@@ -69,13 +69,23 @@ export const fetchMarkerPosition = () => {
 export const destroyGoogleScript = mapId => {
   const googleAPI = document.getElementById(`google-api-${mapId}`);
   googleAPI.parentNode.removeChild(googleAPI);
-  window.google = null;
+  // window.google = null;
   // const mapScripts = document.getElementById(`map-scripts-${mapId}`);
   // mapScripts.parentNode.removeChild(mapScripts);
-  // let scripts = Array.from(document.getElementsByTagName("script"));
-  // scripts.forEach(script => {
-  //   if (script.src.match(/maps\.googleapis/)) {
-  //     script.parentNode.removeChild(script);
-  //   }
-  // });
+  let scripts = Array.from(document.getElementsByTagName("script"));
+  let googScripts = scripts.filter(script => {
+    if (script.src.match(/maps\.googleapis/)) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+  let have = [];
+  googScripts.forEach(script => {
+    if (have.includes(script.src)) {
+      script.parentNode.removeChild(script);
+    } else {
+      have.push(script.src);
+    }
+  });
 };

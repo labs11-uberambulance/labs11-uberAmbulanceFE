@@ -54,11 +54,27 @@ export const calcAndDisplayRoute = (origin, destination) => {
 export const destroyGoogleScript = () => {
   const googleAPI = document.getElementById("google-api");
   googleAPI.parentNode.removeChild(googleAPI);
-  window.google = null;
+  // window.google = null;
   // let scripts = Array.from(document.getElementsByTagName("script"));
   // scripts.forEach(script => {
   //   if (script.src.match(/maps\.googleapis/)) {
   //     script.parentNode.removeChild(script);
   //   }
   // });
+  let scripts = Array.from(document.getElementsByTagName("script"));
+  let googScripts = scripts.filter(script => {
+    if (script.src.match(/maps\.googleapis/)) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+  let have = [];
+  googScripts.forEach(script => {
+    if (have.includes(script.src)) {
+      script.parentNode.removeChild(script);
+    } else {
+      have.push(script.src);
+    }
+  });
 };
