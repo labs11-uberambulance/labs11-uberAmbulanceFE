@@ -12,7 +12,9 @@ return (
         style={{height: "100%", overflowY: "scroll",}}
         className="google-search-list"
     >
-        {props.places.map(place => <GooglePlacesItem handleClose={props.handleClose} rideStart={props.rideStart} getDrivers={props.getDrivers}key={place.id} place={place} clicked={props.setDestination} />)}
+        {props.places.map(place => <GooglePlacesItem 
+        hideList={props.hideList}
+        handleClose={props.handleClose} rideStart={props.rideStart} getDrivers={props.getDrivers}key={place.id} place={place} clicked={props.setDestination} />)}
     </List>
   )
 }
