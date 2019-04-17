@@ -6,7 +6,8 @@ import {
   TextField,
   Dialog,
   Button,
-  withStyles
+  withStyles,
+  Typography
 } from "@material-ui/core";
 import GooglePlacesList from "../../GooglePlacesList/GooglePlacesList";
 import {
@@ -53,7 +54,9 @@ const styles = ({ palette }) => ({
   show: {
     opacity: 1,
     zIndex: 20,
-
+  },
+  dNone:{
+    display:'none'
   },
   modalHeight: {},
   finalMessage: {
@@ -67,10 +70,15 @@ const styles = ({ palette }) => ({
     boxShadow: "0 4px 8px 0 rgba(0,0,0,0.12), 0 2px 4px 0 rgba(0,0,0,0.08)"
   },
   homeBTN:{
-     width: "100%",
+    width: "100%",
     padding: "10px", 
     background: "#2196f3", 
     margin: "5px auto", 
+    lineHeight: '1.75',
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontWeight: '500',
+    fontSize: '1.2rem',
+    color: 'white',
     '&:hover':{
       background:'pink'
     }
@@ -78,6 +86,11 @@ const styles = ({ palette }) => ({
   submitBTN:{
     width:'49%', 
     backgroundColor:'rgb(0, 133, 115)',
+    lineHeight: '1.75',
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontWeight: '500',
+    fontSize: '1.2rem',
+    color: 'white',
     '&:hover':{
       background:'pink'
     }
@@ -85,6 +98,11 @@ const styles = ({ palette }) => ({
   cancelBTN:{
     width:'49%', 
     backgroundColor:'red',
+    lineHeight: '1.75',
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontWeight: '500',
+    fontSize: '1.2rem',
+    color: 'white',
     '&:hover':{
       background:'pink'
     }
@@ -102,12 +120,13 @@ class MotherMap extends Component {
       lat: 0.346996,
       lng: 32.578201,
       open: true,
-      toggleModal: false
+      toggleModal: false,
+      toggleList: true,
     };
   }
   // Default values: Middle of Uganada 0.346996, 32.578201
   goBack = () => {
-    this.setState({ search: "" });
+    this.setState({ search: "", toggleList: true });
     this.props.clearRides();
   };
   handleClickOpen = () => {
@@ -116,17 +135,22 @@ class MotherMap extends Component {
   handleClose = () => {
     this.setState({ toggleModal: false });
   };
+  showList=()=>{
+    this.setState({toggleList:true})
+  }
+  hideList=()=>{
+    this.setState({toggleList:false})
+  }
   toggleMarkLockHandler = (e) => {
     console.log(e.target)
     if(e.target.name === 'homeD'){
       const name = "home_default";
       const position = lockMarker(this.state.startCoords, name)
-      console.log(position)
       geocodeLatlng(position, locName => {
         console.log(locName);
         this.props.setRideStart && this.props.setRideStart(position, locName);
       });
-      return this.setState({ search: "", locked: true, startCoords: position, toggleModal: true });
+      return this.setState({ search: "", locked: true, startCoords: position, toggleModal: false });
     }
     else{
     this.setState(({ locked })=> {
@@ -150,7 +174,7 @@ class MotherMap extends Component {
           this.props.setRideStart && this.props.setRideStart(position, locName);
         });
         console.log(position);
-        return { search: "", locked: true, startCoords: position, toggleModal: true };
+        return { search: "", locked: true, startCoords: position, toggleModal: false };
       }
     });
   }
@@ -171,8 +195,14 @@ class MotherMap extends Component {
       search:"",
       locked: false,
       toggleModal: false,
-      startCoords: {lat: this.state.lat, lng:this.state.lng}
+      places: null,
+      markersSelected: [],
+      startCoords: {
+        lat: Number(this.props.user.location.latlng.split(",")[0]),
+        lng: Number(this.props.user.location.latlng.split(",")[1])
+      },
     })
+    this.props.clearRides();
   }
   mapOutRoute = place => {
     const location = {
@@ -235,15 +265,18 @@ class MotherMap extends Component {
           </section>
         ) : (
           <>
+          
             <div className={this.state.locked ? "reqBoxTwo" : "reqBox"}>
               {!this.props.selectedDriver ? (
                 this.props.rides.length > 0 ? (
+                  
                   <>
                     <i
                       className="fas fa-arrow-circle-left hover-cursor"
                       onClick={() => this.goBack()}
+                      style={{alignSelf:'center'}}
                     />
-
+                    
                     {this.props.rides.map(ride => {
                       return (
                         <DriverCard
@@ -276,23 +309,20 @@ class MotherMap extends Component {
                         </Button>
                       </div>
                     ) : 
-                    null
-                    // (
-                    //   <Button
-                    //     variant="contained"
-                    //     width="90%"
-                    //     className={
-                    //       !this.state.locked
-                    //         ? this.props.classes.firstButton
-                    //         : this.props.classes.root
-                    //     }
-                    //     onClick={this.handleClickOpen}
-                    //   >
-                    //     {!this.state.locked
-                    //       ? "Search New Pickup Location"
-                    //       : `Set Destination`}
-                    //   </Button>
-                    // )
+                    (
+                      <Button
+                        variant="contained"
+                        width="90%"
+                        className={
+                          !this.state.locked
+                            ? this.props.classes.firstButton
+                            : this.props.classes.root
+                        }
+                        onClick={this.handleClickOpen}
+                      >
+                         Search Nearby Health Facilities
+                      </Button>
+                    )
                     }
                     {this.state.locked ? null : (
                       <Button
@@ -353,25 +383,33 @@ class MotherMap extends Component {
                     ? "Search Pick Up Location"
                     : "Search Destinations"}
                 </h3>
+                {!this.state.locked
+                    ? <p>Use your home address or search for the city nearest you.</p>
+                    : <p>Use the term's Hospital or Health Centre to find the one's nearest you.</p>}
                 <TextField
                   label="Search for your location"
                   {...commonTextProps}
                   onKeyPress={this.searchForLocationHandler}
                   // need to always have this rendered so when google tries to connect to it we dont get an error
                   // since React hasn't placed it on the DOM.
-                  style={this.state.locked ? { display: "none" } : {}}
+                  variant='outlined'
+                  style={this.state.locked ? { display: "none" } : {margin:"10px auto 20px"}}
                 />
                 <TextField
                   id="google-search"
-                  label="Search for your destination"
+                  label="Search for Hospitals near you"
+                  variant='outlined'
                   {...commonTextProps}
                   style={!this.state.locked ? { opacity: 0, width: 0, display:"none" } : {}}
                 />
                 { this.state.locked ? 
                 <>
-                  <Button className={this.props.classes.homeBTN} >Hospital Default</Button>
-                  <div style={{display:'flex', justifyContent: "space-between", width: "100%"}}>
-                    <button className={this.props.classes.submitBTN} name="submit" onClick={e=>this.searchForLocationHandler(e)}>Submit</button>
+                  {/* <button className={this.props.classes.homeBTN} >Hospital Default</button> */}
+                  <div style={{display:'flex', justifyContent: "space-between", width: "100%", margin: '10px auto'}}>
+                    <button 
+                    disabled={this.state.search.length<1? true:false}
+                    className={this.props.classes.submitBTN}
+                    name="submit" onClick={e=>this.searchForLocationHandler(e)}>Submit</button>
                     <button onClick={e=>this.cancelHandler(e)} className={this.props.classes.cancelBTN }>Cancel</button>
                   </div>
                 </>
@@ -393,21 +431,13 @@ class MotherMap extends Component {
                   </div>
                 </>
                 }
-                {/* <div className="modal-btns">
-              <Button onClick={this.handleClose} color="primary">
-              Disagree
-              </Button>
-              <Button onClick={this.handleClose} color="primary" autoFocus>
-              Agree
-              </Button>
-              </div> */}
               </div>
             </Dialog>
           </div>
-            
-            {this.state.places && (<div className="places-list">
-                  
+            {this.state.places && (<div className={!this.state.toggleList? this.props.classes.dNone:"places-list"}>
                     <GooglePlacesList
+                      hideList = {this.hideList}
+                      showList = {this.showList}
                       places={Array.isArray(places) ? places : [places]}
                       setDestination={this.mapOutRoute}
                       getDrivers={this.props.getDrivers}

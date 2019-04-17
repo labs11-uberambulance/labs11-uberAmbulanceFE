@@ -45,6 +45,7 @@ function googlePlacesItem(props) {
               props.clicked(props.place);
               props.getDrivers(props.rideStart);
               props.handleClose();
+              props.hideList()
             }}
             type="button"
             className="select-place--button"

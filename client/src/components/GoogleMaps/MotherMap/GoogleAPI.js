@@ -73,7 +73,7 @@ export const searchGoogle = query => {
   const service = new window.google.maps.places.PlacesService(map);
   service.findPlaceFromQuery(request, (results, status) => {
     if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-      map.setZoom(10);
+      map.setZoom(15);
       map.panTo(results[0].geometry.location);
     }
   });
@@ -93,7 +93,11 @@ export const lockMarker = (latlng, name) => {
   window.google.maps.event.removeListener(markerListener);
   marker.setDraggable(false);
   if(name=== 'home_default'){
-    return {lat: latlng.lat, lng: latlng.lng}
+    const lat = latlng.lat;
+    const lng = latlng.lng
+    marker.setPosition({lat,lng})
+    map.setCenter({lat,lng})
+    return {lat, lng}
   }
   return { lat: marker.getPosition().lat(), lng: marker.getPosition().lng() };
 };
