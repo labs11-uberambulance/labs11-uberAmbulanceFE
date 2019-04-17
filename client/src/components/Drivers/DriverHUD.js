@@ -142,7 +142,7 @@ class DriverHUD extends Component {
             />
           </Grid>
           {this.props.usrLoading && (
-            <div style={{ position: "absolute", marginTop: "45px" }}>
+            <div style={{ position: "absolute", marginTop: "53px" }}>
               <ProgressCircular size={20} />
             </div>
           )}
