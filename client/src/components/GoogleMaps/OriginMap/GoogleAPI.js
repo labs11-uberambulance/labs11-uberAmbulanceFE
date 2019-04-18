@@ -19,14 +19,16 @@ const initMap = (lat, lng) => {
 
 export const initGoogleScript = (latInit, lngInit) => {
   // console.log("initGoogScript: ", latInit, lngInit);
+  window.initMap = () => initMap(latInit, lngInit);
   if (!window.google) {
-    window.initMap = () => initMap(latInit, lngInit);
     const googleAPI = document.createElement("script");
     googleAPI.id = "google-api";
     googleAPI.async = true;
     googleAPI.defer = true;
     googleAPI.src = process.env.REACT_APP_googleApiKey;
     document.getElementsByTagName("body")[0].appendChild(googleAPI);
+  } else {
+    window.initMap();
   }
   return;
 };
