@@ -1,15 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { clearRides } from "../../../store/actions/rides";
+import { TextField, Dialog, Button, withStyles } from "@material-ui/core";
 
-import {
-  TextField,
-  Dialog,
-  Button,
-  withStyles,
-  Typography,
-  withTheme
-} from "@material-ui/core";
 import GooglePlacesList from "../../GooglePlacesList/GooglePlacesList";
 import {
   initGoogleScript,
@@ -157,13 +150,11 @@ class MotherMap extends Component {
     this.setState({toggleList:false})
   }
   toggleMarkLockHandler = (e) => {
-    console.log(e.target.title)
-    if(e.target.title === 'homeD'){
-      
+
+    if(e.target.name === 'homeD'){
       const name = "home_default";
       const position = lockMarker(this.state.startCoords, name)
       geocodeLatlng(position, locName => {
-        console.log(locName);
         this.props.setRideStart && this.props.setRideStart(position, locName);
       });
       return this.setState({ search: "", locked: true, startCoords: position, toggleModal: false });
@@ -184,19 +175,15 @@ class MotherMap extends Component {
         }
       } else {
         const position = lockMarker();
-        console.log('@#$', position)
         geocodeLatlng(position, locName => {
-          console.log(locName);
           this.props.setRideStart && this.props.setRideStart(position, locName);
         });
-        console.log(position);
         return { search: "", locked: true, startCoords: position, toggleModal: false };
       }
     });
   }
   };
   searchForLocationHandler = e => {
-    console.log(e.target)
     if (e.key === "Enter") {
       searchGoogle(this.state.search);
       this.handleClose();
@@ -244,7 +231,6 @@ class MotherMap extends Component {
     const maxX = e.currentTarget.parentNode.offsetWidth;
     const nextY = e.clientY - this.state.initY + e.currentTarget.offsetTop;
     const nextX = e.clientX - this.state.initX + e.currentTarget.offsetLeft;
-    console.log('nextX: ', nextX, 'nextY: ', nextY)
     if ( nextX < maxX && nextX > 0 && nextY < maxY && nextY > 0 ) {
       this.setState({ left: nextX, top: nextY })
     }
@@ -389,7 +375,6 @@ class MotherMap extends Component {
                     className="fas fa-arrow-circle-left hover-cursor"
                     onClick={() => this.props.removeDriver()}
                   />
-                  {console.log(this.props.selectedDriver)}
                   <Button
                     variant="contained"
                     className={this.props.classes.firstButton}

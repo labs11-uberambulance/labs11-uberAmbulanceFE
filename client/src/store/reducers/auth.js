@@ -51,11 +51,9 @@ export default (state = initialState, action) => {
       return initialState;
 
     case authTypes.ONBRD_STARTING:
-      console.log("onboard start reducer");
       return state;
 
     case authTypes.ONBRD_SUCCESS:
-      console.log("onboard success reducer");
       const { userData, driverData, motherData } = action.payload;
       return {
         ...state,
@@ -67,18 +65,15 @@ export default (state = initialState, action) => {
       };
 
     case authTypes.ONBRD_FAIL:
-      console.log("onboard fail reducer");
       return state;
 
     case authTypes.USR_UPDATE_STARTING:
-      console.log("usr update start reducer");
       return {
         ...state,
         loading: true
       };
 
     case authTypes.USR_UPDATE_SUCCESS:
-      console.log("user update success reducer");
       return {
         ...state,
         loading: false,
@@ -86,7 +81,6 @@ export default (state = initialState, action) => {
       };
 
     case authTypes.USR_UPDATE_FAIL:
-      console.log("user updated fail reducer");
       return {
         ...state,
         loading: false,

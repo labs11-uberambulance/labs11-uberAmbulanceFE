@@ -67,7 +67,6 @@ class OauthForm extends Component {
   initOauthWithPhone = e => {
     e.preventDefault();
     this.setState({ authMethodConfirm: true, errorMessage: "" });
-    console.log("initOauthWithPhone");
     const appVerifier = window.recaptchaVerifier;
     const firebaseNumber = normalizePhone(`+1${this.state.phoneNumber}`);
     if (!firebaseNumber) {
@@ -92,7 +91,6 @@ class OauthForm extends Component {
     this.setState({ errorMessage: "", authMethodConfirm: true });
     try {
       this.state.confirmationFunc.confirm(this.state.inputCode).catch(err => {
-        console.log("THERE");
         this.setState({
           errorMessage:
             "Incorrect code. Please check the code sent to your phone and try again.",

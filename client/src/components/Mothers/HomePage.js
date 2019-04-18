@@ -23,7 +23,6 @@ class HomePage extends Component {
   }
   submitFinalRideRequest = firebase_id => {
     this.setState({ finished: true });
-    console.log(this.state.placeInfo);
     const end = this.state.rideEnd;
     const start = this.state.rideStart;
     const startName = this.state.rideStartName;
@@ -31,20 +30,17 @@ class HomePage extends Component {
     const { name, phone } = this.props.user;
     const distance = this.state.distance;
     const info = { end, start, startName, hospital, name, phone, distance };
-    console.log(info);
     axios.post(`/api/rides/request/driver/${firebase_id}`, { ...info });
     this.setState({ completed: true });
   };
   setRideStart = (origin, rideStartName) => {
     var latlng = [];
     latlng.push(Object.values(origin));
-    console.log(latlng);
     this.setState({ rideStart: latlng.join(), rideStartName });
   };
   setRideEnd = (dest, place) => {
     var test = [];
     test.push(Object.values(dest));
-    console.log(test);
     this.setState({ rideEnd: test.join(), placeInfo: place });
   };
   selectDriver = (id, name, distance) => {

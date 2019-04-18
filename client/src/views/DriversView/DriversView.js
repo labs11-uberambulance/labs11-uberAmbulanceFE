@@ -5,7 +5,6 @@ import actions from "../../store/actions";
 import HomePage from "../../components/Drivers/HomePage";
 
 function DriversView(props) {
-  console.log("DriverView ", props.user);
   return (
     <>
       <HomePage

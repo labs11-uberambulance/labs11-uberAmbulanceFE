@@ -4,12 +4,9 @@ import firebase from "../../firebase";
 import { initUsrUpdate } from "../../store/actions/auth";
 import Button from "@material-ui/core/Button";
 import ButtonBase from "@material-ui/core/ButtonBase";
-import CardMedia from "@material-ui/core/CardMedia";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
 import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
-import EditIcon from "@material-ui/icons/Edit";
 
 class SimpleDialog extends React.Component {
   constructor(props) {
@@ -60,24 +57,11 @@ class SimpleDialog extends React.Component {
                   background: `url(${URL.createObjectURL(
                     this.state.file
                   )}) 50% 50% / cover no-repeat`,
-                  // backgroundSize: "cover",
                   height: "140px",
                   width: "140px",
                   borderRadius: "40px"
                 }}
               />
-              {/* <CardMedia
-                component="img"
-                alt="DriverImg"
-                height="140"
-                width="140"
-                image={URL.createObjectURL(this.state.file)}
-                title="Driver"
-                style={{
-                  width: "140px",
-                  borderRadius: "40px"
-                }}
-              /> */}
               {`${this.state.file.name.slice(0, 10)}...`}
             </Grid>
           ) : (
@@ -98,18 +82,6 @@ class SimpleDialog extends React.Component {
                   borderRadius: "40px"
                 }}
               />
-              {/* <CardMedia
-                component="img"
-                alt="DriverImg"
-                height="140"
-                width="140"
-                image={this.props.currImg}
-                title="Driver"
-                style={{
-                  width: "140px",
-                  borderRadius: "40px"
-                }}
-              /> */}
             </Grid>
           )}
           <Button
