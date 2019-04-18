@@ -7,8 +7,6 @@ const header = (props) => {
     <header className="landing-header">
         <nav>
             <ul>
-                <li><NavLink to="/">Drivers</NavLink></li>
-                <li><NavLink to="/">Riders</NavLink></li>
                 <li><NavLink to="/register">Sign up</NavLink></li>
                 <li><button onClick={() => {props.history.push('/login')}} >Log in</button></li>
             </ul>
