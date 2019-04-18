@@ -4,66 +4,47 @@ export default function DriverCard(props) {
   const proImg={
     background: `url(${props.ride.driver.photo_url
     }) 50% 50% / cover no-repeat`,
-    height: '100px',
-    width: '80%',
+    height: '150px',
+    width: '90%',
     borderRadius:'15px',
-    margin: '0 auto'
+    margin: '10px auto 0'
   }
   return (
     <div
-      className="driver-card hover-cursor hvr-float-shadow "
-      onClick={() =>
-        props.selectDriver(
-          props.ride.driver.firebase_id,
-          props.ride.driver.name,
-          props.ride.distance
-        )
-      }
+      className="driver-card hvr-float-shadow"
     >
-      <p
-        onClick={() =>
-          props.selectDriver(
-            props.ride.driver.firebase_id,
-            props.ride.driver.name,
-            props.ride.distance
-          )
-        }
-      >
-        {props.ride.driver.name}
-      </p>
       <div
-        onClick={() =>
-          props.selectDriver(
-            props.ride.driver.firebase_id,
-            props.ride.driver.name,
-            props.ride.distance
-          )
-        }
         style={proImg}
         alt={`${props.ride.driver.name}'s Profile Pic`}
       />
+  <div className="driver-info" >
       <p
-        onClick={() =>
-          props.selectDriver(
-            props.ride.driver.firebase_id,
-            props.ride.driver.name,
-            props.ride.distance
-          )
-        }
+        style={{margin: '5px 0'}}
       >
-        ETA: {props.ride.duration.text}
+       <b style={{marginRight: '10px', fontSize: '1.2rem', letterSpacing:'.5px'}}>Driver:</b>{props.ride.driver.name}
       </p>
       <p
-        onClick={() =>
-          props.selectDriver(
-            props.ride.driver.firebase_id,
-            props.ride.driver.name,
-            props.ride.distance
-          )
-        }
+        style={{margin: '5px 0'}}
       >
-        Price: {props.ride.driver.price}
+       <b style={{marginRight: '10px', fontSize: '1.2rem', letterSpacing:'.5px'}}> ETA: </b> {props.ride.duration.text}
       </p>
-    </div>
+      <p
+        style={{margin: '5px 0'}}
+      >
+       <b style={{marginRight: '10px', fontSize: '1.2rem', letterSpacing:'.5px'}}>  Price:</b>  {props.ride.driver.price}
+      </p>
+  </div>
+  <button
+  onClick={() =>
+    props.selectDriver(
+      props.ride.driver.firebase_id,
+      props.ride.driver.name,
+      props.ride.distance
+    )
+  }
+  >
+    Request Driver
+  </button>
+</div>
   );
 }

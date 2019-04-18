@@ -79,14 +79,16 @@ class ResponsiveDialog extends React.Component {
           open={this.props.open}
           onClose={this.props.handleClose}
           aria-labelledby="responsive-dialog-title"
-        >
-        <div style={{
-          width: "90%",
-          height: '115px',
-          background: `url(${BikeLogo}) center / cover no-repeat`,
-          margin: '10px auto',
-          borderRadius: '5px',
-        }}></div>
+        >{
+          this.state.editing? null :
+            <div style={{
+              width: "90%",
+              height: '115px',
+              background: `url(${BikeLogo}) center / cover no-repeat`,
+              margin: '10px auto',
+              borderRadius: '5px',
+            }}></div>
+        }
           <DialogTitle id="responsive-dialog-title">{`${
             this.props.user.name
           }'s Profile`}</DialogTitle>

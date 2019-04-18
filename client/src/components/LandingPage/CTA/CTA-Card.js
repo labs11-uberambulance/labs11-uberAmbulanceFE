@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import MomIcon from "./icons/icons8-pregnant-filled-50.png";
 import DriverIcon from "./icons/icons8-ambulance-50.png";
+import { NavLink, withRouter } from 'react-router-dom';
 
 const styles = ({ palette }) => ({
   card: {
@@ -58,7 +59,7 @@ function SimpleCard(props) {
       </CardContent>
       <CardActions>
         <Button className={classes.button} size="large">
-          Register Now
+         <NavLink to="/register"> Register Now</NavLink>
         </Button>
       </CardActions>
     </Card>
@@ -69,4 +70,4 @@ SimpleCard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SimpleCard);
+export default withRouter(withStyles(styles)(SimpleCard));
