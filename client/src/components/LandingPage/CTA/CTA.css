@@ -40,6 +40,9 @@
     display: flex;
     margin: 0 0 100px;
 }
+.absolute-cards a{
+    color: white;
+}
 @media only screen and (max-width: 750px) {
     .header-font{
         font-size: 3rem;

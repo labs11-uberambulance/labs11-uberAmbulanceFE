@@ -1,19 +1,19 @@
-import React, { Component } from "react";
+import React, { Component, lazy, Suspense } from "react";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { auth } from "./firebase";
 import actions from "./store/actions";
 import { messaging } from "./firebase";
 import RegisterView from "./views/AuthenticationView/RegisterView";
-import OnboardingView from "./views/OnboardingView/OnboardingView";
-import DriversView from "./views/DriversView/DriversView";
-import MothersView from "./views/MothersView/MothersView";
 import RequestRideView from "./views/RequestRideView/RequestRideView";
 import LandingView from "./views/LandingView/LandingView";
 import Logout from "./views/AuthenticationView/Logout";
 import OnNotification from "./components/OnNotification/OnNotification";
 import Loading from "./components/Progress/Circular";
 import "./App.css";
+const DriversView = lazy(() => import("./views/DriversView/DriversView"))
+const MothersView = lazy(() => import("./views/MothersView/MothersView"));
+const OnboardingView = lazy(() => import("./views/OnboardingView/OnboardingView"));
 
 class App extends Component {
   render() {
@@ -33,10 +33,7 @@ class App extends Component {
       // console.log(this.props.user.user_type);
       routes = (
         <Switch>
-          <Route
-            path="/onboarding"
-            render={() => <OnboardingView redir={this.props.history.push} />}
-          />
+          <Route path="/onboarding" component={OnboardingView} />
           <Route path="/logout" component={Logout} />
           {!userType && <Redirect exact to="/onboarding" />}
           <Route path="/drivers" component={DriversView} />
@@ -50,7 +47,9 @@ class App extends Component {
 
     return (
       <div className="App">
-        {routes}
+        <Suspense fallback={<div>Loading...</div>}>
+          {routes}
+        </Suspense>
         {messaging && (
           <OnNotification
             user={this.props.user}

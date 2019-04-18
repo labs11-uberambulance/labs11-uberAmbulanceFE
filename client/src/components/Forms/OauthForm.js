@@ -42,6 +42,7 @@ class OauthForm extends Component {
     if (!email || !password) return;
     auth.createUserWithEmailAndPassword(email, password).catch(err => {
       console.log(err);
+      this.setState({ emailAndPasswordErrorMessage: err.message })
     });
   };
   signInEmailPassword = () => {
@@ -52,6 +53,7 @@ class OauthForm extends Component {
     if (!email || !password) return;
     auth.signInWithEmailAndPassword(email, password).catch(err => {
       console.log(err);
+      this.setState({ emailAndPasswordErrorMessage: err.message })
     });
   };
   choosePhone = () => {
@@ -145,6 +147,7 @@ class OauthForm extends Component {
               >
                 {this.props.signup ? "Sign up " : "Log in "}
               </Button>
+              {this.state.emailAndPasswordErrorMessage && <p className="email-pass-error" onClick={() => {this.setState({ emailAndPasswordErrorMessage: null })}}>{this.state.emailAndPasswordErrorMessage}</p>}
             </div>
           )}
           {!this.state.usingEmail && (
@@ -288,7 +291,8 @@ class OauthForm extends Component {
       errorMessage: null,
       usingGmail: false,
       usingEmail: false,
-      authMethodConfirm: false
+      authMethodConfirm: false,
+      emailAndPasswordErrorMessage: null
     };
     this.phoneInp = React.createRef();
     this.emailInp = React.createRef();
