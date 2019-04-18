@@ -6,7 +6,6 @@ import './GooglePlacesList.css'
 
 
 function googlePlacesList(props) {
-    console.log(props)
 return ( 
     <List
         style={{height: "100%", overflowY: "scroll",}}

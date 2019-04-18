@@ -54,13 +54,6 @@ class ResponsiveDialog extends React.Component {
   stopEditing = () => {
     this.setState({ editing: false });
   };
-  // handleClickOpen = () => {
-  //   this.setState({ open: true });
-  // };
-
-  // handleClose = () => {
-  //   this.setState({ open: false, editing: false });
-  // };
   handleSubmit = () => {
     const data = {
       user: {
@@ -75,12 +68,8 @@ class ResponsiveDialog extends React.Component {
   };
   render() {
     const { fullScreen } = this.props;
-    console.log(this.props);
     return (
       <div>
-        {/* <Button variant="outlined" color="primary" onClick={this.props.handleClickOpen}>
-         View Your Profile
-        </Button> */}
         <Dialog
           fullScreen={fullScreen}
           open={this.props.open}

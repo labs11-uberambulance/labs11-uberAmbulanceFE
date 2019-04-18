@@ -6,7 +6,6 @@ import actions from "../../store/actions";
 
 class Logout extends Component {
   componentDidMount() {
-    console.log("logging out");
     firebase.auth().signOut();
     this.props.onLogout();
   }

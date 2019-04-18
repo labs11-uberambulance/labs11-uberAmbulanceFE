@@ -23,10 +23,8 @@ class App extends Component {
         <Redirect to="/" />
       </Switch>
     );
-    console.log(this.props.user);
     if (this.props.user.ftoken) {
       const userType = this.props.user.user_type;
-      // console.log(this.props.user.user_type);
       routes = (
         <Switch>
           <Route path="/onboarding" component={OnboardingView} />
@@ -72,7 +70,6 @@ class App extends Component {
         }
       } else {
         // this.props.onLogout();
-        console.log("Not Authenticated");
       }
     });
   }

@@ -2,7 +2,6 @@ import { rideTypes } from "./actionTypes";
 import axios from "../../axios-instance";
 
 export const getDrivers = location => dispatch => {
-  console.log(location);
   dispatch({ type: rideTypes.FIND_DRIVERS_STARTING });
   axios
     .post(`/api/rides/drivers`, { location: location })
@@ -15,7 +14,6 @@ export const getDrivers = location => dispatch => {
 };
 
 export const createRide = (start, destination) => dispatch => {
-  console.log(start, destination);
   dispatch({ type: rideTypes.CREATE_RIDE_STARTING });
   axios
     .post(`/api/rides/new-ride`, (start, destination))

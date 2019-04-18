@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { messaging } from "../../firebase";
-// import { withRouter } from "react-router-dom";
 import { Paper, Typography, withStyles, Button } from "@material-ui/core";
 import axios from "../../axios-instance";
 import "./OnNotification.css";
@@ -56,12 +55,10 @@ class OnNotification extends Component {
       return null;
     }
     const { title, body } = this.state.notification;
-    // update driver data, retrieves new ride info
-    this.props.usrUpdate(this.props.user);
     return (
       <aside className="notification-container">
         <Paper className={this.props.classes.root}>
-          <Typography variant="Subheading" component="h4">
+          <Typography component="h4">
             {title}
           </Typography>
           <Typography component="p">{body}</Typography>
@@ -80,6 +77,8 @@ class OnNotification extends Component {
       this.setState({ notification, data });
       const timer = setTimeout(() => {
         this.setState({ notification: null, data: null });
+        // update driver data, retrieves new ride info
+        this.props.usrUpdate(this.props.user);
       }, 10000);
       this.setState({ timer });
     });

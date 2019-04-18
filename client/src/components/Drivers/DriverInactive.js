@@ -12,7 +12,6 @@ export default class DriverInactive extends Component {
   }
 
   handleUpdateDriverLoc = driverLatLng => {
-    console.log("update driver loc to: ", driverLatLng);
     // {"latlng":"0.9445402714964785,33.08937988281251"}
     this.props.usrUpdate(this.props.user, {
       user: {
