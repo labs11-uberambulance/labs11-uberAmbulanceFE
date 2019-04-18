@@ -9,6 +9,7 @@ import RequestRideView from "./views/RequestRideView/RequestRideView";
 import LandingView from "./views/LandingView/LandingView";
 import Logout from "./views/AuthenticationView/Logout";
 import OnNotification from "./components/OnNotification/OnNotification";
+import Loading from "./components/Progress/Circular";
 import "./App.css";
 const DriversView = lazy(() => import("./views/DriversView/DriversView"))
 const MothersView = lazy(() => import("./views/MothersView/MothersView"));
@@ -24,6 +25,9 @@ class App extends Component {
       </Switch>
     );
     console.log(this.props.user);
+    // if (this.props.authLoading) {
+    //   routes = <Route path="/" component={Loading} />;
+    // } else
     if (this.props.user.ftoken) {
       const userType = this.props.user.user_type;
       // console.log(this.props.user.user_type);
@@ -80,7 +84,8 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.auth.user
+    user: state.auth.user,
+    authLoading: state.auth.loading
   };
 };
 
