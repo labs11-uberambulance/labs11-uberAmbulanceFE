@@ -7,7 +7,8 @@ import {
   Dialog,
   Button,
   withStyles,
-  Typography
+  Typography,
+  withTheme
 } from "@material-ui/core";
 import GooglePlacesList from "../../GooglePlacesList/GooglePlacesList";
 import {
@@ -71,17 +72,19 @@ const styles = ({ palette }) => ({
   },
   homeBTN:{
     width: "100%",
-    padding: "7px", 
-    background: "#2196f3", 
-    margin: "5px auto", 
+    color: '#1976d2',  
+    border:" 1px solid #1976d2",
+    margin: "0px auto 30px", 
     lineHeight: '1.75',
     fontWeight: '500',
     fontSize: '1.2rem',
-    color: 'white',
+    display: 'flex',
     borderRadius: '5px',
     '&:hover':{
-      background: '#023b74'
-    }
+      background: '#1976d2',
+      cursor: 'pointer',
+      color: 'white'
+    },
   },
   submitBTN:{
     width:'49%', 
@@ -93,7 +96,8 @@ const styles = ({ palette }) => ({
     color: 'white',
     borderRadius: '5px',
     '&:hover':{
-      background:'pink'
+      background:'rgb(1, 99, 86)',
+      cursor: 'pointer'
     }
   },
   cancelBTN:{
@@ -102,15 +106,17 @@ const styles = ({ palette }) => ({
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: '500',
     fontSize: '1.2rem',
-    color: 'red',
+    color: '#6d1b7b',
     borderRadius: '5px',
     textDecoration: 'none',
     textAlign: 'center',
-    border: "1px solid red",
+    border: "1px solid #6d1b7b",
     alignSelf: 'center',
     '&:hover':{
       textDecoration: 'underline',
-      color:'red'
+      cursor: 'pointer',
+      background: '#6d1b7b',
+      color: 'white'
     }
   }
 });
@@ -152,8 +158,9 @@ class MotherMap extends Component {
     this.setState({toggleList:false})
   }
   toggleMarkLockHandler = (e) => {
-    console.log(e.target)
-    if(e.target.name === 'homeD'){
+    console.log(e.target.title)
+    if(e.target.title === 'homeD'){
+      
       const name = "home_default";
       const position = lockMarker(this.state.startCoords, name)
       geocodeLatlng(position, locName => {
@@ -433,7 +440,7 @@ class MotherMap extends Component {
                   // need to always have this rendered so when google tries to connect to it we dont get an error
                   // since React hasn't placed it on the DOM.
                   variant='outlined'
-                  style={this.state.locked ? { display: "none" } : {margin:"10px auto 20px"}}
+                  style={this.state.locked ? { display: "none" } : {margin:"20px auto 5px"}}
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -450,7 +457,7 @@ class MotherMap extends Component {
                 />
                 { this.state.locked ? 
                 <>
-                  {/* <button className={this.props.classes.homeBTN} >Hospital Default</button> */}
+                  
                   <div style={{display:'flex', justifyContent: "space-between", width: "100%", margin: '10px auto'}}>
                     <button 
                     disabled={this.state.search.length<1? true:false}
@@ -461,7 +468,33 @@ class MotherMap extends Component {
                 </>
                   :
                   <>
-                  <button className={this.props.classes.homeBTN} name="homeD"onClick={e=>{this.toggleMarkLockHandler(e)}}>Home Default</button>
+                  <div className={this.props.classes.homeBTN}
+                  > 
+                  <div 
+                  style={{
+                    width: "10%",
+                    background: "#1976d2",
+                    color: 'white',
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  value="homeD"
+                  onClick={e=>{this.toggleMarkLockHandler(e)}}
+                  >
+                      <i class="fas fa-home"></i>
+                  </div>
+                    <p
+                    title="homeD"
+                    onClick={e=>{this.toggleMarkLockHandler(e)}}
+                    style={{
+                      margin: '0 auto',
+                      padding: '5px',
+                      width: '100%',
+                      textAlign: 'center'
+                    }}
+                    >Continue with your Home Address</p>
+                  </div>
                   <div style={{display:'flex', justifyContent: "space-between", width: "100%"}}>
                     <button 
                       className={this.props.classes.submitBTN}
