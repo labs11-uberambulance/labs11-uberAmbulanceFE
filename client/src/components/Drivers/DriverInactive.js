@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import DriverHUD from "./DriverHUD";
 import DriverUpdateLocation from "./DriverUpdateLocation";
 
@@ -45,7 +44,6 @@ export default class DriverInactive extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={6}>
             <Card>
-              <Typography variant="h6">Your Current Location</Typography>
               <DriverUpdateLocation
                 latInit={driverLat}
                 lngInit={driverLng}

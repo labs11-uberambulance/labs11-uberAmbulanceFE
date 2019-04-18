@@ -64,16 +64,16 @@ const styles = ({ palette }) => ({
   },
   homeBTN:{
     width: "100%",
-    padding: "10px", 
+    padding: "7px", 
     background: "#2196f3", 
     margin: "5px auto", 
     lineHeight: '1.75',
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: '500',
     fontSize: '1.2rem',
     color: 'white',
+    borderRadius: '5px',
     '&:hover':{
-      background:'pink'
+      background: '#023b74'
     }
   },
   submitBTN:{
@@ -84,20 +84,26 @@ const styles = ({ palette }) => ({
     fontWeight: '500',
     fontSize: '1.2rem',
     color: 'white',
+    borderRadius: '5px',
     '&:hover':{
       background:'pink'
     }
   },
   cancelBTN:{
     width:'49%', 
-    backgroundColor:'red',
     lineHeight: '1.75',
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: '500',
     fontSize: '1.2rem',
-    color: 'white',
+    color: 'red',
+    borderRadius: '5px',
+    textDecoration: 'none',
+    textAlign: 'center',
+    border: "1px solid red",
+    alignSelf: 'center',
     '&:hover':{
-      background:'pink'
+      textDecoration: 'underline',
+      color:'red'
     }
   }
 });
@@ -236,13 +242,35 @@ class MotherMap extends Component {
       fullWidth: true
     };
     const pad20={
-      padding: '20px'
+      padding: '0px 20px 20px'
     }
     return (
       <div className="google-maps-container" style={{}}>
         <Drawer />
         <div id="map" />
-        {this.props.finished ? (
+        {this.props.error ?(
+            <div className={this.props.classes.finalMessage}>
+            <h2 >Oh no, there are no Drivers in your Area! Please Contact the Hotline for immediate assistance. HOTLINE: ###-###-####</h2>
+            <div style={{display:'flex'}}>
+            <button
+                variant="contained"
+                className={this.props.classes.submitBTN}
+                onClick={() => console.log('calling hotline')}
+              >
+                Call HotLine
+              </button>
+            <div
+                variant="contained"
+                className={this.props.classes.cancelBTN}
+                onClick={() => {
+                  this.props.history.push("/logout");
+                }}
+              >
+                Logout
+              </div>
+            </div>
+          </div>
+          ): (<>{this.props.finished ? (
           <section className={this.props.classes.finalMessage}>
             <h3>
               Thank you for requesting a ride! Please check your phone for
@@ -270,18 +298,11 @@ class MotherMap extends Component {
           </section>
         ) : (
           <>
-          
             <div className={this.state.locked ? "reqBoxTwo" : "reqBox"}>
-              {!this.props.selectedDriver ? (
+              {!this.props.selectedDriver ? 
                 this.props.rides.length > 0 ? (
-                  
                   <>
-                    <i
-                      className="fas fa-arrow-circle-left hover-cursor"
-                      onClick={() => this.goBack()}
-                      style={{alignSelf:'center'}}
-                    />
-                    
+                    <i className="fas fa-arrow-circle-left hover-cursor" onClick={() => this.goBack()} style={{alignSelf:'center'}}/>
                     {this.props.rides.map(ride => {
                       return (
                         <DriverCard
@@ -342,7 +363,7 @@ class MotherMap extends Component {
                     )}
                   </>
                 )
-              ) : (
+             : (
                 <>
                   <i
                     className="fas fa-arrow-circle-left hover-cursor"
@@ -398,6 +419,9 @@ class MotherMap extends Component {
                   // since React hasn't placed it on the DOM.
                   variant='outlined'
                   style={this.state.locked ? { display: "none" } : {margin:"10px auto 20px"}}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
                 <TextField
                   id="google-search"
@@ -405,6 +429,9 @@ class MotherMap extends Component {
                   variant='outlined'
                   {...commonTextProps}
                   style={!this.state.locked ? { opacity: 0, width: 0, display:"none" } : {}}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
                 { this.state.locked ? 
                 <>
@@ -414,7 +441,7 @@ class MotherMap extends Component {
                     disabled={this.state.search.length<1? true:false}
                     className={this.props.classes.submitBTN}
                     name="submit" onClick={e=>this.searchForLocationHandler(e)}>Submit</button>
-                    <button onClick={e=>this.cancelHandler(e)} className={this.props.classes.cancelBTN }>Cancel</button>
+                    <div onClick={e=>this.cancelHandler(e)} className={this.props.classes.cancelBTN }>Cancel</div>
                   </div>
                 </>
                   :
@@ -427,11 +454,7 @@ class MotherMap extends Component {
                       onClick={e=>this.searchForLocationHandler(e)}>
                       Submit
                     </button>
-                    <button
-                      onClick={e=>this.cancelHandler(e)} 
-                      className={this.props.classes.cancelBTN }>
-                      Cancel
-                    </button>
+                    <div onClick={e=>this.cancelHandler(e)} className={this.props.classes.cancelBTN }>Cancel</div>
                   </div>
                 </>
                 }
@@ -461,7 +484,7 @@ class MotherMap extends Component {
                     >Show All</Button>}
               </div>)}
           </>
-        )}
+        )}</>)}
       </div>
     );
   }
@@ -508,7 +531,8 @@ class MotherMap extends Component {
 
 const mapStateToProps = state => ({
   user: state.auth.user,
-  rides: state.rides.rides
+  rides: state.rides.rides,
+  error: state.rides.error
 });
 
 const mapDispatchToProps = {

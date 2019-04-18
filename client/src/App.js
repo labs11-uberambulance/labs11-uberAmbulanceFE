@@ -72,12 +72,14 @@ class App extends Component {
         // this.props.onLogout();
       }
     });
+    window.initMap = () => {};
   }
 }
 
 const mapStateToProps = state => {
   return {
-    user: state.auth.user
+    user: state.auth.user,
+    authLoading: state.auth.loading
   };
 };
 

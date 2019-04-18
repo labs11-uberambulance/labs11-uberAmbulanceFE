@@ -5,6 +5,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Grid from "@material-ui/core/Grid";
 import withMobileDialog from "@material-ui/core/withMobileDialog";
 
 import RideCard from "./RideCard";
@@ -30,7 +31,11 @@ class ResponsiveDialog extends React.Component {
     const prevRides = this.props.user.driverData.rides
       .filter(ride => ride.ride_status === "complete")
       .map(ride => {
-        return <RideCard key={ride.id} ride={ride} />;
+        return (
+          <Grid item xs={12} key={ride.id}>
+            <RideCard ride={ride} />
+          </Grid>
+        );
       });
     return (
       <div>
@@ -67,7 +72,17 @@ class ResponsiveDialog extends React.Component {
           <DialogTitle id="responsive-dialog-title">{`${
             this.props.user.name
           }'s Ride History`}</DialogTitle>
-          <DialogContent>{prevRides}</DialogContent>
+          <DialogContent>
+            <Grid
+              container
+              direction="column"
+              justify="center"
+              alignItems="stretch"
+              spacing={16}
+            >
+              {prevRides}
+            </Grid>
+          </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary" autoFocus>
               Exit
