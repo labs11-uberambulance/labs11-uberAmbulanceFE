@@ -22,7 +22,7 @@ class OnboardingView extends Component {
       return (
         <OnboardingSelector
           setUserType={this.setUserTypeHandler}
-          redir={this.props.redir}
+          redir={this.props.history.push}
         />
       );
     }
@@ -31,7 +31,7 @@ class OnboardingView extends Component {
         <MotherForm
           user={this.props.user}
           onSubmitForm={this.props.onSubmitForm}
-          redirOnSuccess={this.props.redir}
+          redirOnSuccess={this.props.history.push}
         />
       );
     }
@@ -40,7 +40,7 @@ class OnboardingView extends Component {
         <DriverForm
           user={this.props.user}
           onSubmitForm={this.props.onSubmitForm}
-          redirOnSuccess={this.props.redir}
+          redirOnSuccess={this.props.history.push}
         />
       );
     }
@@ -49,7 +49,7 @@ class OnboardingView extends Component {
         <CareGiversForm
           user={this.props.user}
           onSubmitForm={this.props.onSubmitForm}
-          redirOnSuccess={this.props.redir}
+          redirOnSuccess={this.props.history.push}
         />
       );
     }

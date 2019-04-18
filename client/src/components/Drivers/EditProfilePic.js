@@ -172,7 +172,7 @@ class EditProfileImg extends React.Component {
     const storageRef = firebase
       .storage()
       .ref(
-        `profile_images/${this.props.user.fireBId}@${new Date().toISOString()}`
+        `profile_images/${this.props.user.firebase_id}@${new Date().toISOString()}`
       );
     const uploadTask = storageRef.put(image, { contentType: image.type });
     return uploadTask.then(() => {

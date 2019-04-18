@@ -36,6 +36,12 @@
 .manual-auth {
   margin-bottom: 1rem;
 }
+.email-pass-error {
+  font-size: .8rem;
+  color: darkred;
+  padding: 5px 2px;
+  cursor: pointer;
+}
 button.email-button {
   width: 100%;
   margin-top: 1rem;
@@ -62,32 +68,3 @@ button.login-button {
   margin-top: 10px;
 }
 
-/* @keyframes auth-form {
-    from {
-        transform: translateY(-500px);
-    }
-    to {
-        transform: translateY(0);
-    }
-}
-
-@media (max-width: 450px) {
-    .auth-form {
-        width: 90vw;
-        max-width: 360px;
-        padding: 5rem 1.5rem;
-    }
-}
-
-@keyframes filter {
-    0%, 100% { transform:translate(0, 0) }
-  10% { transform:translate(-5%, -10%) }
-  20% { transform:translate(-15%, 5%) }
-  30% { transform:translate(7%, -25%) }
-  40% { transform:translate(-5%, 25%) }
-  50% { transform:translate(-15%, 10%) }
-  60% { transform:translate(15%, 0%) }
-  70% { transform:translate(0%, 15%) }
-  80% { transform:translate(3%, 35%) }
-  90% { transform:translate(-10%, 10%) }
-} */
