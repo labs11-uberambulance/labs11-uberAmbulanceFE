@@ -11,11 +11,16 @@
   margin: 10px 0;
   color: #1976d2;
 }
+.fa-arrow-circle-left:before{
+  background: white;
+  border-radius: 50%;
+}
+
 .fa-arrow-circle-left:hover{
   color: #6d1b7b;
 }
 .reqBox{
-  width: 50%;
+  width: 80%;
   height: auto;
   padding: 50px;
   z-index: 10;
@@ -27,16 +32,14 @@
   width: 90%
 }
 .reqBoxTwo{
-    width: 50%;
+    width: 80%;
     height: auto;
     padding: 50px;
     z-index: 10;
     display: flex;
-    /* align-items: flex-start; */
     justify-items: center;
     flex-direction: none;
 }
-
 
 .MuiDialog-paperFullWidth-63{
   height: 100%;
@@ -44,25 +47,43 @@
 
 .driver-card{
   color: white;
-  height: 250px;
+  height: auto;
+  padding: 20px 10px;
   width: 25%;
-  background: #1976d2;
+  background: #243B53;
   z-index:50;
   border-radius: 15px;
   box-shadow: 0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08);
   margin: 0 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
-.driver-card:hover{
+.driver-card p{
+  font-size: 1rem;
+}
+.driver-info{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 90%;
+  margin: 10px auto;
+}
+.driver-card button{
+  width: 90%;
+  margin: 0 auto;
+  padding: 6px;
+  border-radius: 7px;
+  font-size: 1.1rem;
+  background: #1976d2;
+  color: white;
+  border: 1px solid #1976d2;
+}
+.driver-card button:hover{
   background: green;
+  border: 1px solid green;
+  cursor: pointer
 }
-.driver-card img{
-  border: 3px solid white;
-  width: auto;
-  /* padding: 0 30px; */
-  height: 40%;
-  border-radius: 50%;
-}
-
 /* Hover Styles */
 .hvr-float-shadow {
   display: inline-block;
