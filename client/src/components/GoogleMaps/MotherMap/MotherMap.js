@@ -113,7 +113,6 @@ const styles = ({ palette }) => ({
     border: "1px solid #6d1b7b",
     alignSelf: 'center',
     '&:hover':{
-      textDecoration: 'underline',
       cursor: 'pointer',
       background: '#6d1b7b',
       color: 'white'
@@ -468,33 +467,23 @@ class MotherMap extends Component {
                 </>
                   :
                   <>
-                  <div className={this.props.classes.homeBTN}
-                  > 
-                  <div 
-                  style={{
-                    width: "10%",
-                    background: "#1976d2",
-                    color: 'white',
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                  value="homeD"
-                  onClick={e=>{this.toggleMarkLockHandler(e)}}
-                  >
-                      <i class="fas fa-home"></i>
+                  {this.props.user.location.latlng ?
+                  <div className={this.props.classes.homeBTN}> 
+                    <div style={{width: "10%", background: "#1976d2", color: 'white',display: "flex", justifyContent: "center", alignItems: "center",}}
+                      title="homeD" onClick={e=>{this.toggleMarkLockHandler(e)}}>
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <p title="homeD" onClick={e=>{this.toggleMarkLockHandler(e)}} style={{ margin: '0 auto', padding: '5px', width: '100%',textAlign: 'center'}}> Continue with your Home Address</p>
                   </div>
-                    <p
-                    title="homeD"
-                    onClick={e=>{this.toggleMarkLockHandler(e)}}
-                    style={{
-                      margin: '0 auto',
-                      padding: '5px',
-                      width: '100%',
-                      textAlign: 'center'
-                    }}
-                    >Continue with your Home Address</p>
+                  : 
+                  <div className={this.props.classes.homeBTN}> 
+                    <div style={{width: "10%", background: "#1976d2", color: 'white',display: "flex", justifyContent: "center", alignItems: "center",}}
+                      title="homeD" onClick={e=>{this.toggleMarkLockHandler(e)}}>
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <p title="homeD" onClick={e=>{this.toggleMarkLockHandler(e)}} style={{ margin: '0 auto', padding: '5px', width: '100%',textAlign: 'center'}}> Set your Home Address</p>
                   </div>
+                }
                   <div style={{display:'flex', justifyContent: "space-between", width: "100%"}}>
                     <button 
                       className={this.props.classes.submitBTN}
