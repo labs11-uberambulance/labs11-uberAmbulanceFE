@@ -25,7 +25,6 @@ class OnNotification extends Component {
         ...this.state
       })
       .then(result => {
-        console.log(result);
         this.setState({ notification: null, data: null });
       })
       .catch(err => {
@@ -39,7 +38,6 @@ class OnNotification extends Component {
     axios
       .get(`/api/rides/driver/accepts/${this.state.data.ride_id}`)
       .then(result => {
-        console.log(result);
         this.setState({ notification: null, data: null });
       })
       .catch(err => {
