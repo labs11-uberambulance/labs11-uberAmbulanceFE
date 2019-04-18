@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { clearRides } from "../../../store/actions/rides";
 import { TextField, Dialog, Button, withStyles } from "@material-ui/core";
+
 import GooglePlacesList from "../../GooglePlacesList/GooglePlacesList";
 import {
   initGoogleScript,
@@ -454,7 +455,7 @@ class MotherMap extends Component {
                   <div className={this.props.classes.homeBTN}> 
                     <div style={{width: "10%", background: "#1976d2", color: 'white',display: "flex", justifyContent: "center", alignItems: "center",}}
                       title="homeD" onClick={e=>{this.toggleMarkLockHandler(e)}}>
-                        <i class="fas fa-home"></i>
+                        <i className="fas fa-home"></i>
                     </div>
                     <p title="homeD" onClick={e=>{this.toggleMarkLockHandler(e)}} style={{ margin: '0 auto', padding: '5px', width: '100%',textAlign: 'center'}}> Continue with your Home Address</p>
                   </div>
@@ -462,7 +463,7 @@ class MotherMap extends Component {
                   <div className={this.props.classes.homeBTN}> 
                     <div style={{width: "10%", background: "#1976d2", color: 'white',display: "flex", justifyContent: "center", alignItems: "center",}}
                       title="homeD" onClick={e=>{this.toggleMarkLockHandler(e)}}>
-                        <i class="fas fa-home"></i>
+                        <i className="fas fa-home"></i>
                     </div>
                     <p title="homeD" onClick={e=>{this.toggleMarkLockHandler(e)}} style={{ margin: '0 auto', padding: '5px', width: '100%',textAlign: 'center'}}> Set your Home Address</p>
                   </div>
