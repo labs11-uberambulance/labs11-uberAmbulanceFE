@@ -92,6 +92,7 @@ export const calcAndDisplayRoute = (origin, destination) => {
 };
 
 export const lockMarker = (latlng, name) => {
+  console.log(latlng,name)
   window.google.maps.event.removeListener(markerListener);
   marker.setDraggable(false);
   if(name=== 'home_default'){

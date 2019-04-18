@@ -54,6 +54,7 @@ class App extends Component {
     );
   }
   componentDidMount() {
+    window.initMap = () => {};
     auth.onAuthStateChanged(user => {
       if (user) {
         const { uid, ra } = user;
@@ -72,7 +73,7 @@ class App extends Component {
         // this.props.onLogout();
       }
     });
-    window.initMap = () => {};
+
   }
 }
 
