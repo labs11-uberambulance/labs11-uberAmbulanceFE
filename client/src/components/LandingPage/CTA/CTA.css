@@ -2,11 +2,15 @@
     width: 100%;
     height: 70vh;
     background: #0277bd;
-    border-radius: 0 0 25% 25%;
-    position: relative;
+    /* border-radius: 0 0 25% 25%;
+    position: relative; */
+    padding: 20px;
+}
+.CTA-Text{
+    
 }
 .h-80{
-    height: 80%;
+    /* height: 80%; */
 }
 .w-50 {
     width: 50%;
@@ -24,9 +28,13 @@
     justify-content: center;
     align-items: center;
 }
+.devices-img{
+    max-width: 100%;
+    height: auto;
+}
 
 .header-font{
-    font-size:4rem;
+    font-size: 2rem;
     width: 80%;
     color: #F4F5F9;
 }
@@ -43,13 +51,26 @@
 .absolute-cards a{
     color: white;
 }
+.app-buttons{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.app-buttons img{
+    max-width: 100%;
+}
 @media only screen and (max-width: 750px) {
     .header-font{
         font-size: 3rem;
+        width: 100%;
     }
     .CTA{
-        height: 60vh;
-        border-radius: 0 0 20% 20%;
+        height: auto;
+        flex-wrap: wrap
+    }
+    .w-50{
+        width:100%;
     }
     .absolute-cards{
         position: none;
@@ -58,13 +79,15 @@
         flex-wrap: wrap;
         margin: 30px auto;
     }
+    .app-buttons{
+        flex-wrap: wrap;
+    }
   }
   @media only screen and (max-width: 400px) {
     .header-font{
         font-size: 2.5rem;
     }
     .CTA{
-        height: 50vh;
-        border-radius: 0 0 5% 5%;
+        height: auto;
     }
   }

@@ -511,19 +511,21 @@ class MotherMap extends Component {
   }
   componentDidMount() {
     if (this.props.user.location.latlng) {
+      const lat = Number(this.props.user.location.latlng.split(",")[0]);
+      const lng = Number(this.props.user.location.latlng.split(",")[1]);
       this.setState({
         startCoords: {
-          lat: Number(this.props.user.location.latlng.split(",")[0]),
-          lng: Number(this.props.user.location.latlng.split(",")[1])
+          lat,
+          lng
         },
-        lat: Number(this.props.user.location.latlng.split(",")[0]),
-        lng: Number(this.props.user.location.latlng.split(",")[1])
+        lat,
+        lng
       });
       initGoogleScript(
         this.passPlacesToComponent,
         this.markerSelectedHandler,
-        Number(this.props.user.location.latlng.split(",")[0]),
-        Number(this.props.user.location.latlng.split(",")[1])
+        lat,
+        lng
       ); // takes lat/long as 3rd/4th args,
     } else {
       initGoogleScript(

@@ -14,14 +14,12 @@ body{
   overflow: visible;
 }
 
-
 .reqBoxTwo, .reqBox {
   backdrop-filter: blur(6px);
 }
 .hover-cursor{
   cursor: pointer;
 }
-
 
 .places-list {
   background-color: white;
