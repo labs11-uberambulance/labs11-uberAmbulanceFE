@@ -13,8 +13,8 @@ export default function CTA() {
       <div className="w-50  flex flex-col center-content CTA-Text">
           <h1 className="header-font">Helping mothers deliver their children Safely, Securely, &amp; Quickly.</h1>
           <div className="app-buttons">
-            <a><img src={Apple} alt=""/></a>
-            <a><img src={Android} alt=""/></a>
+            <a href="https://www.apple.com/ios/app-store"><img src={Apple} alt=""/></a>
+            <a href="https://play.google.com/apps/testing/com.jbseppanen.birthride"><img src={Android} alt=""/></a>
           </div>
       </div>
       <div className="w-50 flex center-content devices-container">

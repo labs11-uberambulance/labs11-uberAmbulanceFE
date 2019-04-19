@@ -5,13 +5,31 @@
 .landing-header > nav {
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: baseline;
+    margin: 0 1.6rem;
+}
+.landing-header--app-button {
+    height: 2.6rem;
+    padding: 5px 20px;
+    background-color: white;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    border: 2px solid black;
+    cursor: pointer;
+}
+.landing-header a {
+    color: unset
+}
+.landing-header--app-button:hover {
+    transition-duration: 100ms;
+    transform: translateY(1px);
 }
 .landing-header > nav ul {
     display: flex;
     width: fit-content;
     align-items: baseline;
-    margin-right: 2rem;
 }
 .landing-header ul > li > a {
     padding: 4px 5px;
@@ -27,4 +45,23 @@
     background: linear-gradient(to right, rgba(103, 58, 183, 0.6), rgba(33, 150, 243, 0.6));
     border-radius: 5px;
     cursor: pointer;
+}
+
+@media (max-width: 450px) {
+    .landing-header > nav {
+        margin: 0 .8rem 0 0;
+    }
+    .landing-header > nav ul {
+        padding: 0;
+    }
+    .landing-header--app-button {
+        height: 2.6rem;
+        padding: 5px 10px;
+        background-color: white;
+        border-radius: 10px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        border: 2px solid black;
+        cursor: pointer;
+    }
 }
