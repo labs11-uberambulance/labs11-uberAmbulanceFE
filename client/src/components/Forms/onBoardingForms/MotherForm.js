@@ -111,7 +111,7 @@ class OnBoardingForm extends Component {
                   className="mother-form-add-yes"
                   onClick={this.handleClickOpen}
                 >
-                  Yes
+                  { this.state.location.latLng !== "" ? "Update" : "Yes" }
                 </Button>
                 <Button
                   color="secondary"

@@ -13,12 +13,9 @@ export default class DriverActiveOnRide extends Component {
   }
 
   onArriveHandler = id => {
-    console.log("Arrived at mother. ride id: ", id);
-    // update ride status, notifies mother of driver's arrival
     axios
       .get(`/api/rides/driver/arrives/${id}`)
       .then(result => {
-        console.log("Ride status updated. status: ", result.status);
         // need to do this since ride data is not automatically updated on application state with update to user data.
         this.props.refreshUserData(this.props.user);
       })
@@ -28,12 +25,10 @@ export default class DriverActiveOnRide extends Component {
   };
 
   onCompleteHandler = id => {
-    console.log("Ride Complete. ride id: ", id);
     // update ride status, notifies mother of driver's arrival
     axios
       .get(`/api/rides/driver/delivers/${id}`)
       .then(result => {
-        console.log("Ride status updated. status: ", result.status);
         // need to do this since ride data is not automatically updated on application state with update to user data.
         this.props.refreshUserData(this.props.user);
       })
@@ -43,14 +38,12 @@ export default class DriverActiveOnRide extends Component {
   };
 
   onCancelHandler = id => {
-    console.log("Cancel Ride ", id);
     const data = {
       ride_id: id
     };
     axios
       .post(`/api/rides/driver/rejects/${id}`, { data })
       .then(result => {
-        console.log("ride reject success: ", result);
         // need to do this since ride data is not automatically updated on application state with update to user data.
         this.props.refreshUserData(this.props.user);
       })
@@ -62,15 +55,12 @@ export default class DriverActiveOnRide extends Component {
   render() {
     const currentRide = this.props.currentRide;
     let start, stop;
-    console.log(currentRide);
     if (currentRide.ride_status === "Driver en route") {
       start = this.props.user.location.latlng;
       stop = currentRide.start;
-      console.log("en route: ", start, stop);
     } else if (currentRide.ride_status === "arrived_at_mother") {
       start = currentRide.start;
       stop = currentRide.destination;
-      console.log("at mother: ", start, stop);
     } else {
       start = "0,0";
       stop = "0,0";

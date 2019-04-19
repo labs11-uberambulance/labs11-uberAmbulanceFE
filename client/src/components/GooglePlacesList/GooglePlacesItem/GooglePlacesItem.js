@@ -12,7 +12,7 @@ import './GooglePlacesItem.css';
 function googlePlacesItem(props) {
   const address = !!props.place.formatted_address ? props.place.formatted_address : "";
   const trimmedAddress = address.split(',')
-  const formAddress = `${trimmedAddress[trimmedAddress.length - 2]}, ${trimmedAddress[trimmedAddress.length - 1]}`
+  const formAddress = `${!!trimmedAddress[trimmedAddress.length - 2] ? trimmedAddress[trimmedAddress.length - 2] : ''}, ${trimmedAddress[trimmedAddress.length - 1]}`
   return (
     <>
       <ListItem alignItems="flex-start" style={{width: "100%"}}>

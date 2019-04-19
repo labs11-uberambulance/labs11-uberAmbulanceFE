@@ -17,11 +17,9 @@ class DriverActiveRides extends Component {
     const data = {
       ride_id: rideData.id
     };
-    console.log("Ride rejected, rideData: ", rideData);
     axios
       .post(`/api/rides/driver/rejects/${rideData.id}`, { data })
       .then(result => {
-        console.log("ride reject success: ", result);
         // need to do this since ride data is not automatically updated on application state with update to user data.
         this.props.refreshUserData(this.props.user);
       })
@@ -31,11 +29,9 @@ class DriverActiveRides extends Component {
   };
   onAcceptHandler = id => {
     // send acceptance to backend to update ride object (ride_id will be in 'data')
-    console.log("Ride accepted, id: ", id);
     axios
       .get(`/api/rides/driver/accepts/${id}`)
       .then(result => {
-        console.log("Ride accepted, id: ", id, " status ", result.status);
         // set driver status to inactive so he can not accept more rides
         this.props.usrUpdate(this.props.user, {
           driver: { active: false }
