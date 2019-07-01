@@ -2,7 +2,6 @@ import { authTypes } from "./actionTypes";
 import axios from "../../axios-instance";
 
 export const initOauth = user => dispatch => {
-  // console.log(user);
   dispatch({
     type: authTypes.OAUTH_STARTING
   });
@@ -74,8 +73,6 @@ export const initOnbrd = (user, formValues) => dispatch => {
   dispatch({
     type: authTypes.ONBRD_STARTING
   });
-  console.log("initOnbrd action");
-  console.log("user: ", user, "formValues: ", formValues);
   const {
     name,
     phone,
@@ -141,17 +138,14 @@ export const initOnbrd = (user, formValues) => dispatch => {
   }
   // first create user type record:
   // token should be set at this point by initOauth
-  console.log("POST data: ", typeData);
   axios
     .post(`/api/users/onboard/${user.id}`, typeData)
     .then(res => {
       // POST to /api/users/onboard/id will create a mother/driver record (based on user.type) with form values
       // update the user record once it's done:
-      console.log("PUT data: ", userData);
       axios
         .put(`/api/users/update/${user.id}`, userData)
         .then(res => {
-          console.log(`success updating user record: ${res.body}`);
           const payload = {
             userData: {
               ...user,
@@ -166,7 +160,6 @@ export const initOnbrd = (user, formValues) => dispatch => {
               ...typeData.motherData
             }
           };
-          console.log("payload: ", payload);
           dispatch({
             type: authTypes.ONBRD_SUCCESS,
             payload: payload
@@ -195,7 +188,6 @@ export const initUsrUpdate = (user, data) => dispatch => {
   });
   const userId = user.id;
   const updates = { ...data };
-  console.log("initUsrUpdate:", updates);
   axios
     .put(`/api/users/update/${userId}`, updates)
     .then(res => {
@@ -213,7 +205,6 @@ export const initUsrUpdate = (user, data) => dispatch => {
           }
         }
       };
-      console.log("payload: ", payload);
       dispatch({
         type: authTypes.USR_UPDATE_SUCCESS,
         payload

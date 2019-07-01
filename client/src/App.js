@@ -9,7 +9,6 @@ import RequestRideView from "./views/RequestRideView/RequestRideView";
 import LandingView from "./views/LandingView/LandingView";
 import Logout from "./views/AuthenticationView/Logout";
 import OnNotification from "./components/OnNotification/OnNotification";
-import Loading from "./components/Progress/Circular";
 import "./App.css";
 const DriversView = lazy(() => import("./views/DriversView/DriversView"))
 const MothersView = lazy(() => import("./views/MothersView/MothersView"));
@@ -24,13 +23,8 @@ class App extends Component {
         <Redirect to="/" />
       </Switch>
     );
-    console.log(this.props.user);
-    // if (this.props.authLoading) {
-    //   routes = <Route path="/" component={Loading} />;
-    // } else
     if (this.props.user.ftoken) {
       const userType = this.props.user.user_type;
-      // console.log(this.props.user.user_type);
       routes = (
         <Switch>
           <Route path="/onboarding" component={OnboardingView} />
@@ -60,6 +54,7 @@ class App extends Component {
     );
   }
   componentDidMount() {
+    window.initMap = () => {};
     auth.onAuthStateChanged(user => {
       if (user) {
         const { uid, ra } = user;
@@ -76,9 +71,9 @@ class App extends Component {
         }
       } else {
         // this.props.onLogout();
-        console.log("Not Authenticated");
       }
     });
+
   }
 }
 

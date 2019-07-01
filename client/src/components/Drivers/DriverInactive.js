@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import DriverHUD from "./DriverHUD";
 import DriverUpdateLocation from "./DriverUpdateLocation";
 
@@ -12,7 +11,6 @@ export default class DriverInactive extends Component {
   }
 
   handleUpdateDriverLoc = driverLatLng => {
-    console.log("update driver loc to: ", driverLatLng);
     // {"latlng":"0.9445402714964785,33.08937988281251"}
     this.props.usrUpdate(this.props.user, {
       user: {
