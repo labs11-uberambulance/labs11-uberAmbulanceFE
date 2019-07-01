@@ -10,6 +10,7 @@ import TextField from "@material-ui/core/TextField";
 import mIcon from "../../assests/images/btn_baseline-mail_outline-24px.svg";
 import gIcon from "../../assests/images/btn_google_light_normal_ios.svg";
 import pIcon from "../../assests/images/btn_phone_light.svg";
+import brLogo from "../../assests/images/birth_ride_logo_cycle.png";
 import { modalCode, normalizePhone } from "./Styling";
 import { TextMaskCustom } from "./Styling";
 import "./OauthForm.css";
@@ -42,7 +43,7 @@ class OauthForm extends Component {
     if (!email || !password) return;
     auth.createUserWithEmailAndPassword(email, password).catch(err => {
       console.log(err);
-      this.setState({ emailAndPasswordErrorMessage: err.message })
+      this.setState({ emailAndPasswordErrorMessage: err.message });
     });
   };
   signInEmailPassword = () => {
@@ -53,7 +54,7 @@ class OauthForm extends Component {
     if (!email || !password) return;
     auth.signInWithEmailAndPassword(email, password).catch(err => {
       console.log(err);
-      this.setState({ emailAndPasswordErrorMessage: err.message })
+      this.setState({ emailAndPasswordErrorMessage: err.message });
     });
   };
   choosePhone = () => {
@@ -114,6 +115,9 @@ class OauthForm extends Component {
     return (
       <div className="authentication-background">
         <form className="auth-form">
+          <Button onClick={() => this.props.history.push("/")}>
+            <img src={brLogo} style={{ height: "4.5rem" }} />
+          </Button>
           {/* Using Email:  */}
           {this.state.usingEmail && (
             <div className="manual-auth">
@@ -145,7 +149,16 @@ class OauthForm extends Component {
               >
                 {this.props.signup ? "Sign up " : "Log in "}
               </Button>
-              {this.state.emailAndPasswordErrorMessage && <p className="email-pass-error" onClick={() => {this.setState({ emailAndPasswordErrorMessage: null })}}>{this.state.emailAndPasswordErrorMessage}</p>}
+              {this.state.emailAndPasswordErrorMessage && (
+                <p
+                  className="email-pass-error"
+                  onClick={() => {
+                    this.setState({ emailAndPasswordErrorMessage: null });
+                  }}
+                >
+                  {this.state.emailAndPasswordErrorMessage}
+                </p>
+              )}
             </div>
           )}
           {!this.state.usingEmail && (
